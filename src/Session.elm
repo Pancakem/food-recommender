@@ -3,10 +3,8 @@ port module Session exposing(Session, decode, navKey, login, changes, cred, view
 import Browser.Navigation as Nav
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
-import Player exposing (..)
-import Player.Cred as Cred exposing (..)
-import Profile exposing (..)
 
+type 
 
 type Session
     = LoggedIn Nav.Key Player
