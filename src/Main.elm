@@ -8,12 +8,17 @@ import Page
 import Route
 import Page.Landing as Landing
 import Page.NotFound as NtFound
+import Session exposing (Session)
+import Json.Encode exposing (Value)
 
-init : () -> Url.Url -> Key -> (Model, Cmd Msg)
-init _ url _ = 
-    changeRouteTo (Route.fromUrl url) <| Load
+init : Value -> Url.Url -> Key -> (Model, Cmd Msg)
+init flags url key = 
+    let
+        decoded_session = Session.decode key flags
+    in
+    changeRouteTo (Route.fromUrl url) <| Load decoded_session
 
-main : Program () Model Msg
+main : Program Value Model Msg
 main =
     Browser.application
         { init = init
@@ -25,8 +30,8 @@ main =
     }
 
 type Model =
-    NotFound
-    | Load
+    NotFound Session
+    | Load Session
     | LandingModel Landing.Model
 
 type Msg
@@ -53,13 +58,19 @@ update msg model =
 
 changeRouteTo : Maybe Route.Route -> Model -> ( Model, Cmd Msg )
 changeRouteTo maybeRoute model =
+    let
+        session = toSession model
+    in
     case maybeRoute of        
         Just Route.Landing ->
-            Landing.init 
+            Landing.init session
                 |> updateWith LandingModel LandingMsg model
+
+        Just Route.Home ->
+            (model, Cmd.none)
         
         Nothing -> 
-            (NotFound, Cmd.none)
+            (NotFound session, Cmd.none)
 
 view : Model -> Browser.Document Msg
 view model =
@@ -77,12 +88,23 @@ view model =
         LandingModel mod ->
             viewPage Page.Home LandingMsg (Landing.view mod)
                 
-        NotFound -> 
+        NotFound _ -> 
             viewPage Page.Other (\_ -> Empty) NtFound.view 
         
-        Load -> 
+        Load _ -> 
             viewPage Page.Other (\_ -> Empty) emptyview
             
+toSession : Model -> Session
+toSession page =
+    case page of
+        NotFound session ->
+            session
+
+        Load session ->
+            session
+
+        LandingModel landing ->
+            Landing.toSession landing
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
