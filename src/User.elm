@@ -1,8 +1,9 @@
-module Player exposing (..)
+module User exposing (..)
 
 import Json.Decode.Pipeline exposing (custom, required)
 import Json.Encode as Encode exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
+import Cred exposing (..)
 
 type alias Profile =
     { username : String
@@ -11,16 +12,16 @@ type alias Profile =
     }
 
 
-encode : Profile -> Value
-encode info = 
+profileEncoder : Profile -> Value
+profileEncoder info = 
     Encode.object
         [ ( "username", Encode.string info.username)
         , ( "email", Encode.string info.email ) 
         , ( "id", Encode.string info.id )
         ]
 
-decoder : Decoder Profile
-decoder =
+profileDecoder : Decoder Profile
+profileDecoder =
     Decode.succeed Profile
         |> required "username" (Decode.string)
         |> required "email" (Decode.string)
@@ -30,8 +31,8 @@ decoder =
 -- Types 
 
 
-type Player 
-    = Player Internals
+type User 
+    = User Internals
 
 type alias Internals = 
     { cred : Cred
@@ -41,22 +42,22 @@ type alias Internals =
 
 -- info
 
-cred : Player -> Cred 
-cred (Player data) =
+cred : User -> Cred 
+cred (User data) =
     data.cred
 
-id : Player -> Id
-id (Player data) =
+id : User -> String
+id (User data) =
     data.profile.id
 
-profile : Player -> Profile 
-profile (Player data) =
+profile : User -> Profile 
+profile (User data) =
     data.profile 
 
 
-decode : Decoder Player
+decode : Decoder User
 decode =
     Decode.map2 Internals 
         (Decode.field "token" Cred.decoder)
-        (Decode.field "profile" Profile.decoder)
-        |> Decode.map Player
+        (Decode.field "profile" profileDecoder)
+        |> Decode.map User
