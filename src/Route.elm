@@ -6,6 +6,7 @@ import Url.Parser as Parser exposing ((</>), Parser, oneOf, s, string)
 
 type Route = 
     Landing
+    | Home
 
 parser : Parser (Route -> a) a
 parser = 
@@ -29,5 +30,8 @@ toPath route =
             case route of 
                 Landing ->
                     [""]
+
+                Home ->
+                    ["home"]
     in
     String.join "/" path
