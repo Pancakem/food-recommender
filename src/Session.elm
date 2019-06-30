@@ -3,11 +3,11 @@ port module Session exposing(Session, decode, navKey, login, changes, cred, view
 import Browser.Navigation as Nav
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
-
-type 
+import User exposing (..)
+import Cred exposing (..)
 
 type Session
-    = LoggedIn Nav.Key Player
+    = LoggedIn Nav.Key User
     | Guest Nav.Key
 
 
@@ -26,18 +26,18 @@ decode key value =
     let
         decoded_session =
             Decode.decodeValue Decode.string value
-                |> Result.andThen (Decode.decodeString Player.decode)
+                |> Result.andThen (Decode.decodeString User.decode)
                 |> Result.toMaybe
     in
     case decoded_session of
-        Just player ->
-            LoggedIn key player
+        Just user ->
+            LoggedIn key user
 
         Nothing ->
             Guest key
 
 
-viewer : Session -> Maybe Player
+viewer : Session -> Maybe User
 viewer session =
     case session of
         LoggedIn _ val ->
@@ -51,7 +51,7 @@ cred : Session -> Maybe Cred
 cred session =
     case session of
         LoggedIn _ val ->
-            Just (Player.cred val)
+            Just (User.cred val)
 
         Guest _ ->
             Nothing
@@ -81,7 +81,7 @@ login { token, user } =
                 [ ( "token", Cred.encodeToken token )
                 , ( "profile"
                   , Encode.object
-                        [ ( "id", Encode.string (idToString user.id) )
+                        [ ( "id", Encode.string user.id)
                         , ( "username", Encode.string user.username )
                         , ( "email", Encode.string user.email )
                         ]
