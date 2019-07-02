@@ -3,4 +3,3 @@ yarn-error.log
 node_modules/
 elm-stuff/
 .vscode/
-index.html
