@@ -69,6 +69,12 @@ changeRouteTo maybeRoute model =
         Just Route.Home ->
             (model, Cmd.none)
         
+        Just Route.Login ->
+            (model, Cmd.none)
+        
+        Just Route.Register ->
+            (model, Cmd.none)
+        
         Nothing -> 
             (NotFound session, Cmd.none)
 
