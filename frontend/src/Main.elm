@@ -8,6 +8,7 @@ import Page
 import Route
 import Page.Landing as Landing
 import Page.NotFound as NtFound
+import Page.Register as Register
 import Session exposing (Session)
 import Json.Encode exposing (Value)
 
@@ -33,12 +34,14 @@ type Model =
     NotFound Session
     | Load Session
     | LandingModel Landing.Model
+    | RegisterModel Register.Model
 
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | Empty
     | LandingMsg Landing.Msg
+    | RegisterMsg Register.Msg
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -73,7 +76,8 @@ changeRouteTo maybeRoute model =
             (model, Cmd.none)
         
         Just Route.Register ->
-            (model, Cmd.none)
+            Register.init session
+                |> updateWith RegisterModel RegisterMsg model
         
         Nothing -> 
             (NotFound session, Cmd.none)
@@ -99,6 +103,9 @@ view model =
         
         Load _ -> 
             viewPage Page.Other (\_ -> Empty) emptyview
+        
+        RegisterModel mod -> 
+            viewPage Page.Register RegisterMsg (Register.view mod)
             
 toSession : Model -> Session
 toSession page =
@@ -109,8 +116,11 @@ toSession page =
         Load session ->
             session
 
-        LandingModel landing ->
-            Landing.toSession landing
+        LandingModel model ->
+            Landing.toSession model
+        
+        RegisterModel model ->
+            Register.toSession model
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
