@@ -7,6 +7,7 @@ type Page =
     Landing
     | Home
     | Register
+    | Login
     | Other
 
 view : Page -> { title : String, content : Html msg } -> Document msg
