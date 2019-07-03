@@ -358,16 +358,7 @@ responseDetails : Model -> ( Model, Cmd Msg )
 responseDetails model =
     case model.err of
         RemoteData.Failure err ->
-            let
-                error =
-                    case handleError err of
-                        Just errorMsg ->
-                            errorMsg
-
-                        Nothing ->
-                            ErrorMessage ""
-            in
-            ( { model | problems = [ ServerError <| asString error ] }
+            ( model
             , Cmd.none
             )
 
@@ -394,3 +385,7 @@ checkSymbol password =
 
         matches ->
             True
+
+doRegister : Model -> Cmd Msg
+doRegister model = 
+    Cmd.none
