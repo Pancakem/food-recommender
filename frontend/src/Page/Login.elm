@@ -1,27 +1,25 @@
 module Page.Login exposing (Model, Msg, init, toSession, view, update, subscriptions) 
 
-import Profile exposing (..)
-import Player exposing (..)
 import Session exposing (Session)
 import Html exposing (..)
 import Html.Events exposing(onClick, onInput)
 import Html.Attributes exposing (..)
 import Route exposing (Route)
 import RemoteData exposing (RemoteData)
-import Api exposing (..)
 import Browser.Navigation as Navigation exposing (load)
+import Http
+import User exposing (Profile)
 
 type alias Model = 
     { session : Session
     , form : Form
     , problems : List Problem
-    , err : RemoteData (Graphql.Http.Error SignIn) SignIn
+    , err : (RemoteData Http.Error SignIn)
     }
 
 type Problem
     = InvalidEntry ValidatedField String
     | ServerError String
-
 
 
 -- VIEW 
@@ -50,6 +48,10 @@ type alias Form =
     , password : String
     }
 
+type alias SignIn =
+    { user : Profile 
+    , token : String
+    }
 
 loginView : Model -> Html Msg
 loginView model = 
@@ -146,7 +148,7 @@ viewInput model formField labelName inputType inputName =
 type Msg 
     = SubmittedDetails
     | SetField ValidatedField String
-    | GotResponse (RemoteData (Graphql.Http.Error SignIn) SignIn)
+    | GotResponse (RemoteData Http.Error SignIn)
     | GotSession Session
 
 
@@ -164,7 +166,7 @@ update msg model =
                     -- receive server response 
                     -- trigger command to handle or consume response
                     ({ model | problems = [] }
-                    , (doSignIn model)
+                    , Cmd.none --(doSignIn model) 
                     )
                 
                 problems ->
@@ -272,52 +274,11 @@ toSession model =
     model.session
 
 
--- GraphQL 
-profile : SelectionSet Profile EatYourDay.Object.User 
-profile = 
-    SelectionSet.succeed Profile
-        |> with User.username 
-        |> with User.email 
-        |> with User.id
-    
-type alias SignIn =
-    { user : Profile 
-    , token : String
-    }
-
-signin : SelectionSet SignIn EatYourDay.Object.SignIn
-signin =
-    SelectionSet.succeed SignIn 
-        |> with (SignIn.user profile)
-        |> with SignIn.token
-
-
-signInMutation : Model -> SelectionSet SignIn RootMutation 
-signInMutation { form } = 
-   Mutation.signIn { input = { signInParam = form.email, password = form.password }} signin
-
-
-doSignIn : Model -> Cmd Msg
-doSignIn model =
-    (signInMutation model)
-    |> Graphql.Http.mutationRequest Api.endPoint
-    |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
-
-
 responseHandling : Model -> (Model, Cmd Msg) 
 responseHandling model = 
     case model.err of
         RemoteData.Failure err ->
-            let 
-                error = 
-                    case handleError err of 
-                        Just errorMsg ->
-                            errorMsg
-                        
-                        Nothing ->
-                            ErrorMessage ""
-            in
-            ( {model | problems = [ServerError <| asString error] }
+            ( model 
             , Cmd.none
             )
 
