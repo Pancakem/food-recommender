@@ -6,6 +6,7 @@ import Html exposing (..)
 type Page = 
     Landing
     | Home
+    | Register
     | Other
 
 view : Page -> { title : String, content : Html msg } -> Document msg
