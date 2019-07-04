@@ -10,7 +10,7 @@ init session =
         cmd =
             case cred session of
                 Just cred ->
-                    Route.replaceUrl (Session.navKey session) Route.Home
+                    Route.replaceUrl (Session.navKey session) Route.Login
 
                 Nothing ->
                     Cmd.none
