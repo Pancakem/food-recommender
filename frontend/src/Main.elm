@@ -10,6 +10,7 @@ import Page.Landing as Landing
 import Page.NotFound as NtFound
 import Page.Register as Register
 import Page.Login as Login
+import Page.Settings as Settings
 import Session exposing (Session)
 import Json.Encode exposing (Value)
 
@@ -37,6 +38,7 @@ type Model =
     | LandingModel Landing.Model
     | RegisterModel Register.Model
     | LoginModel Login.Model
+    | SettingModel Settings.Model
 
 type Msg
     = LinkClicked Browser.UrlRequest
@@ -45,6 +47,7 @@ type Msg
     | LandingMsg Landing.Msg
     | RegisterMsg Register.Msg
     | LoginMsg Login.Msg
+    | SettingMsg Settings.Msg
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -66,6 +69,10 @@ update msg model =
         (LoginMsg subMsg, LoginModel login) ->
             Login.update subMsg login
                 |> updateWith LoginModel LoginMsg model
+        
+        (SettingMsg subMsg, SettingModel settings) ->
+            Settings.update subMsg settings
+                |> updateWith SettingModel SettingMsg model
         
         (_, _) ->
             (model, Cmd.none)
@@ -90,6 +97,10 @@ changeRouteTo maybeRoute model =
         Just Route.Register ->
             Register.init session
                 |> updateWith RegisterModel RegisterMsg model
+        
+        Just Route.Settings ->
+            Settings.init session
+                |> updateWith SettingModel SettingMsg model
         
         Nothing -> 
             (NotFound session, Cmd.none)
@@ -121,6 +132,9 @@ view model =
 
         LoginModel mod -> 
             viewPage Page.Login LoginMsg (Login.view mod)
+        
+        SettingModel mod ->
+            viewPage Page.Settings SettingMsg (Settings.view mod)
             
 toSession : Model -> Session
 toSession page =
@@ -140,6 +154,10 @@ toSession page =
         LoginModel model ->
             Login.toSession model
 
+        SettingModel model ->
+            Settings.toSession model
+        
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
@@ -150,7 +168,7 @@ updateWith toModel toMsg model ( subModel, subCmd ) =
     , Cmd.map toMsg subCmd
     )
 
---empty view
+--empty view 
 emptyview : { title : String, content : Html msg }
 emptyview = 
     { title = ""
