@@ -11,8 +11,6 @@ import Route exposing (Route)
 import Session exposing (..)
 import Http
 
-
-
 -- MODEL
 
 type alias Model =
@@ -60,7 +58,7 @@ init session =
 
 view : Model -> { title : String, content : Html Msg }
 view model =
-    { title = "Eat Your Day - Register"
+    { title = "Register"
     , content = registerView model
     }
 
@@ -86,11 +84,11 @@ viewServerError problem =
 viewForm : Model -> Html Msg
 viewForm model =
     div [ class "vert-form" ]
-        [ p [ class "order-slogan"] [ text "Get Notified. Get Productive. Do Your Dream Today!"]
-        , p [ class "order-cta"] [ text  "Only $15 Month"]
+        [ p [ class "order-slogan"] [ text "Eat Healthy."]
+        , p [ class "order-cta"] [ text  "No fees"]
         , p [ class "field-set-label"] [ text "Set Up Account"]
-        , viewInput model Email "Email Address" "text" "forestsquirrel@eyd.com"
-        , viewInput model Username "Profile Name" "text" "Forest Squirrel"
+        , viewInput model Email "Email Address" "text" "johndoe@example.com"
+        , viewInput model Username "Profile Name" "text" "John Doe"
         , viewInput model Password "Password" "password" "********"
         , viewInput model PasswordAgain "Confirm Password" "password" "********"
         , viewTermsAndConditions
