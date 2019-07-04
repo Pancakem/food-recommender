@@ -1,3 +1,18 @@
 module Page.Home exposing (..)
 
-x = 24
+import Session exposing (Session)
+
+init : Session -> (Model, Cmd msg)
+init session =
+    ({
+        session = session
+    }
+    , Cmd.none
+     )
+        
+type alias Model = 
+    {session : Session}
+
+
+-- type Msg = 
+
