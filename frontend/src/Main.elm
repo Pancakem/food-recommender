@@ -58,6 +58,14 @@ update msg model =
 
         (UrlChanged _, _) ->
             (model, Cmd.none)
+
+        (RegisterMsg subMsg, RegisterModel model) ->
+            Register.update subMsg model
+                |> updateWith RegisterModel RegisterMsg model
+        
+        (LoginMsg subMsg, LoginModel model) ->
+            Login.update subMsg model
+                |> updateWith LoginModel LoginMsg model
         
         (_, _) ->
             (model, Cmd.none)
