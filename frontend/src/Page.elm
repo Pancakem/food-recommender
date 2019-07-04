@@ -8,6 +8,7 @@ type Page =
     | Home
     | Register
     | Login
+    | Settings
     | Other
 
 view : Page -> { title : String, content : Html msg } -> Document msg
