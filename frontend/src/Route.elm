@@ -9,6 +9,7 @@ type Route =
     | Home
     | Register
     | Login
+    | Settings
 
 parser : Parser (Route -> a) a
 parser = 
@@ -17,6 +18,7 @@ parser =
         , Parser.map Register (s "register")
         , Parser.map Login (s "login")
         , Parser.map Home (s "home")
+        , Parser.map Settings (s "settings")
         ]
 
 fromUrl : Url -> Maybe Route 
@@ -44,5 +46,8 @@ toPath route =
                 
                 Register -> 
                     ["register"]
+                
+                Settings ->
+                    ["settings"]
     in
     String.join "/" path
