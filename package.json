@@ -1,0 +1,21 @@
+{
+  "name": "food-recommender",
+  "version": "1.0.0",
+  "description": "food recommender system",
+  "main": "index.js",
+  "repository": "https://github.com/Pancakem/food-recommender.git",
+  "author": "Pancakem <pancakesdeath@protonmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev:client": "webpack-dev-server --mode=development --port 9098",
+    "watch": "webpack --watch --color --mode=development",
+    "build:production": "webpack --color --mode=production"
+  },
+  "engines": {
+    "node": ">=9.10.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.5"
+  }
+}
