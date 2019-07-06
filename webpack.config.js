@@ -67,7 +67,8 @@ module.exports = {
     	new CompressionPlugin(),
 	  	new CopyWebpackPlugin([
 			 //{ from: 'src/images/', to: 'images/' }, 
-		     //{ from: 'src/fonts/', to: 'fonts/'}, 
+             //{ from: 'src/fonts/', to: 'fonts/'}, 
+             {from: 'frontend/src/index.html', to: ''},
 		     { from: 'frontend/src/sw.js', to: 'js/' }
 		])
   ],
