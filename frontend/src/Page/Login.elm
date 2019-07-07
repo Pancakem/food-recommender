@@ -68,7 +68,7 @@ loginForm model =
         [ viewInput model Email "Email" "text" "johndoe@example.com"
         , viewInput model Password "Password" "password" "*******"
         , div [ class "login-button-row"]
-              [ button [ class "brown-button button", onClick SubmittedDetails ] [ text "LOGIN" ] ]
+              [ button [ class "blue-button button", onClick SubmittedDetails ] [ text "LOGIN" ] ]
         ]
 
 
@@ -96,7 +96,7 @@ viewProblem model formfield problem =
                         ""
         in
         if String.length errorMsg > 1 then
-            li [style "color" "red"] [ text errorMsg ]
+            p [style "color" "red"] [ text errorMsg ]
  
         else
             text ""
