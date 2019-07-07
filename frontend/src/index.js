@@ -1,3 +1,9 @@
+// include css and html files
+import './index.html';
+
+const {Elm} = require('../src/Main.elm');
+
+
 //collect session if any
 let session = localStorage.getItem("session")
 
