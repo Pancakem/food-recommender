@@ -56,11 +56,18 @@ update msg model =
             Landing.update subMsg landing 
                 |> updateWith LandingModel LandingMsg model
 
-        (LinkClicked _, _) ->
-            (model, Cmd.none)
+        ( LinkClicked urlRequest, _ ) ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model
+                    , pushUrl (Session.navKey (toSession model)) (Url.toString url)
+                    )
 
-        (UrlChanged _, _) ->
-            (model, Cmd.none)
+                Browser.External href ->
+                    ( model, load href )
+
+        ( UrlChanged url, _ ) ->
+            changeRouteTo (Route.fromUrl url) model
 
         (RegisterMsg subMsg, RegisterModel register) ->
             Register.update subMsg register
