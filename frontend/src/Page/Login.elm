@@ -25,7 +25,7 @@ type Problem
 -- VIEW 
 view : Model -> { title : String, content : Html Msg}
 view model = 
-    { title = "Eat Your Day - Login"
+    { title = "Eat Right - Login"
     , content = (loginView model)
     }
 
@@ -65,7 +65,7 @@ loginView model =
 loginForm : Model -> Html Msg
 loginForm model = 
     div [ class "vert-form" ]
-        [ viewInput model Email "Email" "text" "forestsquirrel@eyd.com"
+        [ viewInput model Email "Email" "text" "johndoe@example.com"
         , viewInput model Password "Password" "password" "*******"
         , div [ class "login-button-row"]
               [ button [ class "brown-button button", onClick SubmittedDetails ] [ text "LOGIN" ] ]
@@ -189,7 +189,7 @@ update msg model =
 
         GotSession session ->
             ( { model | session = session }
-            , Navigation.load "/dashboard" 
+            , Navigation.load "/home" 
             )
 
 
