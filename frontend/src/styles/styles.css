@@ -1,0 +1,143 @@
+@font-face {
+	font-family: 'Roboto', sans-serif;
+	src: url('https://fonts.googleapis.com/css?family=Roboto:400,500, 900');
+}
+
+html {
+	height: 100%;
+}
+
+
+body {
+	margin: 0px;
+	height: 100%;
+	font-family: 'Roboto', sans-serif;
+	display: flex;
+	flex-direction: column;
+}
+
+.roboto-black {
+	font-weight: 900;
+}
+
+
+.footer-icon {
+	width: 28.96px;
+	height: 28.96px;
+	margin-right: 8px;
+}
+
+.home-bar {
+	justify-content: space-around;
+}
+
+.login-bar, .dash-bar {
+	justify-content: space-between;
+}
+
+.report-bar {
+	justify-content: space-between;
+	color: #FFFFFF;
+	font-family: "PWBoldScript BoldScript";
+	font-size: 1.25em;
+	align-items: center;
+}
+
+.setting-bar {
+	justify-content: space-between;
+	color: #FFFFFF;
+	font-family: "PWBoldScript BoldScript";
+	font-size: 1.25em;
+	vertical-align: middle;
+}
+
+.home-logo-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+   	margin-top: 5.06875rem;
+}
+
+.report-container {
+	overflow: auto;
+}	
+
+.button {
+	border: none;
+	border-radius: 0.68rem;
+}
+
+.front-page-button {
+	font-size: 20
+}
+
+.blue-button {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	width: 107px;
+	height: 43px;
+	background-color: rgb(51, 67, 156);
+}
+
+.login-button-row {
+	margin-top: 4rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding-bottom: 15px;
+}
+
+.vert-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+
+.form-label {
+	display: flex;
+	flex-direction: column;
+	margin-top: 2.5rem;
+}
+
+.form-input {
+	margin-top: 1.1rem;
+	border-right-style: none;
+	border-left-style: none;
+	border-top-style: none;
+	color: rgb(51, 67, 156);
+	border-bottom: 0.1rem solid black;
+}
+
+.faded-blue-button {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	width: 88px;
+	height: 48px;
+	padding-top: 16px;
+	padding-bottom: 14px;
+	background-color: rgb(95, 77, 197);
+	border-radius: 11px;
+}
+
+.faded-blue-button:hover {
+	background-color: rgb(51, 67, 156);
+}
+
+.dash-view {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.validation-problem {
+	font-size: 12px;
+	font-weight: 100;
+	color: #FF0000;
+}
+
+.error-list {
+	list-style-type: none;
+}
