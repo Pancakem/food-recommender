@@ -1,5 +1,6 @@
 // include css and html files
 import './index.html';
+import './styles/styles.css';
 
 const {Elm} = require('../src/Main.elm');
 
