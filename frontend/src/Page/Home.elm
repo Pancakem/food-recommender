@@ -10,10 +10,10 @@ init session =
         cmd =
             case cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Login
+                    Cmd.none
 
                 Nothing ->
-                    Cmd.none
+                    Route.pushUrl (Session.navKey session) Route.Login
     in
     
     ({
