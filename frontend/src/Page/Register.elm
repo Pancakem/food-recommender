@@ -66,7 +66,7 @@ view model =
 registerView : Model -> Html Msg
 registerView model =
     div [ class "login-page" ]
-        [ ul [ style "color" "red" ] (List.map (\str -> viewServerError str) model.problems)
+        [ p [ class "validation-problem" ] (List.map (\str -> viewServerError str) model.problems)
         , viewForm model
         ]
 
@@ -84,16 +84,16 @@ viewServerError problem =
 viewForm : Model -> Html Msg
 viewForm model =
     div [ class "vert-form" ]
-        [ p [ class "order-slogan"] [ text "Eat Healthy."]
-        , p [ class "order-cta"] [ text  "No fees"]
+        [ p [ class "product-slogan"] [ text "Eat Healthy."]
+        , p [ class "product-cta"] [ text  "No fees"]
         , p [ class "field-set-label"] [ text "Set Up Account"]
         , viewInput model Email "Email Address" "text" "johndoe@example.com"
-        , viewInput model Username "Profile Name" "text" "John Doe"
+        , viewInput model Username "Full Name" "text" "John Doe"
         , viewInput model Password "Password" "password" "********"
         , viewInput model PasswordAgain "Confirm Password" "password" "********"
         , viewTermsAndConditions
         , div [ class "login-button-row" ]
-            [ button [ class "brown-button button", onClick SubmittedForm ] [ text "Join" ] ]
+            [ button [ class "blue-button button", onClick SubmittedForm ] [ text "Join" ] ]
         ]
 
 
@@ -164,7 +164,7 @@ viewProblem model formfield problem =
                         ""
         in
         if String.length errorMsg > 1 then
-            li [ style "color" "red" ] [ text errorMsg ]
+            p [ style "color" "red" ] [ text errorMsg ]
 
         else
             text ""
@@ -299,7 +299,7 @@ validatedField (Trimmed form) field =
         case field of     
             Username ->
                 if String.isEmpty form.username then
-                    [ "username can't be blank." ]
+                    [ "name can't be blank." ]
 
                 else
                     []
