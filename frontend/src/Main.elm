@@ -11,6 +11,7 @@ import Page.NotFound as NtFound
 import Page.Register as Register
 import Page.Login as Login
 import Page.Settings as Settings
+import Page.Home as Home
 import Session exposing (Session)
 import Json.Encode exposing (Value)
 
@@ -39,11 +40,13 @@ type Model =
     | RegisterModel Register.Model
     | LoginModel Login.Model
     | SettingModel Settings.Model
+    | HomeModel Home.Model
 
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | Empty
+    | HomeMsg Home.Msg
     | LandingMsg Landing.Msg
     | RegisterMsg Register.Msg
     | LoginMsg Login.Msg
@@ -81,6 +84,10 @@ update msg model =
             Settings.update subMsg settings
                 |> updateWith SettingModel SettingMsg model
         
+        (HomeMsg subMsg, HomeModel home) ->
+            Home.update subMsg home
+                |> updateWith HomeModel HomeMsg model
+        
         (_, _) ->
             (model, Cmd.none)
 
@@ -95,7 +102,8 @@ changeRouteTo maybeRoute model =
                 |> updateWith LandingModel LandingMsg model
 
         Just Route.Home ->
-            (model, Cmd.none)
+            Home.init session
+                |> updateWith HomeModel HomeMsg model
         
         Just Route.Login ->
             Login.init session
@@ -142,6 +150,9 @@ view model =
         
         SettingModel mod ->
             viewPage Page.Settings SettingMsg (Settings.view mod)
+        
+        HomeModel mod ->
+            viewPage Page.Home HomeMsg (Home.view mod)
             
 toSession : Model -> Session
 toSession page =
@@ -163,6 +174,9 @@ toSession page =
 
         SettingModel model ->
             Settings.toSession model
+        
+        HomeModel model -> 
+            Home.toSession model
         
 
 subscriptions : Model -> Sub Msg
