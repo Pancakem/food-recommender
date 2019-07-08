@@ -1,4 +1,4 @@
-module Page.Home exposing (Model, Msg, update, view, subscriptions, init)
+module Page.Home exposing (Model, Msg, update, view, subscriptions, init, toSession)
 
 import Html exposing (..)
 import Session exposing (Session, cred)
