@@ -35,22 +35,6 @@ body {
 	justify-content: space-between;
 }
 
-.report-bar {
-	justify-content: space-between;
-	color: #FFFFFF;
-	font-family: "PWBoldScript BoldScript";
-	font-size: 1.25em;
-	align-items: center;
-}
-
-.setting-bar {
-	justify-content: space-between;
-	color: #FFFFFF;
-	font-family: "PWBoldScript BoldScript";
-	font-size: 1.25em;
-	vertical-align: middle;
-}
-
 .home-logo-box {
 	display: flex;
 	flex-direction: row;
@@ -73,7 +57,7 @@ body {
 	font-size: 15px;
 	width: 107px;
 	height: 43px;
-	background-color: rgb(51, 67, 156);
+	background-color: rgb(155, 141, 236);
 }
 
 .login-button-row {
@@ -102,7 +86,7 @@ body {
 	border-right-style: none;
 	border-left-style: none;
 	border-top-style: none;
-	color: rgb(51, 67, 156);
+	color: rgb(155, 141, 236);
 	border-bottom: 0.1rem solid black;
 }
 
@@ -114,12 +98,12 @@ body {
 	height: 48px;
 	padding-top: 16px;
 	padding-bottom: 14px;
-	background-color: rgb(95, 77, 197);
+	background-color: rgb(155, 141, 236);
 	border-radius: 11px;
 }
 
 .faded-blue-button:hover {
-	background-color: rgb(51, 67, 156);
+	background-color: rgb(155, 141, 236);
 }
 
 .validation-problem {
@@ -130,4 +114,35 @@ body {
 
 .error-list {
 	list-style-type: none;
+}
+
+.product-slogan {
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+}
+
+.product-cta {
+	font-weight: bold;
+   	text-align: center;
+	color: rgb(60, 154, 170);
+	margin-top: .9rem;
+	font-size: 18px;
+}
+
+.field-set-label {
+	font-weight: bold;
+	color: #000000;
+	margin-top: 4.9rem;
+}
+
+::placeholder {
+	color: rgb(238, 209, 200);
+}
+
+.login-page {
+	padding-right: 2.51rem;
+	padding-left: 2.51rem;
+	padding-top: 4.97rem;
+	overflow: auto;
 }
