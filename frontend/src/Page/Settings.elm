@@ -40,7 +40,7 @@ init session =
                     Cmd.none -- get current settings
 
                 Nothing ->
-                    Route.replaceUrl (Session.navKey session) Route.Login
+                    Route.pushUrl (Session.navKey session) Route.Login
     in
     ( { session = session
       , form =

@@ -361,7 +361,7 @@ responseDetails model =
             )
 
         RemoteData.Success successData ->
-            ( model, Route.replaceUrl (Session.navKey model.session) Route.Login )
+            ( model, Route.pushUrl (Session.navKey model.session) Route.Login )
 
         _ ->
             ( model, Cmd.none )

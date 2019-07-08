@@ -96,7 +96,7 @@ viewProblem model formfield problem =
                         ""
         in
         if String.length errorMsg > 1 then
-            p [style "color" "red"] [ text errorMsg ]
+            p [class "validation-problem"] [ text errorMsg ]
  
         else
             text ""

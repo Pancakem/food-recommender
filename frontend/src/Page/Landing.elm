@@ -15,7 +15,7 @@ init session =
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.replaceUrl (Session.navKey session) Route.Home
+                    Route.pushUrl (Session.navKey session) Route.Home
 
                 Nothing ->
                     Cmd.none
@@ -38,7 +38,7 @@ update msg model =
 
         ClickedRegister ->
             (model
-            , Route.replaceUrl (Session.navKey model.session) Route.Register)
+            , Route.pushUrl (Session.navKey model.session) Route.Register)
 
 
 view : Model -> { title : String, content  : Html Msg  }
