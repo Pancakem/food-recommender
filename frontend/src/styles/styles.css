@@ -58,10 +58,6 @@ body {
    	margin-top: 5.06875rem;
 }
 
-.report-container {
-	overflow: auto;
-}	
-
 .button {
 	border: none;
 	border-radius: 0.68rem;
@@ -124,12 +120,6 @@ body {
 
 .faded-blue-button:hover {
 	background-color: rgb(51, 67, 156);
-}
-
-.dash-view {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
 }
 
 .validation-problem {
