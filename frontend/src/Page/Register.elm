@@ -9,6 +9,9 @@ import Regex exposing (..)
 import Route exposing (Route)
 import Session exposing (..)
 import Http
+import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
+import Json.Encode as Encode
+import Browser.Navigation as Navigation exposing (load)
 
 -- MODEL
 
@@ -176,7 +179,7 @@ type Msg
     | OnFocus ValidatedField
     | OnBlur ValidatedField
     | ToggleShowPassword
-    | GotResponse (Result Http.Error ())
+    | GotResponse (Result Http.Error Response)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -218,7 +221,18 @@ update msg model =
             ( { model | showPassword = not model.showPassword }, Cmd.none )
 
         GotResponse signUpResp ->
-            (model, Cmd.none)
+            case signUpResp of
+                Ok successData ->
+                    (model
+                    , Cmd.batch [Session.login successData, Navigation.load "/home"]
+                    )
+                Err err ->
+                    let
+                        errorMsg = informHttpError err
+                    in
+                    ({model | problems = [ServerError errorMsg]}
+                    , Cmd.none
+                    )
 
 
 updateForm : (Form -> Form) -> Model -> Model
@@ -362,6 +376,22 @@ checkSymbol password =
         matches ->
             True
 
+
+-- http
+
 doRegister : Model -> Cmd Msg
 doRegister model = 
-    Cmd.none
+    Http.post 
+        { url = endPoint 
+        , body = Http.jsonBody (encodeRegister model)
+        , expect = Http.expectJson GotResponse decodeResponse 
+        }
+
+
+encodeRegister : Model -> Encode.Value 
+encodeRegister {form} = 
+    Encode.object
+        [ ("email", Encode.string form.email)
+        , ("fullname", Encode.string form.username)
+        , ("password", Encode.string form.password)
+        ]
