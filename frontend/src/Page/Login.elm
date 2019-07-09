@@ -160,7 +160,7 @@ update msg model =
                     -- receive server response 
                     -- trigger command to handle or consume response
                     ({ model | problems = [] }
-                    , Cmd.none --(doSignIn model) 
+                    , login model
                     )
                 
                 problems ->
@@ -175,7 +175,39 @@ update msg model =
             , Cmd.none)  
         
         GotResponse resp ->
-            (model, Cmd.none)
+            case resp of 
+                Ok successData ->
+                    (model
+                    , Cmd.batch [Session.login successData, Navigation.load "/home"]
+                    )
+                
+                Err err ->
+                    case err of 
+                        Http.BadStatus _ ->
+                            ({model | problems = [ServerError "Oh the request failed. Something must've gone wrong. Try again."]}
+                            , Cmd.none
+                            )
+
+                        Http.Timeout ->
+                            ({model | problems = [ServerError "Server took too long to respond."]}
+                            , Cmd.none
+                            )
+                        
+                        Http.NetworkError ->
+                            ({model | problems = [ServerError "Network error. Please check your wifi."]}
+                            , Cmd.none
+                            )
+                        
+                        Http.BadBody _ ->
+                            ({model | problems = [ServerError "Oooh something went wrong. Try again!"]}
+                            , Cmd.none
+                            )
+                        
+                        Http.BadUrl _ ->
+                            ({model | problems = [ServerError "Invalid url."]}
+                            , Cmd.none
+                            )
+                        
 
         GotSession session ->
             ( { model | session = session }
