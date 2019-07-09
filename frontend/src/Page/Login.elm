@@ -8,7 +8,7 @@ import Route exposing (Route)
 import Browser.Navigation as Navigation exposing (load)
 import Http
 import User exposing (Profile)
-import Json.Decode exposing (field, Decoder, string, map3, map2)
+import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
 import Json.Encode as Encode
 
 type alias Model = 
@@ -50,7 +50,7 @@ type alias Form =
 loginView : Model -> Html Msg
 loginView model = 
     div [ class "login-page"]
-        [ ul []
+        [ p [class "validation-problem"]
           (List.map (\str -> viewServerError str) model.problems)
         ,(loginForm model) 
         ]
@@ -182,31 +182,12 @@ update msg model =
                     )
                 
                 Err err ->
-                    case err of 
-                        Http.BadStatus _ ->
-                            ({model | problems = [ServerError "Oh the request failed. Something must've gone wrong. Try again."]}
-                            , Cmd.none
-                            )
-
-                        Http.Timeout ->
-                            ({model | problems = [ServerError "Server took too long to respond."]}
-                            , Cmd.none
-                            )
-                        
-                        Http.NetworkError ->
-                            ({model | problems = [ServerError "Network error. Please check your wifi."]}
-                            , Cmd.none
-                            )
-                        
-                        Http.BadBody _ ->
-                            ({model | problems = [ServerError "Oooh something went wrong. Try again!"]}
-                            , Cmd.none
-                            )
-                        
-                        Http.BadUrl _ ->
-                            ({model | problems = [ServerError "Invalid url."]}
-                            , Cmd.none
-                            )
+                    let
+                        errorMsg = informHttpError err
+                    in
+                    ({model | problems = [ServerError errorMsg]}
+                    , Cmd.none
+                    )
                         
 
         GotSession session ->
@@ -301,27 +282,9 @@ login : Model -> Cmd Msg
 login model =    
     Http.post
       { url = ""
-      , body = Http.jsonBody (encodeLogin model )
+      , body = Http.jsonBody (encodeLogin model)
       , expect = Http.expectJson GotResponse decodeResponse
       }
-
-type alias Response =
-    { token : String
-    , profile : Profile
-    }
-
-decodeResponse : Decoder Response
-decodeResponse = 
-    map2 Response
-        (field "token" string)
-        (field "profile" decodeProfile)
-
-decodeProfile : Decoder Profile
-decodeProfile = 
-    map3 Profile
-        (field "fullname" string)
-        (field "email" string)
-        (field "id" string)
 
 encodeLogin : Model -> Encode.Value
 encodeLogin {form} = 
