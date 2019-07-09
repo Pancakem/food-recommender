@@ -6,7 +6,6 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import User exposing (Profile)
 import Regex exposing (..)
-import RemoteData exposing (RemoteData)
 import Route exposing (Route)
 import Session exposing (..)
 import Http
@@ -20,7 +19,6 @@ type alias Model =
     , focus : Maybe ValidatedField
     , showPassword : Bool
     , showErrors : Bool
-    , err : RemoteData Http.Error ()
     }
 
 
@@ -50,7 +48,6 @@ init session =
       , focus = Nothing
       , showPassword = False
       , showErrors = False
-      , err = RemoteData.Loading
       }
     , Cmd.none
     )
@@ -179,7 +176,7 @@ type Msg
     | OnFocus ValidatedField
     | OnBlur ValidatedField
     | ToggleShowPassword
-    | GotResponse (RemoteData Http.Error ())
+    | GotResponse (Result Http.Error ())
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -221,11 +218,7 @@ update msg model =
             ( { model | showPassword = not model.showPassword }, Cmd.none )
 
         GotResponse signUpResp ->
-            let
-                f =
-                    { model | err = signUpResp }
-            in
-            responseDetails f
+            (model, Cmd.none)
 
 
 updateForm : (Form -> Form) -> Model -> Model
@@ -350,21 +343,6 @@ trimFields form =
 toSession : Model -> Session
 toSession model =
     model.session
-
-
-responseDetails : Model -> ( Model, Cmd Msg )
-responseDetails model =
-    case model.err of
-        RemoteData.Failure err ->
-            ( model
-            , Cmd.none
-            )
-
-        RemoteData.Success successData ->
-            ( model, Route.pushUrl (Session.navKey model.session) Route.Login )
-
-        _ ->
-            ( model, Cmd.none )
 
 
 checkSymbol : String -> Bool
