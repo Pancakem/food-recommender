@@ -5,16 +5,16 @@ import Html exposing (..)
 import Html.Events exposing(onClick, onInput)
 import Html.Attributes exposing (..)
 import Route exposing (Route)
-import RemoteData exposing (RemoteData)
 import Browser.Navigation as Navigation exposing (load)
 import Http
 import User exposing (Profile)
+import Json.Decode exposing (field, Decoder, string, map3, map2)
+import Json.Encode as Encode
 
 type alias Model = 
     { session : Session
     , form : Form
     , problems : List Problem
-    , err : (RemoteData Http.Error SignIn)
     }
 
 type Problem
@@ -37,7 +37,6 @@ init session =
            { email = ""
            , password = ""
            }
-    , err = RemoteData.Loading
     }
     , Cmd.none
     )
@@ -46,11 +45,6 @@ init session =
 type alias Form =
     { email : String
     , password : String
-    }
-
-type alias SignIn =
-    { user : Profile 
-    , token : String
     }
 
 loginView : Model -> Html Msg
@@ -148,7 +142,7 @@ viewInput model formField labelName inputType inputName =
 type Msg 
     = SubmittedDetails
     | SetField ValidatedField String
-    | GotResponse (RemoteData Http.Error SignIn)
+    | GotResponse (Result Http.Error Response)
     | GotSession Session
 
 
@@ -181,11 +175,7 @@ update msg model =
             , Cmd.none)  
         
         GotResponse resp ->
-            let 
-                newModel = 
-                    { model | err = resp }
-            in
-            responseHandling newModel
+            (model, Cmd.none)
 
         GotSession session ->
             ( { model | session = session }
@@ -273,20 +263,37 @@ toSession : Model -> Session
 toSession model =  
     model.session
 
+-- http 
 
-responseHandling : Model -> (Model, Cmd Msg) 
-responseHandling model = 
-    case model.err of
-        RemoteData.Failure err ->
-            ( model 
-            , Cmd.none
-            )
+login : Model -> Cmd Msg
+login model =    
+    Http.post
+      { url = ""
+      , body = Http.jsonBody (encodeLogin model )
+      , expect = Http.expectJson GotResponse decodeResponse
+      }
 
-        RemoteData.Success successData ->
-            (model
-            , Session.login successData
-            )
-        
-        _ ->
-            (model, Cmd.none)
+type alias Response =
+    { token : String
+    , profile : Profile
+    }
 
+decodeResponse : Decoder Response
+decodeResponse = 
+    map2 Response
+        (field "token" string)
+        (field "profile" decodeProfile)
+
+decodeProfile : Decoder Profile
+decodeProfile = 
+    map3 Profile
+        (field "fullname" string)
+        (field "email" string)
+        (field "id" string)
+
+encodeLogin : Model -> Encode.Value
+encodeLogin {form} = 
+    Encode.object
+        [ ( "email", Encode.string form.email )
+        , ( "password", Encode.string form.password )
+        ]
