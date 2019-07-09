@@ -73,17 +73,17 @@ logout =
     storeSession Nothing
 
 
-login : { token : String, user : Profile } -> Cmd msg
-login { token, user } =
+login : { token : String, profile : Profile } -> Cmd msg
+login { token, profile } =
     let
         session_value =
             Encode.object
                 [ ( "token", Cred.encodeToken token )
                 , ( "profile"
                   , Encode.object
-                        [ ( "id", Encode.string user.id)
-                        , ( "username", Encode.string user.username )
-                        , ( "email", Encode.string user.email )
+                        [ ( "id", Encode.string profile.id)
+                        , ( "username", Encode.string profile.username )
+                        , ( "email", Encode.string profile.email )
                         ]
                   )
                 ]
