@@ -1,0 +1,148 @@
+@font-face {
+	font-family: 'Roboto', sans-serif;
+	src: url('https://fonts.googleapis.com/css?family=Roboto:400,500, 900');
+}
+
+html {
+	height: 100%;
+}
+
+
+body {
+	margin: 0px;
+	height: 100%;
+	font-family: 'Roboto', sans-serif;
+	display: flex;
+	flex-direction: column;
+}
+
+.roboto-black {
+	font-weight: 900;
+}
+
+
+.footer-icon {
+	width: 28.96px;
+	height: 28.96px;
+	margin-right: 8px;
+}
+
+.home-bar {
+	justify-content: space-around;
+}
+
+.login-bar, .dash-bar {
+	justify-content: space-between;
+}
+
+.home-logo-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+   	margin-top: 5.06875rem;
+}
+
+.button {
+	border: none;
+	border-radius: 0.68rem;
+}
+
+.front-page-button {
+	font-size: 20
+}
+
+.blue-button {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	width: 107px;
+	height: 43px;
+	background-color: rgb(155, 141, 236);
+}
+
+.login-button-row {
+	margin-top: 4rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding-bottom: 15px;
+}
+
+.vert-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+
+.form-label {
+	display: flex;
+	flex-direction: column;
+	margin-top: 2.5rem;
+}
+
+.form-input {
+	margin-top: 1.1rem;
+	border-right-style: none;
+	border-left-style: none;
+	border-top-style: none;
+	color: rgb(155, 141, 236);
+	border-bottom: 0.1rem solid black;
+}
+
+.faded-blue-button {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	width: 88px;
+	height: 48px;
+	padding-top: 16px;
+	padding-bottom: 14px;
+	background-color: rgb(155, 141, 236);
+	border-radius: 11px;
+}
+
+.faded-blue-button:hover {
+	background-color: rgb(155, 141, 236);
+}
+
+.validation-problem {
+	font-size: 12px;
+	font-weight: 100;
+	color: #FF0000;
+}
+
+.error-list {
+	list-style-type: none;
+}
+
+.product-slogan {
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+}
+
+.product-cta {
+	font-weight: bold;
+   	text-align: center;
+	color: rgb(60, 154, 170);
+	margin-top: .9rem;
+	font-size: 18px;
+}
+
+.field-set-label {
+	font-weight: bold;
+	color: #000000;
+	margin-top: 4.9rem;
+}
+
+::placeholder {
+	color: rgb(238, 209, 200);
+}
+
+.login-page {
+	padding-right: 2.51rem;
+	padding-left: 2.51rem;
+	padding-top: 4.97rem;
+	overflow: auto;
+}
