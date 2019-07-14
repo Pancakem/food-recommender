@@ -13,3 +13,5 @@ bin/
 include/
 lib/
 main/flask_boilerplate_main.db
+share/
+local/
