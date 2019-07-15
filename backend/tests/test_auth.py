@@ -4,7 +4,7 @@ import json
 from backend.main import db
 from backend.main.model.user import User
 from backend.main.model.bad_token import BadToken
-from project.tests.base import BaseTestCase
+from backend.tests.base import BaseTestCase
 
 
 class TestAuthBlueprint(BaseTestCase):
