@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
+from project.server.auth.views import auth_blueprint
 
 from .config import config_by_name
 
@@ -15,5 +16,6 @@ def create_app(config_name):
 	bcrypt.init_app(app)
 	cors = CORS(app)
 	app.config['CORS_HEADERS'] = 'Content-Type'
+	app.register_blueprint(auth_blueprint)
 
 	return app
