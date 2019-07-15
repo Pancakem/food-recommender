@@ -146,3 +146,7 @@ body {
 	padding-top: 4.97rem;
 	overflow: auto;
 }
+
+.navbar-dropdown {
+	text-align: right;
+}
