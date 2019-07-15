@@ -2,14 +2,28 @@ module Page.Landing exposing (Model, Msg, update, view, subscriptions, init, toS
 
 import Html exposing (..)
 import Html.Events exposing (..)
+import Html.Attributes exposing (..)
 import Session exposing (..)
 import Route
+import Bootstrap.Navbar as Navbar
+import Bootstrap.Carousel as Carousel
+import Bootstrap.Dropdown as Dropdown
+import Bootstrap.Button as Button
 
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        model =
-            { session = session
+        (navstate, navCmd) = Navbar.initialState NavbarMsg
+
+        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
+
+        dropdownstate = Dropdown.initialState
+
+        model = {
+            session = session
+            , navbarState = navstate
+            , carouselState = carouselstate
+            , dropdownState = dropdownstate
             }
 
         cmd =
@@ -18,45 +32,83 @@ init session =
                     Route.pushUrl (Session.navKey session) Route.Home
 
                 Nothing ->
-                    Cmd.none
+                    navCmd
     in
-    ( model, cmd )
+    ( model , cmd )
 
 type alias Model = 
-    {session : Session}
+    {session : Session
+    , navbarState : Navbar.State
+    , carouselState : Carousel.State
+    , dropdownState : Dropdown.State
+    }
 
 type Msg
-    = ClickedLogin
-    | ClickedRegister
-
+    = NavbarMsg Navbar.State
+    | CarouselMsg Carousel.Msg
+    | KeyPress Int
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    case msg of
-        ClickedLogin ->
-            (model, Cmd.none)
+    case msg of        
+        NavbarMsg state ->
+            ({model | navbarState = state}, Cmd.none)
 
-        ClickedRegister ->
-            (model
-            , Route.pushUrl (Session.navKey model.session) Route.Register)
+        CarouselMsg submsg ->
+            ( { model | carouselState = Carousel.update submsg model.carouselState }
+            , Cmd.none
+            )
+        
+        KeyPress keycode ->
+            if keycode == 39 then -- right arrow
+                ({ model | carouselState = Carousel.next model.carouselState }
+                , Cmd.none
+                )
 
+            else if keycode == 37 then -- left arrow
+                ({ model | carouselState = Carousel.prev model.carouselState }
+                , Cmd.none
+                )
+
+            else
+                ( model
+                , Cmd.none
+                )
 
 view : Model -> { title : String, content  : Html Msg  }
 view model =
     { title = "Landing Page"
     , content = 
         div []
-            [ text "New Html Program" 
+            [ 
+            viewNavbar model 
+            , viewCarousel model
             , br [] []
-            , button [onClick ClickedRegister] [text "SIGN UP"]
-            , br [] []
-            , button [] [text "SIGN IN"]
             ]
     }
 
+viewNavbar : Model -> Html Msg
+viewNavbar model = 
+    Navbar.config NavbarMsg
+        |> Navbar.withAnimation
+        |> Navbar.brand [ href "/" ] [ text "EatRight" ]
+        |> Navbar.items
+            [ Navbar.itemLink [ class "navbar-dropdown", href "/login" ] [ text "Sign In" ]
+            , Navbar.itemLink [ class "navbar-dropdown", href "/register" ] [ text "Sign Up" ]
+            ]
+        |> Navbar.view model.navbarState
+
+viewCarousel : Model -> Html Msg
+viewCarousel model = 
+    Carousel.config CarouselMsg []
+        |> Carousel.withIndicators
+        |> Carousel.slides
+            [] -- put slides in here
+        |> Carousel.view model.carouselState
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.batch [Carousel.subscriptions model.carouselState CarouselMsg]
 
 toSession : Model -> Session
 toSession model = 

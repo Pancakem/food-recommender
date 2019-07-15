@@ -16,3 +16,4 @@ flask_boilerplate_main.db
 share/
 local/
 migrations/
+
