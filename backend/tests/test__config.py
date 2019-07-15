@@ -1,5 +1,5 @@
 from flask_testing import TestCase
-from backend.main import app
+from main import app
 
 class TestDevelopmentConfig(TestCase):
     def create_app(self):

@@ -1,5 +1,5 @@
 from flask_testing import TestCase
-from main import db
+from backend.main import db
 from manage import app
 
 
