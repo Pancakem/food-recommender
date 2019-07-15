@@ -2,43 +2,39 @@ module Page.Landing exposing (Model, Msg, update, view, subscriptions, init, toS
 
 import Html exposing (..)
 import Html.Events exposing (..)
+import Html.Attributes exposing (..)
 import Session exposing (..)
 import Route
+import Bootstrap.Navbar as Navbar
 
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        model =
-            { session = session
-            }
+        (navstate, navCmd) = Navbar.initialState NavbarMsg
 
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Home
+                    Cmd.batch [Route.pushUrl (Session.navKey session) Route.Home]
 
                 Nothing ->
-                    Cmd.none
+                    navCmd
     in
-    ( model, cmd )
+    ( {session =session, navbarState = navstate}, cmd )
 
 type alias Model = 
-    {session : Session}
+    {session : Session
+    , navbarState : Navbar.State}
 
 type Msg
-    = ClickedLogin
-    | ClickedRegister
+    = NavbarMsg Navbar.State
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    case msg of
-        ClickedLogin ->
-            (model, Cmd.none)
-
-        ClickedRegister ->
-            (model
-            , Route.pushUrl (Session.navKey model.session) Route.Register)
+    case msg of        
+        NavbarMsg state ->
+            ({model | navbarState = state}, Cmd.none)
 
 
 view : Model -> { title : String, content  : Html Msg  }
@@ -46,13 +42,22 @@ view model =
     { title = "Landing Page"
     , content = 
         div []
-            [ text "New Html Program" 
+            [ 
+            viewNavbar model 
             , br [] []
-            , button [onClick ClickedRegister] [text "SIGN UP"]
-            , br [] []
-            , button [] [text "SIGN IN"]
             ]
     }
+
+viewNavbar : Model -> Html Msg
+viewNavbar model = 
+    Navbar.config NavbarMsg
+        |> Navbar.withAnimation
+        |> Navbar.brand [ href "/" ] [ text "EatRight" ]
+        |> Navbar.items
+            [ Navbar.itemLink [ href "/login" ] [ text "Sign In" ]
+            , Navbar.itemLink [ href "/register" ] [ text "Sign Up" ]
+            ]
+        |> Navbar.view model.navbarState
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
