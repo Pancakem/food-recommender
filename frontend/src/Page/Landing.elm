@@ -6,28 +6,43 @@ import Html.Attributes exposing (..)
 import Session exposing (..)
 import Route
 import Bootstrap.Navbar as Navbar
+import Bootstrap.Carousel as Carousel
+import Bootstrap.Dropdown as Dropdown
+
 
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
         (navstate, navCmd) = Navbar.initialState NavbarMsg
 
+        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
+
+        model = {
+            session = session
+            , navbarState = navstate
+            , carouselState = carouselstate
+            }
+
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Cmd.batch [Route.pushUrl (Session.navKey session) Route.Home]
+                    Route.pushUrl (Session.navKey session) Route.Home
 
                 Nothing ->
                     navCmd
     in
-    ( {session =session, navbarState = navstate}, cmd )
+    ( model , cmd )
 
 type alias Model = 
     {session : Session
-    , navbarState : Navbar.State}
+    , navbarState : Navbar.State
+    , carouselState : Carousel.State
+    }
 
 type Msg
     = NavbarMsg Navbar.State
+    | CarouselMsg Carousel.Msg
+    | KeyPress Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -35,6 +50,27 @@ update msg model =
     case msg of        
         NavbarMsg state ->
             ({model | navbarState = state}, Cmd.none)
+
+        CarouselMsg submsg ->
+            ( { model | carouselState = Carousel.update submsg model.carouselState }
+            , Cmd.none
+            )
+        
+        KeyPress keycode ->
+            if keycode == 39 then -- right arrow
+                ({ model | carouselState = Carousel.next model.carouselState }
+                , Cmd.none
+                )
+
+            else if keycode == 37 then -- left arrow
+                ({ model | carouselState = Carousel.prev model.carouselState }
+                , Cmd.none
+                )
+
+            else
+                ( model
+                , Cmd.none
+                )
 
 
 view : Model -> { title : String, content  : Html Msg  }
@@ -44,6 +80,7 @@ view model =
         div []
             [ 
             viewNavbar model 
+            , viewCarousel model
             , br [] []
             ]
     }
@@ -54,14 +91,24 @@ viewNavbar model =
         |> Navbar.withAnimation
         |> Navbar.brand [ href "/" ] [ text "EatRight" ]
         |> Navbar.items
-            [ Navbar.itemLink [ href "/login" ] [ text "Sign In" ]
-            , Navbar.itemLink [ href "/register" ] [ text "Sign Up" ]
+            [
+            -- [ Navbar.itemLink [ href "/login" ] [ text "Sign In" ]
+            -- , Navbar.itemLink [ href "/register" ] [ text "Sign Up" ]
+            Dr
             ]
         |> Navbar.view model.navbarState
 
+viewCarousel : Model -> Html Msg
+viewCarousel model = 
+    Carousel.config CarouselMsg []
+        |> Carousel.withIndicators
+        |> Carousel.slides
+            [] -- put slides in here
+        |> Carousel.view model.carouselState
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.batch [Carousel.subscriptions model.carouselState CarouselMsg]
 
 toSession : Model -> Session
 toSession model = 
