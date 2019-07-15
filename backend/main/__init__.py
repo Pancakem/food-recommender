@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
-from project.server.auth.views import auth_blueprint
+from .auth.api import auth_blueprint
 
 from .config import config_by_name
 
