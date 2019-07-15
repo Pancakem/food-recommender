@@ -1,5 +1,5 @@
 import datetime
-from .. import db
+from main import db
 
 class BadToken(db.Model):
 

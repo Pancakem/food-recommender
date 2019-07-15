@@ -1,7 +1,7 @@
 
 class TestDevelopmentConfig(TestCase):
     def create_app(self):
-        app.config.from_object('')
+        app.config.from_object('main.config.DevelopmentConfig')
         return app
     
     def test_app_is_development(self):

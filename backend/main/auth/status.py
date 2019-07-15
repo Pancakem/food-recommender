@@ -1,8 +1,8 @@
 from flask import request, make_response, jsonify
 from flask.views import MethodView
 
-from .. import bcrypt, db
-from ..model import User
+from main import bcrypt, db
+from main.model import User
 
 class UserAPI(MethodView):
     """

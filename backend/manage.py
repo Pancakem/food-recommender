@@ -5,11 +5,8 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from main import create_app, db
-from main.model import blacklist#, records, user
-from __init__ import blueprint
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'prod')
-app.register_blueprint(blueprint)
 
 app.app_context().push()
 
