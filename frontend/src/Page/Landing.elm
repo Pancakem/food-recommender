@@ -8,7 +8,7 @@ import Route
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
 import Bootstrap.Dropdown as Dropdown
-
+import Bootstrap.Button as Button
 
 init : Session -> ( Model, Cmd Msg )
 init session =
@@ -17,10 +17,13 @@ init session =
 
         carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
 
+        dropdownstate = Dropdown.initialState
+
         model = {
             session = session
             , navbarState = navstate
             , carouselState = carouselstate
+            , dropdownState = dropdownstate
             }
 
         cmd =
@@ -37,13 +40,13 @@ type alias Model =
     {session : Session
     , navbarState : Navbar.State
     , carouselState : Carousel.State
+    , dropdownState : Dropdown.State
     }
 
 type Msg
     = NavbarMsg Navbar.State
     | CarouselMsg Carousel.Msg
     | KeyPress Int
-
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -72,7 +75,6 @@ update msg model =
                 , Cmd.none
                 )
 
-
 view : Model -> { title : String, content  : Html Msg  }
 view model =
     { title = "Landing Page"
@@ -91,10 +93,8 @@ viewNavbar model =
         |> Navbar.withAnimation
         |> Navbar.brand [ href "/" ] [ text "EatRight" ]
         |> Navbar.items
-            [
-            -- [ Navbar.itemLink [ href "/login" ] [ text "Sign In" ]
-            -- , Navbar.itemLink [ href "/register" ] [ text "Sign Up" ]
-            Dr
+            [ Navbar.itemLink [ class "navbar-dropdown", href "/login" ] [ text "Sign In" ]
+            , Navbar.itemLink [ class "navbar-dropdown", href "/register" ] [ text "Sign Up" ]
             ]
         |> Navbar.view model.navbarState
 
