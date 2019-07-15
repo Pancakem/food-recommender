@@ -4,6 +4,16 @@ node_modules/
 elm-stuff/
 .vscode/
 
+# python stuff
+__pycache__/
+.idea/
+venv/
+.vscode/
 bin/
 include/
 lib/
+flask_boilerplate_main.db
+share/
+local/
+migrations/
+
