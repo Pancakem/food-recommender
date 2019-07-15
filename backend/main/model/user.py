@@ -1,5 +1,5 @@
 import jwt
-from main import app, db, bcrypt
+from main.__init__ import app, db
 
 class User(db.Model):
     """ User Model for storing user related details """
@@ -20,23 +20,23 @@ class User(db.Model):
         self.admin = admin
     
     def encode_auth_token(self, user_id):
-    """
-    Generates the Auth Token
-    :return: string
-    """
-    try:
-        payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
-            'iat': datetime.datetime.utcnow(),
-            'sub': user_id
-        }
-        return jwt.encode(
-            payload,
-            app.config.get('SECRET_KEY'),
-            algorithm='HS256'
-        )
-    except Exception as e:
-        return e
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                'iat': datetime.datetime.utcnow(),
+                'sub': user_id
+            }
+            return jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
 
     @staticmethod
     def decode_auth_token(auth_token):
@@ -51,7 +51,7 @@ class User(db.Model):
             if is_blacklisted_token:
                 return 'Token is bad. Please log in again.'
             else:
-            return payload['sub']
+                return payload['sub']
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
