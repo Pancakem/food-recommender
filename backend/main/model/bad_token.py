@@ -1,3 +1,4 @@
+import datetime
 from .. import db
 
 class BadToken(db.Model):
@@ -6,9 +7,14 @@ class BadToken(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     token = db.Column(db.String, unique=True)
+    blacklisted_on = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, token):
         self.token = token
+        self.blacklisted_on = datetime.datetime.now()
+    
+    def __repr__(self):
+        return f'<token: {self.token}>'
     
     @staticmethod
 	def check_token(auth_token):
