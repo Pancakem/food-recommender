@@ -1,14 +1,22 @@
 import unittest
 import json
 
-from main import db
 from main.model.user import User
 from main.model.bad_token import BadToken
 from tests.base import BaseTestCase
 
 
-class TestAuthBlueprint(BaseTestCase):
-    def register_user(self, email, password):
+def login_user(self, email, password):
+    resp_login = self.client.post(
+                '/auth/login',
+                data=json.dumps(dict(
+                    email='malea@gmail.com',
+                    password='123456'
+                )),
+                content_type='application/json'
+            )
+
+def register_user(self, email, password):
         return self.client.post(
             '/auth/register',
             data=json.dumps(dict(
@@ -18,6 +26,7 @@ class TestAuthBlueprint(BaseTestCase):
             content_type='application/json',
         )
 
+class TestAuthBlueprint(BaseTestCase):
     def test_registration(self):
         """ Test for user registration """
         with self.client:
@@ -66,14 +75,7 @@ class TestAuthBlueprint(BaseTestCase):
             self.assertTrue(resp_register.content_type == 'application/json')
             self.assertEqual(resp_register.status_code, 201)
             # user login
-            resp_login = self.client.post(
-                '/auth/login',
-                data=json.dumps(dict(
-                    email='malea@gmail.com',
-                    password='123456'
-                )),
-                content_type='application/json'
-            )
+            
             data_login = json.loads(resp_login.data.decode())
             self.assertTrue(data_login['status'] == 'success')
             self.assertTrue(data_login['message'] == 'Successfully logged in.')
