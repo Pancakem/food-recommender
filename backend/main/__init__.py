@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from main.auth.api import auth_blueprint
 
-from .config import config_by_name
+from main.config import config_by_name
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
