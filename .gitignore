@@ -12,6 +12,7 @@ venv/
 bin/
 include/
 lib/
-main/flask_boilerplate_main.db
+flask_boilerplate_main.db
 share/
 local/
+migrations/
