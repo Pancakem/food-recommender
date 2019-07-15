@@ -1,15 +1,11 @@
 from flask import request, make_response, jsonify
 from flask.views import MethodView
 
-from main import bcrypt, db
-from main.model import User
-
 
 class RegisterAPI(MethodView):
     """
     User Registration Resource
     """
-
     def post(self):
         # get the post data
         post_data = request.get_json()

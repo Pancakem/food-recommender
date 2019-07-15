@@ -1,8 +1,6 @@
 from flask import request, make_response, jsonify
 from flask.views import MethodView
 
-from main import bcrypt, db
-from main.model import User
 
 class LoginAPI(MethodView):
     """
