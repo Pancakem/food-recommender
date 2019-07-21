@@ -281,7 +281,7 @@ toSession model =
 login : Model -> Cmd Msg
 login model =    
     Http.post
-      { url = ""
+      { url = endPoint ++ "/auth/login"
       , body = Http.jsonBody (encodeLogin model)
       , expect = Http.expectJson GotResponse decodeResponse
       }
