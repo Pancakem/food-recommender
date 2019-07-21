@@ -28,7 +28,6 @@ class UserAPI(MethodView):
                     'data': {
                         'user_id': user.id,
                         'email': user.email,
-                        'admin': user.admin,
                         'registered_on': user.registered_on
                     }
                 }
