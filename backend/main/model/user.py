@@ -1,17 +1,21 @@
 import jwt
-from main.__init__ import app, db
+import uuid
+from main.__init__ import db
 
 class User(db.Model):
     """ User Model for storing user related details """
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.String, primary_key=True)
+    fullname = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, email, password, admin=False):
+    def __init__(self, fullname, email, password, admin=False):
+        self.id = str(uuid.uuid4())
+        self.fullname = fullname
         self.email = email
         self.password = bcrypt.generate_password_hash(
             password, app.config.get('BCRYPT_LOG_ROUNDS')
