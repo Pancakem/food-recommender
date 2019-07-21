@@ -5,8 +5,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from main import create_app, db
-import main.model.bad_token
-import main.model.user
+from main.model import user, bad_token
 
 app = create_app('dev')
 
