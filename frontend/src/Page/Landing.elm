@@ -7,7 +7,6 @@ import Session exposing (..)
 import Route
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
-import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Button as Button
 
 init : Session -> ( Model, Cmd Msg )
@@ -17,13 +16,10 @@ init session =
 
         carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
 
-        dropdownstate = Dropdown.initialState
-
         model = {
             session = session
             , navbarState = navstate
             , carouselState = carouselstate
-            , dropdownState = dropdownstate
             }
 
         cmd =
@@ -40,7 +36,6 @@ type alias Model =
     {session : Session
     , navbarState : Navbar.State
     , carouselState : Carousel.State
-    , dropdownState : Dropdown.State
     }
 
 type Msg
