@@ -2,7 +2,7 @@ import unittest
 import json
 
 from tests.base import BaseTestCase
-import main.model.user
+from main.model.model import User
 
 
 
