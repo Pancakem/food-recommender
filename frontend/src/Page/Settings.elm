@@ -126,11 +126,14 @@ view model =
 
 viewSettings : Model -> Html Msg
 viewSettings model =
-    div [ class "settings-container" ]
-        [ viewNavbar model
-        , ul [] (List.map (\str -> viewError str) model.problem)
-        , viewAccountInfo model
-        ]
+    div []
+    [ viewNavbar model
+    , div [ class "settings-container" ]
+            [ ul [] (List.map (\str -> viewError str) model.problem)
+            , viewAccountInfo model
+            ]
+    ]
+    
 
 viewError : Problem -> Html msg
 viewError (ServerError str) = 
@@ -139,7 +142,7 @@ viewError (ServerError str) =
     
 viewAccountInfo : Model -> Html Msg
 viewAccountInfo model = 
-    div []
+    div [ class "task-form settings-form" ]
         [ text " Account Info"
         , inputField ProfileName model model.form.profileName "Full Name" "text"
         , inputField Email model model.form.email "Email" "text"
@@ -150,10 +153,10 @@ viewNavbar : Model -> Html Msg
 viewNavbar model = 
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.brand [ href "/" ] [ text "EatRight" ]
+        |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
         |> Navbar.items
-            [ Navbar.itemLink [ class "navbar-dropdown", href "/home" ] [ text "Home" ]
-            , Navbar.itemLink [ class "navbar-dropdown", href "/logout" ] [ text "Logout" ]
+            [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/home" ] [ text "Home" ]
+            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/logout" ] [ text "Logout" ]
             ]
         |> Navbar.view model.navbarState
 
@@ -177,7 +180,7 @@ inputField field {form} plceholder lbel taype =
                     ""
     in
     div [ class "" ]
-        [ span [] [label [class "task-form-input-title"] [ text lbel ], img [class "task-form-edit-icon", src "../images/edit.png"] []]
+        [ span [] [label [class "task-form-input-title"] [ text lbel ]]
         , input
             [ class "task-form-input"
             , type_ taype
