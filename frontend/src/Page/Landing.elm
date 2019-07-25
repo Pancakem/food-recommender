@@ -86,10 +86,10 @@ viewNavbar : Model -> Html Msg
 viewNavbar model = 
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.brand [ href "/" ] [ text "EatRight" ]
+        |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
         |> Navbar.items
-            [ Navbar.itemLink [ class "navbar-dropdown", href "/login" ] [ text "Sign In" ]
-            , Navbar.itemLink [ class "navbar-dropdown", href "/register" ] [ text "Sign Up" ]
+            [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/login" ] [ text "Sign In" ]
+            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/register" ] [ text "Sign Up" ]
             ]
         |> Navbar.view model.navbarState
 
