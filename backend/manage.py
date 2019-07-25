@@ -4,10 +4,9 @@ import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from main import create_app, db
-from main.model import user, bad_token
+from main import app, db
+from main.model import model
 
-app = create_app('dev')
 
 app.app_context().push()
 
