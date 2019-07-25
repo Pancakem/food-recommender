@@ -170,7 +170,6 @@ body {
 
 
 .task-form {
-	border : 1px solid black;
 	padding-top: 41px;
 	padding-left: 29px;
 	padding-bottom: 41px;
@@ -190,19 +189,6 @@ body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	margin-bottom: 30px;
-}
-
-.task-form-brown-button{
-	margin-top: 30px;
-	margin-left: 65px;
-	margin-right: auto;
-	color: #FFFFFF;
-	font-weight: bold;
-	font-size: 15px;
-	width: 107px;
-	height: 43px;
-	background-color: #AA563C;
-	border-radius: 11px;
 }
 
 .task-form-edit-icon{
@@ -243,4 +229,42 @@ body {
 .task-form-slider-text{
 	width: 208px;
 	display: inline-block;
+}
+
+.settings-container {
+	overflow-x: hidden;
+	margin-top: 37px;
+}
+
+.settings-form {
+	margin-bottom: 16px;
+}
+
+.nav-links{
+	display: flex;
+	flex-direction: column;
+	margin-left: 35px;
+	margin-bottom: 35px;
+	margin-right: 40.98px;
+	font-family: "Roboto, Regular";
+	font-size: 20px;
+	color: #FFFFFF;
+}
+
+.nav-menu{
+	height: 60%;
+}
+
+.nav-menu a{
+	margin-top: 15px;
+	text-decoration: none;
+	font-family: "Roboto, Regular";
+	color: #FFFFFF;
+	display: block;
+}
+
+
+.nav-menu-logo{
+	height: 99px;
+	width: 130px;
 }
