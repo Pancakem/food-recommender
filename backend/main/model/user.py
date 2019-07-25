@@ -1,6 +1,6 @@
 import jwt
 import uuid
-from main.__init__ import db
+from main import db
 
 class User(db.Model):
     """ User Model for storing user related details """
