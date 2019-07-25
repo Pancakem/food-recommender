@@ -128,6 +128,7 @@ viewSettings : Model -> Html Msg
 viewSettings model =
     div []
     [ viewNavbar model
+    , br [][], br [][]
     , div [ class "settings-container" ]
             [ ul [] (List.map (\str -> viewError str) model.problem)
             , viewAccountInfo model

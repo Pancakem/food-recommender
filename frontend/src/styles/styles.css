@@ -251,10 +251,6 @@ body {
 	color: #FFFFFF;
 }
 
-.nav-menu{
-	height: 60%;
-}
-
 .nav-menu a{
 	margin-top: 15px;
 	text-decoration: none;
@@ -263,8 +259,7 @@ body {
 	display: block;
 }
 
-
 .nav-menu-logo{
-	height: 99px;
+	height: 50px;
 	width: 130px;
 }
