@@ -8,6 +8,7 @@ import Route
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
 import Bootstrap.Button as Button
+import Bootstrap.Carousel.Slide as Slide
 
 init : Session -> ( Model, Cmd Msg )
 init session =
@@ -96,10 +97,14 @@ viewNavbar model =
 viewCarousel : Model -> Html Msg
 viewCarousel model = 
     Carousel.config CarouselMsg []
-        |> Carousel.withIndicators
-        |> Carousel.slides
-            [] -- put slides in here
-        |> Carousel.view model.carouselState
+    |> Carousel.withControls
+    |> Carousel.withIndicators
+    |> Carousel.slides
+        [ Slide.config [] (Slide.image [] "src/images/olive-oil-968657__340.jpg")
+        , Slide.config [] (Slide.image [] "src/images/vegetables-752153_960_720.jpg")
+        , Slide.config [] (Slide.image [] "src/images/grapes-690230_960_720.jpg")
+        ]
+    |> Carousel.view model.carouselState
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
