@@ -150,3 +150,97 @@ body {
 .navbar-dropdown {
 	text-align: right;
 }
+
+.input-length {
+	color: #000000;
+	font-size: 12px;
+	font-weight: 550;
+	opacity: 0.5;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.input-length-error {
+	color: #ff0000;
+}
+
+::placeholder {
+	color: #AA563C;
+}
+
+
+.task-form {
+	border : 1px solid black;
+	padding-top: 41px;
+	padding-left: 29px;
+	padding-bottom: 41px;
+	border-radius: 12px;
+	margin-right: 32px;
+	margin-left: 32px;
+	margin-bottom: 30px;
+}
+
+.task-form p input{
+	width: 245px;
+	display: block;
+	border-top-style: none !important;
+	border-right-style: none !important;
+	border-left-style: none  !important;
+	border-color: black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 30px;
+}
+
+.task-form-brown-button{
+	margin-top: 30px;
+	margin-left: 65px;
+	margin-right: auto;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	width: 107px;
+	height: 43px;
+	background-color: #AA563C;
+	border-radius: 11px;
+}
+
+.task-form-edit-icon{
+	float: right;
+	margin-right: 30px;
+}
+
+.task-form-edit-icon ::after{
+	clear: both;
+}
+
+.task-form-button-icon{
+	width: 20px;
+	height: 20px;
+}
+
+.task-form-input{
+	width: 245px;
+	display: block;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	border-color: black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 30px;
+}
+
+.task-form-title{
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.task-form-input-title{
+	font-size: 20px;
+}
+
+.task-form-slider-text{
+	width: 208px;
+	display: inline-block;
+}
