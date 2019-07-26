@@ -7,8 +7,8 @@ import Session exposing (..)
 import Route
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
-import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Button as Button
+import Bootstrap.Carousel.Slide as Slide
 
 init : Session -> ( Model, Cmd Msg )
 init session =
@@ -17,13 +17,10 @@ init session =
 
         carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
 
-        dropdownstate = Dropdown.initialState
-
         model = {
             session = session
             , navbarState = navstate
             , carouselState = carouselstate
-            , dropdownState = dropdownstate
             }
 
         cmd =
@@ -40,7 +37,6 @@ type alias Model =
     {session : Session
     , navbarState : Navbar.State
     , carouselState : Carousel.State
-    , dropdownState : Dropdown.State
     }
 
 type Msg
@@ -91,20 +87,24 @@ viewNavbar : Model -> Html Msg
 viewNavbar model = 
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.brand [ href "/" ] [ text "EatRight" ]
+        |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
         |> Navbar.items
-            [ Navbar.itemLink [ class "navbar-dropdown", href "/login" ] [ text "Sign In" ]
-            , Navbar.itemLink [ class "navbar-dropdown", href "/register" ] [ text "Sign Up" ]
+            [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/login" ] [ text "Sign In" ]
+            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/register" ] [ text "Sign Up" ]
             ]
         |> Navbar.view model.navbarState
 
 viewCarousel : Model -> Html Msg
 viewCarousel model = 
     Carousel.config CarouselMsg []
-        |> Carousel.withIndicators
-        |> Carousel.slides
-            [] -- put slides in here
-        |> Carousel.view model.carouselState
+    |> Carousel.withControls
+    |> Carousel.withIndicators
+    |> Carousel.slides
+        [ Slide.config [] (Slide.image [] "src/images/olive-oil-968657__340.jpg")
+        , Slide.config [] (Slide.image [] "src/images/vegetables-752153_960_720.jpg")
+        , Slide.config [] (Slide.image [] "src/images/grapes-690230_960_720.jpg")
+        ]
+    |> Carousel.view model.carouselState
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

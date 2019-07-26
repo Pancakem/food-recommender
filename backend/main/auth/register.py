@@ -1,5 +1,6 @@
 from flask import request, make_response, jsonify
 from flask.views import MethodView
+import main.model.user.User
 
 
 class RegisterAPI(MethodView):
@@ -14,6 +15,7 @@ class RegisterAPI(MethodView):
         if not user:
             try:
                 user = User(
+                    fullname=post_data.get('fullname'),
                     email=post_data.get('email'),
                     password=post_data.get('password')
                 )

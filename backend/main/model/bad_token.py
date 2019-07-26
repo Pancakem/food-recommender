@@ -17,10 +17,9 @@ class BadToken(db.Model):
         return f'<token: {self.token}>'
     
     @staticmethod
-	def check_token(auth_token):
-		res = BadToken.query.filter_by(token=str(auth_token)).first()
-
-		if res:
-			return True
-		else:
-			return False
+    def check_token(auth_token):
+        res = BadToken.query.filter_by(token=str(auth_token)).first()
+        if res:
+            return True
+        else:
+            return False

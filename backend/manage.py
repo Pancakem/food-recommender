@@ -5,8 +5,9 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from main import create_app, db
+from main.model import user, bad_token
 
-app = create_app(os.getenv('BOILERPLATE_ENV') or 'prod')
+app = create_app('dev')
 
 app.app_context().push()
 

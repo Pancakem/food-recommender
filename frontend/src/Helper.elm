@@ -7,7 +7,7 @@ import Http
 
 endPoint : String 
 endPoint = 
-    ""
+    "http:localhost:5000"
 
 type alias Response =
     { token : String
@@ -30,7 +30,10 @@ decodeProfile =
 informHttpError : Http.Error -> String
 informHttpError err = 
     case err of 
-        Http.BadStatus _ ->
+        Http.BadStatus st ->
+            let
+                _ = Debug.log "" st
+            in
             "Oh the request failed. Something must've gone wrong. Try again."
         
         Http.Timeout ->
@@ -39,9 +42,15 @@ informHttpError err =
         Http.NetworkError ->
             "Network error. Please check your wifi."
         
-        Http.BadBody _ ->
+        Http.BadBody bb ->
+            let
+                _ = Debug.log "" bb
+            in
             "Oooh something went wrong. Try again!"   
         
-        Http.BadUrl _ ->
+        Http.BadUrl bd ->
+            let
+                _ = Debug.log "" bd
+            in
             "Invalid url."
                             

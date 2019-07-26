@@ -12,7 +12,7 @@ venv/
 bin/
 include/
 lib/
-flask_boilerplate_main.db
+eatright.db
 share/
 local/
 migrations/

@@ -382,7 +382,7 @@ checkSymbol password =
 doRegister : Model -> Cmd Msg
 doRegister model = 
     Http.post 
-        { url = endPoint 
+        { url = endPoint ++ "/auth/register"
         , body = Http.jsonBody (encodeRegister model)
         , expect = Http.expectJson GotResponse decodeResponse 
         }
