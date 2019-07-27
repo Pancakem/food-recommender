@@ -26,7 +26,7 @@ class UserAPI(MethodView):
             auth_token = ''
         if auth_token:
             resp = User.decode_auth_token(auth_token)
-            if not isinstance(resp, str):
+            if isinstance(resp, str):
                 user = User.query.filter_by(id=resp).first()
                 responseObject = {
                     'status': 'success',
@@ -81,7 +81,7 @@ class RegisterAPI(MethodView):
             except Exception as e:
                 responseObject = {
                     'status': 'fail',
-                    'message': 'Some error occurred. Please try again.'
+                    'message': f'Some error occurred. Please try again. {e}'
                 }
                 return make_response(jsonify(responseObject)), 401
         else:
