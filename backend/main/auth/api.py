@@ -29,11 +29,10 @@ class UserAPI(MethodView):
             if isinstance(resp, str):
                 user = User.query.filter_by(id=resp).first()
                 responseObject = {
-                    'status': 'success',
                     'data': {
-                        'user_id': user.id,
-                        'email': user.email,
-                        'registered_on': user.registered_on
+                        'id': user.id,
+                        'fullname': user.fullname,
+                        'email': user.email
                     }
                 }
                 return make_response(jsonify(responseObject)), 200
