@@ -66,8 +66,8 @@ module.exports = {
   plugins: [
     	new CompressionPlugin(),
 	  	new CopyWebpackPlugin([
-			 //{ from: 'src/images/', to: 'images/' }, 
-             //{ from: 'src/fonts/', to: 'fonts/'}, 
+			 { from: 'src/images/', to: 'images/' }, 
+             { from: 'src/manifest.json', to: 'manifest.json'}, 
 		     { from: 'src/service-worker.js', to: 'js/' }
 		])
   ],
