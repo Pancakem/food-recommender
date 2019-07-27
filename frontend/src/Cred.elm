@@ -1,4 +1,4 @@
-module Cred exposing (..)
+module Cred exposing (Cred, encodeToken, decoder, getToken)
 
 import Json.Encode as Encode exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
@@ -8,9 +8,9 @@ type Cred
     = Cred String
 
 
--- name 
-
--- add http auth header
+getToken : Cred -> String
+getToken (Cred cred) = 
+    cred
 
 encodeToken : String -> Value
 encodeToken str =
