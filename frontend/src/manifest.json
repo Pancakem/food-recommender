@@ -3,8 +3,7 @@
     "name": "Minimal progressive Elm App, to demonstrate the steps involved",
     "icons": [
       {
-        "src": "icon.png",
-        "sizes": "192x192",
+        "src": "images/icon.png",
         "type": "image/png"
       }
     ],
