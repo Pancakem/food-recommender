@@ -12,7 +12,7 @@ import Http
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
 import Bootstrap.Button as Button
-import Helper exposing (prepareAuthHeader, endPoint)
+import Helper exposing (prepareAuthHeader, endPoint, informHttpError)
 import Json.Decode as Decode
 
 
@@ -32,15 +32,18 @@ init session =
             , password = ""            
             }
             , problem = []
+            , likes = []
             }
 
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Home
+                    Cmd.batch 
+                        [ navCmd, (getAccountInfo session), (getFoodPreferences session)]
 
                 Nothing ->
-                    navCmd
+                    --Route.pushUrl (Session.navKey session) Route.Login
+                    Cmd.none
     in
     ( model , cmd )
 
@@ -50,6 +53,7 @@ type alias Model =
     , problem : List Problem
     , form : Form
     , navbarState : Navbar.State
+    , likes : Likes 
     }
 
 
@@ -63,7 +67,7 @@ type alias Form =
     , password : String
     }
 
-
+type alias Likes = List String
 
 -- UPDATE
 
@@ -78,11 +82,31 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        GotAccountInfo resp ->       
-            ( model, Cmd.none )
+        GotAccountInfo resp ->
+            let
+                newModel = 
+                    case resp of
+                        Ok a ->
+                            updateForm (\f -> { f | profileName = a.username, email = a.email }) model
+                            
+                        Err e ->
+                            { model | problem = [ ServerError <| informHttpError e]}
+            in
+                   
+            ( newModel, Cmd.none )
 
         GotSettingsInfo resp ->                     
-            ( model, Cmd.none )
+            let
+                newModel = 
+                    case resp of
+                        Ok a ->
+                            { model | likes = a.likes }
+                            
+                        Err e ->
+                            { model | problem = [ ServerError <| informHttpError e]}
+            in
+                   
+            ( newModel, Cmd.none )
 
         SubmitAccount ->
             ( model, Cmd.none )
@@ -228,8 +252,8 @@ subscriptions _ =
     Sub.none
 
 -- http
-getAccountInfo : Model -> Cmd Msg
-getAccountInfo {session} = 
+getAccountInfo : Session -> Cmd Msg
+getAccountInfo session = 
     Http.request
         { headers = [ prepareAuthHeader session ]
         , url = endPoint ++ "/auth/status"
@@ -248,8 +272,8 @@ decodeAccountInfo =
         (Decode.field "id" Decode.string)
 
 
-getFoodPreferences : Model -> Cmd Msg
-getFoodPreferences {session} = 
+getFoodPreferences : Session -> Cmd Msg
+getFoodPreferences session = 
     Http.request
         { headers = [ prepareAuthHeader session ]
         , url = endPoint ++ "/auth/status"
