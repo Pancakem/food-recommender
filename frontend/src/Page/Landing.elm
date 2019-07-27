@@ -15,8 +15,7 @@ init session =
     let
         (navstate, navCmd) = Navbar.initialState NavbarMsg
 
-        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
-
+        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions
         model = {
             session = session
             , navbarState = navstate
@@ -97,8 +96,6 @@ viewNavbar model =
 viewCarousel : Model -> Html Msg
 viewCarousel model = 
     Carousel.config CarouselMsg []
-    |> Carousel.withControls
-    |> Carousel.withIndicators
     |> Carousel.slides
         [ Slide.config [] (Slide.image [] "src/images/olive-oil-968657__340.jpg")
         , Slide.config [] (Slide.image [] "src/images/vegetables-752153_960_720.jpg")
