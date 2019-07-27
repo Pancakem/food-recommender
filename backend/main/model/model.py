@@ -1,6 +1,30 @@
 import jwt
 import uuid
-from main import db
+import datetime
+from main import db, bcrypt, app
+
+class BadToken(db.Model):
+
+    __tablename__ = "bad_token"
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    token = db.Column(db.String, unique=True)
+    blacklisted_on = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, token):
+        self.token = token
+        self.blacklisted_on = datetime.datetime.now()
+    
+    def __repr__(self):
+        return f'<token: {self.token}>'
+    
+    @staticmethod
+    def check_token(auth_token):
+        res = BadToken.query.filter_by(token=str(auth_token)).first()
+        if res:
+            return True
+        else:
+            return False
 
 class User(db.Model):
     """ User Model for storing user related details """
@@ -30,7 +54,7 @@ class User(db.Model):
         """
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=21, seconds=5),
                 'iat': datetime.datetime.utcnow(),
                 'sub': user_id
             }
@@ -51,7 +75,7 @@ class User(db.Model):
         """
         try:
             payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
-            is_blacklisted_token = BlacklistToken.check_blacklist(auth_token)
+            is_blacklisted_token = BadToken.check_token(auth_token)
             if is_blacklisted_token:
                 return 'Token is bad. Please log in again.'
             else:
@@ -60,3 +84,11 @@ class User(db.Model):
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
             return 'Invalid token. Please log in again.'
+
+class Settings(db.Model):
+     
+    __tablename__ = "settings"
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    
+

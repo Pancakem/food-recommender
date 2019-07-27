@@ -1,8 +1,7 @@
 import unittest
 import json
 
-from main.model.user import User
-from main.model.bad_token import BadToken
+from main.model.model import User, BadToken
 from tests.base import BaseTestCase
 
 

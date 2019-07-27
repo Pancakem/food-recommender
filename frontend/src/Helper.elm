@@ -1,13 +1,15 @@
-module Helper exposing (endPoint, Response, decodeResponse, informHttpError)
+module Helper exposing (endPoint, Response, decodeResponse, informHttpError, prepareAuthHeader)
 
 import User exposing (Profile)
 import Json.Decode exposing (field, Decoder, string, map3, map2)
 import Json.Encode as Encode
 import Http
+import Session exposing (Session, cred)
+import Cred exposing (getToken)
 
 endPoint : String 
 endPoint = 
-    "http:localhost:5000"
+    "http//:localhost:5000"
 
 type alias Response =
     { token : String
@@ -26,6 +28,19 @@ decodeProfile =
         (field "fullname" string)
         (field "email" string)
         (field "id" string)
+
+prepareAuthHeader : Session -> Http.Header
+prepareAuthHeader session = 
+    let
+        token = case cred session of
+                    Just tk ->
+                        getToken tk
+                    
+                    Nothing ->
+                        ""
+    in
+    Http.header "Authorization" token
+
 
 informHttpError : Http.Error -> String
 informHttpError err = 
