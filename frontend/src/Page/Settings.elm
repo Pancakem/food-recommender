@@ -1,4 +1,4 @@
-module Page.Settings exposing (Model, Msg(..), Settings, init, toSession, view, update, subscriptions)
+module Page.Settings exposing (Model, Msg(..), FoodPreference, init, toSession, view, update, subscriptions)
 
 import Array as Array
 import Html exposing (..)
@@ -12,6 +12,8 @@ import Http
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
 import Bootstrap.Button as Button
+import Helper exposing (prepareAuthHeader, endPoint)
+import Json.Decode as Decode
 
 
 init : Session -> ( Model, Cmd Msg )
@@ -67,7 +69,7 @@ type alias Form =
 
 type Msg
     = GotAccountInfo (Result Http.Error Account) 
-    | GotSettingsInfo (Result Http.Error Settings)
+    | GotSettingsInfo (Result Http.Error FoodPreference)
     | SubmitAccount
     | SetField Field String
     | NavbarMsg Navbar.State
@@ -132,6 +134,7 @@ viewSettings model =
     , div [ class "settings-container" ]
             [ ul [] (List.map (\str -> viewError str) model.problem)
             , viewAccountInfo model
+            , viewPersonalSettings model
             ]
     ]
     
@@ -148,6 +151,12 @@ viewAccountInfo model =
         , inputField ProfileName model model.form.profileName "Full Name" "text"
         , inputField Email model model.form.email "Email" "text"
         , inputField Password model model.form.password "Password" "text"
+        ]
+
+viewPersonalSettings : Model -> Html Msg
+viewPersonalSettings model = 
+    div [ class "task-form settings-form" ]
+        [ text " Food Preferences"
         ]
 
 viewNavbar : Model -> Html Msg
@@ -208,9 +217,8 @@ type alias Account =
     , username : String
     }
 
-type alias Settings =
-    {
-    id : String
+type alias FoodPreference =
+    { likes : List String
     }
 
 
@@ -218,3 +226,41 @@ type alias Settings =
 subscriptions : Model -> Sub Msg 
 subscriptions _ =
     Sub.none
+
+-- http
+getAccountInfo : Model -> Cmd Msg
+getAccountInfo {session} = 
+    Http.request
+        { headers = [ prepareAuthHeader session ]
+        , url = endPoint ++ "/auth/status"
+        , body = Http.emptyBody
+        , method = "GET"
+        , timeout = Nothing
+        , tracker = Nothing
+        , expect = Http.expectJson GotAccountInfo decodeAccountInfo
+        }
+
+decodeAccountInfo : Decode.Decoder Account
+decodeAccountInfo = 
+    Decode.map3 Account
+        (Decode.field "fullname" Decode.string)
+        (Decode.field "email" Decode.string)
+        (Decode.field "id" Decode.string)
+
+
+getFoodPreferences : Model -> Cmd Msg
+getFoodPreferences {session} = 
+    Http.request
+        { headers = [ prepareAuthHeader session ]
+        , url = endPoint ++ "/auth/status"
+        , body = Http.emptyBody
+        , method = "GET"
+        , timeout = Nothing
+        , tracker = Nothing
+        , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
+        }
+
+decodeFoodPreference : Decode.Decoder FoodPreference
+decodeFoodPreference = 
+    Decode.map FoodPreference
+        (Decode.field "likes" (Decode.list Decode.string))
