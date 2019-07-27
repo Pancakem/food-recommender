@@ -29,6 +29,29 @@ Say what the step will be
 4. Run `yarn install` then `yarn watch`
 5. Open another terminal in the same folder then run `yarn start`
 
+## Backend
+
+### Prerequisites
+
+What things you need to install the software and how to install them
+
+```
+Python
+```
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+Say what the step will be
+
+1. If you don't already have python on your machine visit [here](https:://python.org) and get an installation suitable for your machine
+2. Install `virtualenv` through `pip install virtualenv`
+3. In the project folder open a terminal then run `virtualenv backend`
+4. Then run `cd backend` then `source bin/activate`
+5. Get the dependencies by running `pip install -r requirements.txt` 
+6. Run `python3 manage.py db init` then `python3 manage.py db migrate` then `python3 manage.py db upgrade` then run `python3 manage.py run`. You are good to go.
+
 ## Built With
 
 * [Flask](http://flask.pocoo.org/) - The web framework used
