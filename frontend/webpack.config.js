@@ -61,7 +61,8 @@ module.exports = {
   devServer: {
     inline: true,
     stats: 'errors-only',
-    historyApiFallback: true
+	historyApiFallback: true,
+	disableHostCheck: true
   },
   plugins: [
     	new CompressionPlugin(),
