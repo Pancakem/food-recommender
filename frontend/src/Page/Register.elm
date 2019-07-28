@@ -28,6 +28,7 @@ type alias Model =
 type alias Form =
     { email : String
     , username : String
+    , age : Int
     , password : String
     , passwordAgain : String
     }
@@ -45,6 +46,7 @@ init session =
       , form =
             { email = ""
             , username = ""
+            , age = 0
             , password = ""
             , passwordAgain = ""
             }
@@ -89,9 +91,10 @@ viewForm model =
         , p [ class "field-set-label"] [ text "Set Up Account"]
         , viewInput model Email "Email Address" "text" "johndoe@example.com"
         , viewInput model Username "Full Name" "text" "John Doe"
+        , viewInput model Age "Age" "text" "18"
         , viewInput model Password "Password" "password" "********"
         , viewInput model PasswordAgain "Confirm Password" "password" "********"
-        , viewTermsAndConditions
+        -- , viewTermsAndConditions
         , div [ class "login-button-row" ]
             [ button [ class "blue-button button", onClick SubmittedForm ] [ text "Join" ] ]
         ]
@@ -121,6 +124,9 @@ viewInput model formField labelName inputType inputName =
 
                 PasswordAgain ->
                     model.form.passwordAgain
+                
+                Age ->
+                    String.fromInt model.form.age
 
         lis =
             List.map (\err -> viewProblem model formField err) model.problems
@@ -252,16 +258,17 @@ type TrimmedForm
 type ValidatedField
     = Username
     | Email
+    | Age
     | Password
     | PasswordAgain
 
 
-viewTermsAndConditions : Html msg
-viewTermsAndConditions =
-    div []
-        [ text "By signing up, you agree to the "
-        , a [ href "/termsandconditions"] [ text "Terms and Conditions" ]
-        ]
+-- viewTermsAndConditions : Html msg
+-- viewTermsAndConditions =
+--     div []
+--         [ text "By signing up, you agree to the "
+--         , a [ href "/termsandconditions"] [ text "Terms and Conditions" ]
+--         ]
 
 fieldsToValidate : List ValidatedField
 fieldsToValidate =
@@ -299,6 +306,9 @@ setField field value model =
 
         PasswordAgain ->
             updateForm (\form -> { form | passwordAgain = value }) model
+        
+        Age ->
+            updateForm (\form -> { form | age = String.toInt value |> Maybe.withDefault 0 }) model
         
 validatedField : TrimmedForm -> ValidatedField -> List Problem
 validatedField (Trimmed form) field =
@@ -343,12 +353,16 @@ validatedField (Trimmed form) field =
 
                 else
                     []
+            
+            _ ->
+                []
 
 trimFields : Form -> TrimmedForm
 trimFields form =
     Trimmed
         { username = String.trim form.username
         , email = String.trim form.email
+        , age = form.age
         , password = String.trim form.password
         , passwordAgain = String.trim form.passwordAgain
         }
@@ -393,5 +407,6 @@ encodeRegister {form} =
     Encode.object
         [ ("email", Encode.string form.email)
         , ("fullname", Encode.string form.username)
+        , ("age", Encode.int form.age)
         , ("password", Encode.string form.password)
         ]
