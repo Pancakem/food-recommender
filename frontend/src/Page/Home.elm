@@ -111,6 +111,8 @@ getRecommendation session =
 type alias Recommendation =
     { food : String
     }
+
+
 decodeRecommendation : Decode.Decoder Recommendation
 decodeRecommendation = 
     Decode.map Recommendation
