@@ -8,6 +8,8 @@ import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Button as Button
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
+import Http
+import Helper exposing (prepareAuthHeader)
 
 init : Session -> (Model, Cmd Msg)
 init session =
@@ -40,7 +42,7 @@ type alias Model =
 
 type Msg
     = NavbarMsg Navbar.State
-    | Msg2
+    | GetRecommendation
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -48,8 +50,8 @@ update msg model =
         NavbarMsg state ->
             ({model | navbarState = state}, Cmd.none)
 
-        Msg2 ->
-            (model, Cmd.none)
+        GetRecommendation ->
+            (model, getRecommendation model.session)
 
 
 view : Model -> {title : String, content : Html Msg}
@@ -72,6 +74,12 @@ viewNavbar model =
             ]
         |> Navbar.view model.navbarState
 
+viewRecommendation : Model -> Html Msg
+viewRecommendation model =
+    div []
+        [ Button.button [ Button.primary, Button.onClick GetRecommendation ] [ text "Button" ]
+        ]
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -80,4 +88,17 @@ subscriptions model =
 toSession : Model -> Session
 toSession {session} = 
     session
+
+getRecommendation : Session -> Cmd Msg
+getRecommendation session = 
+    Http.request 
+        { headers = [ prepareAuthHeader session ]
+        , method = "GET"
+        , timeout = Nothing
+        , tracker = Nothing
+        , expect = Http.expectJson
+        , url = ""
+        , body = Http.emptyBody
+        }
+
 
