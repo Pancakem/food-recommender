@@ -7,7 +7,7 @@ import Html.Events exposing (..)
 import Html.Events.Extra exposing (targetValueIntParse)
 import Json.Decode as Decode
 import Route
-import Session exposing (Session)
+import Session exposing (Session, logout)
 import Http
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
@@ -77,6 +77,7 @@ type Msg
     | SubmitAccount
     | SetField Field String
     | NavbarMsg Navbar.State
+    | ClickedLogout
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -118,8 +119,9 @@ update msg model =
         
         NavbarMsg state ->
             ({model | navbarState = state}, Cmd.none)
-
-
+        
+        ClickedLogout ->
+            (model, logout)
 
 
 -- record update helpers
@@ -187,10 +189,10 @@ viewNavbar : Model -> Html Msg
 viewNavbar model = 
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
+        |> Navbar.brand [ class "nav-menu-logo", href "/home" ] [ text "EatRight" ]
         |> Navbar.items
             [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/home" ] [ text "Home" ]
-            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/logout" ] [ text "Logout" ]
+            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/", onClick ClickedLogout ] [ text "Logout" ]
             ]
         |> Navbar.view model.navbarState
 
