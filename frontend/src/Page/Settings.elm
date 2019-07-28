@@ -180,7 +180,7 @@ viewAccountInfo model =
 viewPersonalSettings : Model -> Html Msg
 viewPersonalSettings model = 
     div [ class "task-form settings-form" ]
-        [ text " Food Preferences"
+        [ text "Food Preferences"
         ]
 
 viewNavbar : Model -> Html Msg
