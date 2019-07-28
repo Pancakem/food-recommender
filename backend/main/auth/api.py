@@ -173,6 +173,21 @@ class LogoutAPI(MethodView):
             }
             return make_response(jsonify(responseObject)), 403
 
+class RecommendAPI(MethodView):
+    """
+    Recommend Resource
+    """
+    def post(self):
+        # get auth token
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split(" ")[1]
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = User.decode_auth_token(auth_token)
+            pass
+
 auth_blueprint = Blueprint('auth', __name__)
 
 # define the API resources
@@ -180,6 +195,7 @@ registration_view = RegisterAPI.as_view('register_api')
 user_view = UserAPI.as_view('user_api')
 login_view = LoginAPI.as_view('login_api')
 logout_view = LogoutAPI.as_view('logout_api')
+recommend_view = RecommendAPI.as_view('recommend_view')
 
 # add Rules for API Endpoints
 auth_blueprint.add_url_rule(
@@ -189,7 +205,7 @@ auth_blueprint.add_url_rule(
 )
 
 auth_blueprint.add_url_rule(
-    '/auth/status',
+    '/status',
     view_func=user_view,
     methods=['GET']
 )
