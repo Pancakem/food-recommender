@@ -62,6 +62,7 @@ class RegisterAPI(MethodView):
                 user = User(
                     fullname=post_data.get('fullname'),
                     email=post_data.get('email'),
+                    age=post_data.get('age'),
                     password=post_data.get('password')
                 )
 
