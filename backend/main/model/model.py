@@ -33,14 +33,16 @@ class User(db.Model):
     id = db.Column(db.String, primary_key=True)
     fullname = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
+    age= db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, fullname, email, password, admin=False):
+    def __init__(self, fullname, email, age, password, admin=False):
         self.id = str(uuid.uuid4())
         self.fullname = fullname
         self.email = email
+        self.age = age
         self.password = bcrypt.generate_password_hash(
             password, app.config.get('BCRYPT_LOG_ROUNDS')
         ).decode()
