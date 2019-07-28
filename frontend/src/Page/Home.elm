@@ -10,6 +10,7 @@ import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Http
 import Helper exposing (prepareAuthHeader)
+import Json.Decode as Decode
 
 init : Session -> (Model, Cmd Msg)
 init session =
@@ -43,6 +44,7 @@ type alias Model =
 type Msg
     = NavbarMsg Navbar.State
     | GetRecommendation
+    | GotRecommendation  (Result Http.Error Recommendation)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -52,6 +54,9 @@ update msg model =
 
         GetRecommendation ->
             (model, getRecommendation model.session)
+        
+        GotRecommendation resp ->
+            (model, Cmd.none)
 
 
 view : Model -> {title : String, content : Html Msg}
@@ -59,7 +64,9 @@ view model =
     {title = "Home"
     , content = 
         div []
-            [ viewNavbar model ]
+            [ viewNavbar model
+            , viewRecommendation
+            ]
     }
 
 
@@ -74,10 +81,10 @@ viewNavbar model =
             ]
         |> Navbar.view model.navbarState
 
-viewRecommendation : Model -> Html Msg
-viewRecommendation model =
+viewRecommendation : Html Msg
+viewRecommendation =
     div []
-        [ Button.button [ Button.primary, Button.onClick GetRecommendation ] [ text "Button" ]
+        [ Button.button [ Button.primary, Button.onClick GetRecommendation ] [ text "Get Recommendation" ]
         ]
 
 
@@ -96,9 +103,16 @@ getRecommendation session =
         , method = "GET"
         , timeout = Nothing
         , tracker = Nothing
-        , expect = Http.expectJson
+        , expect = Http.expectJson GotRecommendation decodeRecommendation
         , url = ""
         , body = Http.emptyBody
         }
 
+type alias Recommendation =
+    { food : String
+    }
+decodeRecommendation : Decode.Decoder Recommendation
+decodeRecommendation = 
+    Decode.map Recommendation
+        (Decode.field "food" Decode.string)
 
