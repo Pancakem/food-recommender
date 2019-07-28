@@ -1,6 +1,6 @@
 # Eat Right Food Recommendation System
 
-One Paragraph of project description goes here
+A web application that recommends what to eat based on preference, budget and age.
 
 ## Getting Started
 
