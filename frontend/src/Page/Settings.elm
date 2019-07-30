@@ -39,7 +39,7 @@ init session =
             case Session.cred session of
                 Just cred ->
                     Cmd.batch 
-                        [ navCmd, (getAccountInfo session), (getFoodPreferences session)]
+                        [ navCmd, (getAccountInfo session) ]--, --(getFoodPreferences session)]
 
                 Nothing ->
                     Route.pushUrl (Session.navKey session) Route.Login
@@ -159,7 +159,7 @@ viewSettings model =
     , div [ class "settings-container" ]
             [ ul [] (List.map (\str -> viewError str) model.problem)
             , viewAccountInfo model
-            , viewPersonalSettings model
+            --, viewPersonalSettings model
             ]
     ]
     
@@ -266,19 +266,19 @@ getAccountInfo session =
         }
 
 
-getFoodPreferences : Session -> Cmd Msg
-getFoodPreferences session = 
-    Http.request
-        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
-        , url = endPoint ["status"]
-        , body = Http.emptyBody
-        , method = "GET"
-        , timeout = Nothing
-        , tracker = Nothing
-        , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
-        }
+-- getFoodPreferences : Session -> Cmd Msg
+-- getFoodPreferences session = 
+--     Http.request
+--         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+--         , url = endPoint ["status"]
+--         , body = Http.emptyBody
+--         , method = "GET"
+--         , timeout = Nothing
+--         , tracker = Nothing
+--         , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
+--         }
 
-decodeFoodPreference : Decode.Decoder FoodPreference
-decodeFoodPreference = 
-    Decode.map FoodPreference
-        (Decode.field "likes" (Decode.list Decode.string))
+-- decodeFoodPreference : Decode.Decoder FoodPreference
+-- decodeFoodPreference = 
+--     Decode.map FoodPreference
+--         (Decode.field "likes" (Decode.list Decode.string))
