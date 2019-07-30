@@ -8,9 +8,10 @@ import Session exposing (Session, cred)
 import Cred exposing (getToken)
 import Url.Builder as Builder
 
-endPoint : String 
-endPoint = 
-    "http//:localhost:5000"
+endPoint : List String -> String
+endPoint lis = 
+     Builder.crossOrigin
+            "http://localhost:5000" lis []
 
 type alias Response =
     { token : String
