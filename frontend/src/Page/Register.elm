@@ -395,10 +395,14 @@ checkSymbol password =
 
 doRegister : Model -> Cmd Msg
 doRegister model = 
-    Http.post 
-        { url = endPoint ++ "/auth/register"
+    Http.request 
+        { url = endPoint ["auth", "register"]
         , body = Http.jsonBody (encodeRegister model)
         , expect = Http.expectJson GotResponse decodeResponse 
+        , headers = [Http.header "Origin" "http://localhost:5000"]
+        , method = "POST"
+        , tracker = Nothing
+        , timeout = Nothing
         }
 
 
