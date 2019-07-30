@@ -16,4 +16,4 @@ eatright.db
 share/
 local/
 migrations/
-
+*.pyc
