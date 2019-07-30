@@ -1,4 +1,4 @@
-module Helper exposing (endPoint, Response, decodeResponse, informHttpError, prepareAuthHeader)
+module Helper exposing (endPoint, Response, decodeResponse, informHttpError, prepareAuthHeader, decodeProfile)
 
 import User exposing (Profile)
 import Json.Decode exposing (field, Decoder, string, map3, map2)
@@ -27,7 +27,7 @@ decodeResponse =
 decodeProfile : Decoder Profile
 decodeProfile = 
     map3 Profile
-        (field "fullname" string)
+        (field "username" string)
         (field "email" string)
         (field "id" string)
 
