@@ -9,7 +9,7 @@ import Bootstrap.Button as Button
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Http
-import Helper exposing (prepareAuthHeader, endPoint)
+import Helper exposing (prepareAuthHeader, endPoint, informHttpError)
 import Json.Decode as Decode
 
 init : Session -> (Model, Cmd Msg)
@@ -22,7 +22,9 @@ init session =
         model = {
             session = session
             , navbarState = navstate
+            , recommendation = { food = ""}
             , dropdownState = dropdownstate
+            , problem = []
             }
 
         cmd =
@@ -37,10 +39,14 @@ init session =
     ( model , cmd )
         
 type alias Model = 
-    {session : Session
+    { session : Session
+    , recommendation : Recommendation
     , navbarState : Navbar.State
     , dropdownState : Dropdown.State
+    , problem : List Problem
     }
+
+type Problem = ServerError String
 
 type Msg
     = NavbarMsg Navbar.State
@@ -57,6 +63,16 @@ update msg model =
             (model, getRecommendation model.session)
         
         GotRecommendation resp ->
+            let
+                newModel = 
+                    case resp of
+                        Ok data ->
+                            {model | recommendation = data }
+                        
+                        Err er ->
+                            {model | problem = [ServerError <| informHttpError er]}
+            in
+            
             (model, Cmd.none)
 
 
@@ -66,10 +82,15 @@ view model =
     , content = 
         div []
             [ viewNavbar model
-            , viewRecommendation
+            , p [class "validation-problem"]
+                (List.map (\str -> viewServerError str) model.problem)
+            , viewRecommendation model
             ]
     }
 
+viewServerError : Problem -> Html Msg
+viewServerError (ServerError str) =
+    text str
 
 viewNavbar : Model -> Html Msg
 viewNavbar model = 
@@ -82,10 +103,15 @@ viewNavbar model =
             ]
         |> Navbar.view model.navbarState
 
-viewRecommendation : Html Msg
-viewRecommendation =
+viewRecommendation : Model -> Html Msg
+viewRecommendation model =
     div [ style "text-align" "center"]
-        [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ]
+        [
+        div [] 
+            [ text model.recommendation.food ]
+        , br [] []
+        , div []
+            [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ]]
         ]
 
 
