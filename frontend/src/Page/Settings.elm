@@ -257,8 +257,8 @@ subscriptions _ =
 getAccountInfo : Session -> Cmd Msg
 getAccountInfo session = 
     Http.request
-        { headers = [ prepareAuthHeader session ]
-        , url = endPoint ++ "/auth/status"
+        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+        , url = endPoint ["auth", "status"]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
@@ -277,8 +277,8 @@ decodeAccountInfo =
 getFoodPreferences : Session -> Cmd Msg
 getFoodPreferences session = 
     Http.request
-        { headers = [ prepareAuthHeader session ]
-        , url = endPoint ++ "/auth/status"
+        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+        , url = endPoint ["auth", "status"]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
