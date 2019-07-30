@@ -9,7 +9,7 @@ import Bootstrap.Button as Button
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Http
-import Helper exposing (prepareAuthHeader)
+import Helper exposing (prepareAuthHeader, endPoint)
 import Json.Decode as Decode
 
 init : Session -> (Model, Cmd Msg)
@@ -28,10 +28,11 @@ init session =
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Home
+                    navCmd
 
                 Nothing ->
-                    navCmd
+                    Route.pushUrl (Session.navKey session) Route.Login
+                    
     in
     ( model , cmd )
         
@@ -99,12 +100,12 @@ toSession {session} =
 getRecommendation : Session -> Cmd Msg
 getRecommendation session = 
     Http.request 
-        { headers = [ prepareAuthHeader session ]
+        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
         , method = "GET"
         , timeout = Nothing
         , tracker = Nothing
         , expect = Http.expectJson GotRecommendation decodeRecommendation
-        , url = ""
+        , url = endPoint [""]
         , body = Http.emptyBody
         }
 
