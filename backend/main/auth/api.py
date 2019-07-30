@@ -31,7 +31,7 @@ class UserAPI(MethodView):
                 responseObject = {
                     'data': {
                         'id': user.id,
-                        'fullname': user.fullname,
+                        'username': user.fullname,
                         'email': user.email
                     }
                 }
@@ -54,16 +54,16 @@ class RegisterAPI(MethodView):
     """
     def post(self):
         # get the post data
-        post_data = request.args
+        post_data = request.get_json()
         # check if user already exists
-        user = User.query.filter_by(email=post_data.get('email')).first()
+        user = User.query.filter_by(email=post_data['email']).first()
         if not user:
             try:
                 user = User(
-                    fullname=post_data.get('fullname'),
-                    email=post_data.get('email'),
-                    age=post_data.get('age'),
-                    password=post_data.get('password')
+                    fullname=post_data['fullname'],
+                    email=post_data['email'],
+                    age=post_data['age'],
+                    password=post_data['password']
                 )
 
                 # insert the user
@@ -72,9 +72,12 @@ class RegisterAPI(MethodView):
                 # generate the auth token
                 auth_token = user.encode_auth_token(user.id)
                 responseObject = {
-                    'status': 'success',
-                    'message': 'Successfully registered.',
-                    'auth_token': auth_token.decode()
+                    'token': auth_token.decode(),
+                    'profile': {
+                        'id': user.id,
+                        'username': user.fullname,
+                        'email': user.email
+                    }
                 }
                 return make_response(jsonify(responseObject)), 201
                 
@@ -97,22 +100,24 @@ class LoginAPI(MethodView):
     """
     def post(self):
         # get the post data
-        # post_data = request.get_json() ## uncomment for frontend test
-        post_data = request.args
+        post_data = request.get_json()
         try:
             # fetch the user data
             user = User.query.filter_by(
-                email=post_data.get('email')
+                email=post_data['email']
             ).first()
             if user and bcrypt.check_password_hash(
-                user.password, post_data.get('password')
+                user.password, post_data['password']
             ):
                 auth_token = user.encode_auth_token(user.id)
                 if auth_token:
                     responseObject = {
-                        'status': 'success',
-                        'message': 'Successfully logged in.',
-                        'auth_token': auth_token.decode()
+                        'token': auth_token.decode(),
+                        'profile': {
+                            'id': user.id,
+                            'username': user.fullname,
+                            'email': user.email
+                            }
                     }
                     return make_response(jsonify(responseObject)), 200
             else:
