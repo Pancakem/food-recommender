@@ -263,3 +263,15 @@ body {
 	height: 50px;
 	width: 130px;
 }
+
+.recommend-button {
+	color: rgb(210, 215, 219);
+	font-weight: bold;
+	font-size: 15px;
+	padding-top: 16px;
+	padding-bottom: 14px;
+	background-color: dodgerblue;
+	border-radius: 11px;
+	margin-left: 30%;
+	margin-right: 30%
+}
