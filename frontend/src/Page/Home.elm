@@ -131,7 +131,7 @@ getRecommendation session =
         , timeout = Nothing
         , tracker = Nothing
         , expect = Http.expectJson GotRecommendation decodeRecommendation
-        , url = endPoint [""]
+        , url = endPoint ["recommend"]
         , body = Http.emptyBody
         }
 
