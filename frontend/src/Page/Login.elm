@@ -11,6 +11,30 @@ import User exposing (Profile)
 import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
 import Json.Encode as Encode
 import Url.Builder as Builder
+import Route
+
+
+init : Session -> (Model, Cmd Msg)
+init session =
+    let
+        cmd =
+            case Session.cred session of
+                Just cred ->
+                    Route.pushUrl (Session.navKey session) Route.Home
+
+                Nothing ->
+                    Cmd.none
+    in
+    
+    ({ session = session
+     , problems  = [] 
+     , form = 
+           { email = ""
+           , password = ""
+           }
+    }
+    , cmd
+    )
 
 type alias Model = 
     { session : Session
@@ -29,18 +53,6 @@ view model =
     { title = "Eat Right - Login"
     , content = (loginView model)
     }
-
-init : Session -> (Model, Cmd Msg)
-init session =
-    ({ session = session
-     , problems  = [] 
-     , form = 
-           { email = ""
-           , password = ""
-           }
-    }
-    , Cmd.none
-    )
 
 
 type alias Form =
@@ -179,7 +191,7 @@ update msg model =
             case resp of 
                 Ok successData ->
                     (model
-                    , Cmd.batch [Session.login successData, Navigation.load "/home"]
+                    , Cmd.batch [Session.login successData, Route.pushUrl (Session.navKey model.session) Route.Home]
                     )
                 
                 Err err ->
