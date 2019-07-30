@@ -18,7 +18,7 @@ class UserAPI(MethodView):
         auth_header = request.headers.get('Authorization')
         if auth_header:
             try:
-                auth_token = auth_header.split(" ")[1]
+                auth_token = auth_header.split(" ")[0]
             except IndexError:
                 responseObject = {
                     'status': 'fail',
@@ -32,11 +32,9 @@ class UserAPI(MethodView):
             if isinstance(resp, str):
                 user = User.query.filter_by(id=resp).first()
                 responseObject = {
-                    'data': {
                         'id': user.id,
                         'username': user.fullname,
                         'email': user.email
-                    }
                 }
                 return make_response(jsonify(responseObject)), 200
             responseObject = {
@@ -188,9 +186,10 @@ class RecommendAPI(MethodView):
     def get(self):
         # get auth token
         auth_header = request.headers.get('Authorization')
+        print(auth_header)
         if auth_header:
             try:
-                auth_token = auth_header.split(" ")[1]
+                auth_token = auth_header.split(" ")[0]
             except IndexError:
                 responseObject = {
                     'status': 'fail',
@@ -204,9 +203,7 @@ class RecommendAPI(MethodView):
             if isinstance(resp, str):
                 ## do recommendation here
                 responseObject = {
-                    'data': {
                         'food': 'food'
-                    }
                 }
                 return make_response(jsonify(responseObject)), 200
             responseObject = {
