@@ -185,16 +185,41 @@ class RecommendAPI(MethodView):
     """
     Recommend Resource
     """
-    def post(self):
+    def get(self):
         # get auth token
         auth_header = request.headers.get('Authorization')
         if auth_header:
-            auth_token = auth_header.split(" ")[1]
+            try:
+                auth_token = auth_header.split(" ")[1]
+            except IndexError:
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Bearer token malformed.'
+                }
+                return make_response(jsonify(responseObject)), 401
         else:
             auth_token = ''
         if auth_token:
             resp = User.decode_auth_token(auth_token)
-            pass
+            if isinstance(resp, str):
+                ## do recommendation here
+                responseObject = {
+                    'data': {
+                        'food': 'food'
+                    }
+                }
+                return make_response(jsonify(responseObject)), 200
+            responseObject = {
+                'status': 'fail',
+                'message': resp
+            }
+            return make_response(jsonify(responseObject)), 401
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+            return make_response(jsonify(responseObject)), 401
 
 auth_blueprint = Blueprint('auth', __name__)
 
