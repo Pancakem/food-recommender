@@ -282,10 +282,8 @@ toSession model =
 login : Model -> Cmd Msg
 login model =
     Http.request
-      { url = Builder.crossOrigin
-            "http://localhost:5000"
-            ["auth", "login"] []
-      , headers = [Http.header "Origin" "http://elm-lang.org"]
+      { url = endPoint ["auth", "login"]
+      , headers = [Http.header "Origin" "http://localhost:5000"]
       , body = Http.jsonBody (encodeLogin model)
       , expect = Http.expectJson GotResponse decodeResponse
       , method = "POST"
