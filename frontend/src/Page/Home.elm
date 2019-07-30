@@ -73,7 +73,7 @@ update msg model =
                             {model | problem = [ServerError <| informHttpError er]}
             in
             
-            (model, Cmd.none)
+            (newModel, Cmd.none)
 
 
 view : Model -> {title : String, content : Html Msg}
