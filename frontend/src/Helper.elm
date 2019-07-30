@@ -6,6 +6,7 @@ import Json.Encode as Encode
 import Http
 import Session exposing (Session, cred)
 import Cred exposing (getToken)
+import Url.Builder as Builder
 
 endPoint : String 
 endPoint = 
