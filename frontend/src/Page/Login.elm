@@ -10,6 +10,7 @@ import Http
 import User exposing (Profile)
 import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
 import Json.Encode as Encode
+import Url.Builder as Builder
 
 type alias Model = 
     { session : Session
@@ -279,12 +280,20 @@ toSession model =
 -- http 
 
 login : Model -> Cmd Msg
-login model =    
-    Http.post
-      { url = endPoint ++ "/auth/login"
+login model =
+    Http.request
+      { url = Builder.crossOrigin
+            "http://localhost:5000"
+            ["auth", "login"] []
+      , headers = [Http.header "Origin" "http://elm-lang.org"]
       , body = Http.jsonBody (encodeLogin model)
       , expect = Http.expectJson GotResponse decodeResponse
+      , method = "POST"
+      , timeout = Nothing
+      , tracker = Nothing
       }
+
+
 
 encodeLogin : Model -> Encode.Value
 encodeLogin {form} = 
