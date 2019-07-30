@@ -12,7 +12,7 @@ import Http
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
 import Bootstrap.Button as Button
-import Helper exposing (prepareAuthHeader, endPoint, informHttpError)
+import Helper exposing (prepareAuthHeader, endPoint, informHttpError, decodeProfile)
 import Json.Decode as Decode
 
 
@@ -42,8 +42,7 @@ init session =
                         [ navCmd, (getAccountInfo session), (getFoodPreferences session)]
 
                 Nothing ->
-                    --Route.pushUrl (Session.navKey session) Route.Login
-                    Cmd.none
+                    Route.pushUrl (Session.navKey session) Route.Login
     in
     ( model , cmd )
 
@@ -258,27 +257,20 @@ getAccountInfo : Session -> Cmd Msg
 getAccountInfo session = 
     Http.request
         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
-        , url = endPoint ["auth", "status"]
+        , url = endPoint ["status"]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
         , tracker = Nothing
-        , expect = Http.expectJson GotAccountInfo decodeAccountInfo
+        , expect = Http.expectJson GotAccountInfo decodeProfile
         }
-
-decodeAccountInfo : Decode.Decoder Account
-decodeAccountInfo = 
-    Decode.map3 Account
-        (Decode.field "fullname" Decode.string)
-        (Decode.field "email" Decode.string)
-        (Decode.field "id" Decode.string)
 
 
 getFoodPreferences : Session -> Cmd Msg
 getFoodPreferences session = 
     Http.request
         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
-        , url = endPoint ["auth", "status"]
+        , url = endPoint ["status"]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
