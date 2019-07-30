@@ -13,6 +13,33 @@ import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
 import Json.Encode as Encode
 import Browser.Navigation as Navigation exposing (load)
 
+init : Session -> ( Model, Cmd msg )
+init session =
+    let
+        cmd =
+            case Session.cred session of
+                Just cred ->
+                    Route.pushUrl (Session.navKey session) Route.Home
+
+                Nothing ->
+                    Cmd.none
+    in
+    ( { session = session
+      , problems = []
+      , form =
+            { email = ""
+            , username = ""
+            , age = 0
+            , password = ""
+            , passwordAgain = ""
+            }
+      , focus = Nothing
+      , showPassword = False
+      , showErrors = False
+      }
+    , cmd
+    )
+
 -- MODEL
 
 type alias Model =
@@ -38,24 +65,6 @@ type Problem
     = InvalidEntry ValidatedField String
     | ServerError String
 
-
-init : Session -> ( Model, Cmd msg )
-init session =
-    ( { session = session
-      , problems = []
-      , form =
-            { email = ""
-            , username = ""
-            , age = 0
-            , password = ""
-            , passwordAgain = ""
-            }
-      , focus = Nothing
-      , showPassword = False
-      , showErrors = False
-      }
-    , Cmd.none
-    )
 
 
 view : Model -> { title : String, content : Html Msg }
@@ -230,7 +239,7 @@ update msg model =
             case signUpResp of
                 Ok successData ->
                     (model
-                    , Cmd.batch [Session.login successData, Navigation.load "/home"]
+                    , Cmd.batch [Session.login successData, Route.pushUrl (Session.navKey model.session) Route.Home ]
                     )
                 Err err ->
                     let
