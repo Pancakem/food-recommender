@@ -83,8 +83,8 @@ viewNavbar model =
 
 viewRecommendation : Html Msg
 viewRecommendation =
-    div []
-        [ Button.button [ Button.primary, Button.onClick GetRecommendation ] [ text "Get Recommendation" ]
+    div [ style "text-align" "center"]
+        [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ]
         ]
 
 
