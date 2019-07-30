@@ -6,11 +6,7 @@ from flask.views import MethodView
 from main import bcrypt, db
 from main.model.model import User, BadToken
 
-from algorithm.geneticAlgo.genetic_algo_initial_popu import createInitialPopu
-from algorithm.geneticAlgo.genetic_algo_ratePopu import rankDishes
-from algorithm.geneticAlgo.selection import selection
-from algorithm.geneticAlgo.crossover import crossover
-from algorithm.geneticAlgo.mutate import mutatePopulation
+from main.alg.geneticAlgo.genetic_algorithm import *
 
 
 class UserAPI(MethodView):
