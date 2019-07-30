@@ -6,6 +6,13 @@ from flask.views import MethodView
 from main import bcrypt, db
 from main.model.model import User, BadToken
 
+from algorithm.geneticAlgo.genetic_algo_initial_popu import createInitialPopu
+from algorithm.geneticAlgo.genetic_algo_ratePopu import rankDishes
+from algorithm.geneticAlgo.selection import selection
+from algorithm.geneticAlgo.crossover import crossover
+from algorithm.geneticAlgo.mutate import mutatePopulation
+
+
 class UserAPI(MethodView):
     """
     User Resource
@@ -200,7 +207,7 @@ registration_view = RegisterAPI.as_view('register_api')
 user_view = UserAPI.as_view('user_api')
 login_view = LoginAPI.as_view('login_api')
 logout_view = LogoutAPI.as_view('logout_api')
-recommend_view = RecommendAPI.as_view('recommend_view')
+recommend_view = RecommendAPI.as_view('recommend_api')
 
 # add Rules for API Endpoints
 auth_blueprint.add_url_rule(
@@ -225,4 +232,10 @@ auth_blueprint.add_url_rule(
     '/auth/logout',
     view_func=logout_view,
     methods=['POST']
+)
+
+auth_blueprint.add_url_rule(
+    '/recommend',
+    view_func=recommend_view,
+    methods=['GET']
 )
