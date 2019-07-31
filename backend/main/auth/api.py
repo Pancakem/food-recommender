@@ -143,7 +143,7 @@ class LogoutAPI(MethodView):
         # get auth token
         auth_header = request.headers.get('Authorization')
         if auth_header:
-            auth_token = auth_header.split(" ")[1]
+            auth_token = auth_header.split(" ")[0]
         else:
             auth_token = ''
         if auth_token:
@@ -186,7 +186,6 @@ class RecommendAPI(MethodView):
     def get(self):
         # get auth token
         auth_header = request.headers.get('Authorization')
-        print(auth_header)
         if auth_header:
             try:
                 auth_token = auth_header.split(" ")[0]
@@ -202,8 +201,21 @@ class RecommendAPI(MethodView):
             resp = User.decode_auth_token(auth_token)
             if isinstance(resp, str):
                 ## do recommendation here
+                cuisineScore = {"indian":0.08,"italian":0.15,"afghani":0.08,"chinese":0.14, "Kenyan":0, "nigerian":0.20, "ugandan":0.10, "Tanzanian":0.13, "Lunch": 0.10, "Breakfast":0.02}
+
+                temp = createInitialPopu(4, 10)
+                temp1 = rankDishes(temp, cuisineScore, 2)
+                matePool = selection(temp1,2)
+                newGen = crossover(matePool,temp,5)
+                newGenAfterMutation = mutatePopulation(newGen, 10, 0.67)
+                import random
+                rec = newGenAfterMutation[random.randrange(0, len(newGenAfterMutation))]
+
+                rec = rec[random.randrange(0, len(rec))].id
+                food = menuData[rec]['dishName']
+                    
                 responseObject = {
-                        'food': 'food'
+                        'food': food
                 }
                 return make_response(jsonify(responseObject)), 200
             responseObject = {
