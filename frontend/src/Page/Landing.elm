@@ -78,7 +78,17 @@ view model =
             [ 
             viewNavbar model 
             , viewCarousel model
-            , br [] []
+            , section [class "deal"] [
+                div[] [h3 [class "title-h"] [ text "What's Our Deal?"] ]
+                , viewPitch
+                ]
+            , section [ class "diet"] [
+                div [] [h3 [class "title-h"] [text "My Diet, My Locality"]]
+                , viewMyDiet
+            ]
+            , section [] [
+                viewFooter
+            ]
             ]
     }
 
@@ -103,6 +113,34 @@ viewCarousel model =
         ]
     |> Carousel.view model.carouselState
 
+viewPitch : Html msg
+viewPitch = 
+    div []
+        [ text pitch ]
+
+viewMyDiet : Html msg
+viewMyDiet = 
+    div []
+        [ text mydiet ]
+
+viewFooter : Html msg
+viewFooter = 
+    footer []
+        [div[] 
+            [ h6 []  [ text "EATRIGHT" ]
+            -- , br [][]
+            , text "What is EatRight"
+            , br [] []
+            , text "Fruits"
+            , br [] []
+            , text "Protein Food"
+            , br [] []
+            , text "Dairy"
+            , br [] []
+            , text "Oils"
+            ]
+        ]
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch [Carousel.subscriptions model.carouselState CarouselMsg]
@@ -110,3 +148,10 @@ subscriptions model =
 toSession : Model -> Session
 toSession model = 
     model.session
+
+
+pitch = """The EatRight platform shows you food groups targets-what and how much to each within your calorie allowance. Your food plan is 
+            personalized, based on your age, sex, height, and physical activity level. Use EatRight now."""
+
+mydiet = """What foods, flavors and recipes is your town/city known for? Do they meet your dietary requirements? The new EatRight Platform is full
+        of nutritious food groups to help you meet your dietary requirements, customized to your area and the foods available within your reach."""

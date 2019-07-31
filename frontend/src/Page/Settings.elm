@@ -138,9 +138,6 @@ setField field val model =
 
         ProfileName ->
             updateForm (\form -> { form | profileName = val }) model
-
-        Password ->
-            updateForm (\form -> { form | password = val }) model
         
 -- VIEW
 
@@ -175,7 +172,6 @@ viewAccountInfo model =
         [ text " Account Info"
         , inputField ProfileName model model.form.profileName "Full Name" "text"
         , inputField Email model model.form.email "Email" "text"
-        , inputField Password model model.form.password "Password" "text"
         ]
 
 viewPersonalSettings : Model -> Html Msg
@@ -197,7 +193,6 @@ viewNavbar model =
 
 type Field
     = Email
-    | Password
     | ProfileName
 
 inputField : Field -> Model -> String -> String -> String -> Html Msg
@@ -211,8 +206,6 @@ inputField field {form} plceholder lbel taype =
                 ProfileName ->
                     form.profileName
                 
-                _ -> 
-                    ""
     in
     div [ class "" ]
         [ span [] [label [class "task-form-input-title"] [ text lbel ]]

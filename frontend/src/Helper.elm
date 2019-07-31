@@ -11,7 +11,7 @@ import Url.Builder as Builder
 endPoint : List String -> String
 endPoint lis = 
      Builder.crossOrigin
-            "http://localhost:5000" lis []
+            "https://bcd567be.ngrok.io" lis []
 
 type alias Response =
     { token : String
