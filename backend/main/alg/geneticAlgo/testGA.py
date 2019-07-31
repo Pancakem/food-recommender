@@ -1,16 +1,10 @@
-from genetic_algo_initial_popu import createInitialPopu
-from genetic_algo_ratePopu import rankDishes
-from selection import selection
-from crossover import crossover
-from mutate import mutatePopulation
+initialPopu = open('initPopu.txt','w')
+PopuWithRank = open('popuWithFit.txt','w')
+matingPoolAfterFirstSelection = open('afterFirstSelection.txt','w')
+popuNewGen = open("populationAfterCrossover.txt",'w')
+popuNewGenMutate = open("populationAfterMutation.txt",'w')
 
-initialPopu = open('./tempFiles/initPopu.txt','w')
-PopuWithRank = open('./tempFiles/popuWithFit.txt','w')
-matingPoolAfterFirstSelection = open('./tempFiles/afterFirstSelection.txt','w')
-popuNewGen = open("./tempFiles/populationAfterCrossover.txt",'w')
-popuNewGenMutate = open("./tempFiles/populationAfterMutation.txt",'w')
-
-cuisineScore = {"indian":0.33,"italian":0.45,"afghani":0.08,"chinese":0.14}
+cuisineScore = {"indian":0.20,"italian":0.15,"afghani":0.08,"chinese":0.14, "Kenyan":0, "Nigerian":0.20, "ugandan":0.10, "Tanzanian":0.13}
 
 temp = createInitialPopu(4, 10)
 for item in temp:
