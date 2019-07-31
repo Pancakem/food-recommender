@@ -120,7 +120,7 @@ update msg model =
             ({model | navbarState = state}, Cmd.none)
         
         ClickedLogout ->
-            (model, logout)
+            (model, Cmd.batch[ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login])
 
 
 -- record update helpers
@@ -187,7 +187,7 @@ viewNavbar model =
         |> Navbar.brand [ class "nav-menu-logo", href "/home" ] [ text "EatRight" ]
         |> Navbar.items
             [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/home" ] [ text "Home" ]
-            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/", onClick ClickedLogout ] [ text "Logout" ]
+            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", onClick ClickedLogout ] [ text "Logout" ]
             ]
         |> Navbar.view model.navbarState
 
