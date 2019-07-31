@@ -275,3 +275,34 @@ body {
 	margin-left: 30%;
 	margin-right: 30%
 }
+
+.deal {
+	display: block;
+	border-top: 1px solid rgb(218, 214, 213);
+	background-color: rgba(218, 236, 188, 0.363);
+}
+
+footer {
+	/* margin: 5px auto; */
+	/* border-top: 1px solid #f3f2f2; */
+	text-align: center;
+	background-color: #eec89c;
+}
+
+.footer-sect {
+	display: block;
+}
+
+.title-h {
+	text-align: center;
+}
+
+.diet {
+	display: block;
+	background-color: #f3e4b8;
+}
+
+.cp-text{
+	color: rgba(0,0,0,.7); 
+	text-shadow: 0 1px rgba(255, 255, 255, 0.1);
+}
