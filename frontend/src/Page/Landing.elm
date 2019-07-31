@@ -86,7 +86,7 @@ view model =
                 div [] [h3 [class "title-h"] [text "My Diet, My Locality"]]
                 , viewMyDiet
             ]
-            , section [] [
+            , section [class "footer-sect"] [
                 viewFooter
             ]
             ]
@@ -125,11 +125,9 @@ viewMyDiet =
 
 viewFooter : Html msg
 viewFooter = 
-    footer []
-        [div[] 
-            [ h6 []  [ text "EATRIGHT" ]
-            -- , br [][]
-            , text "What is EatRight"
+    footer [ class "cp-text" ]
+        [  h6 []  [ text "EATRIGHT" ],
+            text "What is EatRight"
             , br [] []
             , text "Fruits"
             , br [] []
@@ -138,7 +136,6 @@ viewFooter =
             , text "Dairy"
             , br [] []
             , text "Oils"
-            ]
         ]
 
 subscriptions : Model -> Sub Msg
