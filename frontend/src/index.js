@@ -18,5 +18,5 @@ const app = Elm.Main.init({
 app.ports.storeSession.subscribe(function (sessionData) {
     localStorage.setItem("session", sessionData);
 
-    setTimeout(function () { app.ports.sessionChanged.send(sessionData); }, 0);
+    // setTimeout(function () { app.ports.sessionChanged.send(sessionData); }, 0);
 });
