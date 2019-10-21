@@ -11,7 +11,6 @@ import Session exposing (Session, logout)
 import Http
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Carousel as Carousel
-import Bootstrap.Button as Button
 import Helper exposing (prepareAuthHeader, endPoint, informHttpError, decodeProfile)
 import Json.Decode as Decode
 
@@ -19,20 +18,22 @@ import Json.Decode as Decode
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        (navstate, navCmd) = Navbar.initialState NavbarMsg
-
-        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
+        (navstate, navCmd) = Navbar.initialState NavbarMsg   
 
         model = {
             session = session
             , navbarState = navstate
-            , form =
+            , user =
             { email = ""
-            , profileName = ""
-            , password = ""            
+            , profileName = ""            
             }
             , problem = []
-            , likes = []
+            , preferences = {
+                likes = ""
+                , prIn = 0
+                , carbIn = 0
+                , vitaIn = 0
+            }
             }
 
         cmd =
@@ -50,23 +51,20 @@ init session =
 type alias Model =
     { session : Session
     , problem : List Problem
-    , form : Form
+    , user : User
     , navbarState : Navbar.State
-    , likes : Likes 
-    }
+    , preferences : FoodPreference 
+    } 
 
 
 type Problem
     = ServerError String
 
 
-type alias Form =
+type alias User =
     { email : String
     , profileName : String
-    , password : String
     }
-
-type alias Likes = List String
 
 -- UPDATE
 
@@ -77,11 +75,63 @@ type Msg
     | SetField Field String
     | NavbarMsg Navbar.State
     | ClickedLogout
+    | Increase Ty
+    | Decrease Ty
 
+
+type Ty = 
+    Carbohydrate
+    | Vitamin
+    | Protein
+
+updateIntake : Ty -> FoodPreference -> FoodPreference
+updateIntake ty fp =
+    case ty of
+        Carbohydrate ->
+            {fp | carbIn = fp.carbIn + 1}
+    
+        Vitamin ->
+            {fp | vitaIn = fp.vitaIn + 1}
+        
+        Protein ->
+            {fp | prIn = fp.prIn + 1}
+            
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Increase ty ->
+            let
+                newModel = 
+                    case ty of
+                        Carbohydrate ->
+                            {model | preferences = updateIntake ty model.preferences}
+                        
+                        Vitamin ->
+                            {model | preferences = updateIntake ty model.preferences}
+
+                        Protein ->
+                            {model | preferences = updateIntake ty model.preferences}
+                            
+            in
+            (newModel, Cmd.none)
+
+        Decrease ty ->
+            let
+                newModel = 
+                    case ty of
+                        Carbohydrate ->
+                            {model | preferences = updateIntake ty model.preferences}
+                        
+                        Vitamin ->
+                            {model | preferences = updateIntake ty model.preferences}
+
+                        Protein ->
+                            {model | preferences = updateIntake ty model.preferences}
+                            
+            in
+            (newModel, Cmd.none)
+
         GotAccountInfo resp ->
             let
                 newModel = 
@@ -100,7 +150,7 @@ update msg model =
                 newModel = 
                     case resp of
                         Ok a ->
-                            { model | likes = a.likes }
+                            { model | preferences = a }
                             
                         Err e ->
                             { model | problem = [ ServerError <| informHttpError e]}
@@ -125,19 +175,19 @@ update msg model =
 
 -- record update helpers
 
-updateForm : (Form -> Form) -> Model -> Model
+updateForm : (User -> User) -> Model -> Model
 updateForm transform model =
-    { model | form = transform model.form }
-
+    { model | user = transform model.user }
+ 
 
 setField : Field -> String -> Model -> Model
 setField field val model =
     case field of
         Email ->
-            updateForm (\form -> { form | email = val }) model
+            updateForm (\user -> { user | email = val }) model
 
         ProfileName ->
-            updateForm (\form -> { form | profileName = val }) model
+            updateForm (\user -> { user | profileName = val }) model
         
 -- VIEW
 
@@ -156,7 +206,7 @@ viewSettings model =
     , div [ class "settings-container" ]
             [ ul [] (List.map (\str -> viewError str) model.problem)
             , viewAccountInfo model
-            --, viewPersonalSettings model
+            , viewPersonalSettings model
             ]
     ]
     
@@ -170,14 +220,43 @@ viewAccountInfo : Model -> Html Msg
 viewAccountInfo model = 
     div [ class "task-form settings-form" ]
         [ text " Account Info"
-        , inputField ProfileName model model.form.profileName "Full Name" "text"
-        , inputField Email model model.form.email "Email" "text"
+        , inputField ProfileName model model.user.profileName "Full Name" "text"
+        , inputField Email model model.user.email "Email" "text"
         ]
 
 viewPersonalSettings : Model -> Html Msg
-viewPersonalSettings model = 
-    div [ class "task-form settings-form" ]
-        [ text "Food Preferences"
+viewPersonalSettings model =
+    let
+        txt = 
+            if model.preferences.likes == "vegan" then
+                veganMojo
+            else if model.preferences.likes == "vegeterian" then
+                vegetarianMojo
+            else
+                theRestMojo
+    in
+    div [ class "" ]
+        [ p [] [text"Food Preferences"]
+        , hr [] []
+        , label [] [
+            text txt
+            , input [
+            type_ "text"
+            , value model.preferences.likes 
+            , disabled True
+            ] []
+        ]
+        , p [] [text "Protein"]
+        , button [onClick <| Increase Protein] [text "Increase protein uptake"]
+        , button [onClick <| Decrease Protein] [text "Decrease protein uptake"]
+        , hr [] []
+        , p [] [text "Carbohydrates"]
+        , button [onClick <| Increase Carbohydrate] [text "Increase carb uptake"]
+        , button  [onClick <| Decrease Carbohydrate] [text "Decrease carb uptake"]
+        , hr [] []
+        , p [] [text "Vitamins"]
+        , button [onClick <| Increase Vitamin] [text "Increase vitamin uptake"]
+        , button [onClick <| Decrease Vitamin] [text "Decrease vitamin uptake"]      
         ]
 
 viewNavbar : Model -> Html Msg
@@ -196,15 +275,15 @@ type Field
     | ProfileName
 
 inputField : Field -> Model -> String -> String -> String -> Html Msg
-inputField field {form} plceholder lbel taype =
+inputField field {user} plceholder lbel taype =
     let
         val = 
             case field of
                 Email -> 
-                    form.email
+                    user.email
                 
                 ProfileName ->
-                    form.profileName
+                    user.profileName
                 
     in
     div [ class "" ]
@@ -236,7 +315,10 @@ type alias Account =
     }
 
 type alias FoodPreference =
-    { likes : List String
+    { likes : String
+    , prIn: Int
+    , carbIn : Int
+    , vitaIn : Int
     }
 
 
@@ -259,19 +341,41 @@ getAccountInfo session =
         }
 
 
--- getFoodPreferences : Session -> Cmd Msg
--- getFoodPreferences session = 
---     Http.request
---         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
---         , url = endPoint ["status"]
---         , body = Http.emptyBody
---         , method = "GET"
---         , timeout = Nothing
---         , tracker = Nothing
---         , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
---         }
+getFoodPreferences : Session -> Cmd Msg
+getFoodPreferences session = 
+    Http.request
+        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+        , url = endPoint ["status"]
+        , body = Http.emptyBody
+        , method = "GET"
+        , timeout = Nothing
+        , tracker = Nothing
+        , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
+        }
 
--- decodeFoodPreference : Decode.Decoder FoodPreference
--- decodeFoodPreference = 
---     Decode.map FoodPreference
---         (Decode.field "likes" (Decode.list Decode.string))
+decodeFoodPreference : Decode.Decoder FoodPreference
+decodeFoodPreference = 
+    Decode.map4 FoodPreference
+        (Decode.field "likes" Decode.string)
+        (Decode.field "prIn" Decode.int)
+        (Decode.field "carbIn" Decode.int)
+        (Decode.field "vitaIn" Decode.int)
+
+
+veganMojo = 
+    """
+    Veganism is the practice of abstaining from the use of animal products, 
+    particularly in diet, and an associated philosophy that rejects the commodity status of animals. 
+    A follower of the diet or the philosophy is known as a vegan.
+    """
+
+vegetarianMojo =
+    """Vegetarianism is the practice of abstaining from the consumption of meat, 
+    and may also include abstention from by-products of animals processed for food. 
+    Vegetarianism may be adopted for various reasons. 
+    Many people object to eating meat out of respect for sentient life
+    """
+
+theRestMojo =
+    """You are so strong you can do anything that's why you eat anything. We love you.
+    """

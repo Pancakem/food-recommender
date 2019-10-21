@@ -20,6 +20,10 @@ body {
 	font-weight: 900;
 }
 
+ul {
+	list-style: none;
+}
+
 
 .footer-icon {
 	width: 28.96px;

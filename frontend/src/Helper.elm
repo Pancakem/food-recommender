@@ -11,7 +11,7 @@ import Url.Builder as Builder
 endPoint : List String -> String
 endPoint lis = 
      Builder.crossOrigin
-            "https://bcd567be.ngrok.io" lis []
+            "http://127.0.0.1:5000" lis []
 
 type alias Response =
     { token : String
@@ -47,10 +47,7 @@ prepareAuthHeader session =
 informHttpError : Http.Error -> String
 informHttpError err = 
     case err of 
-        Http.BadStatus st ->
-            let
-                _ = Debug.log "" st
-            in
+        Http.BadStatus _ ->
             "Oh the request failed. Something must've gone wrong. Try again."
         
         Http.Timeout ->
@@ -59,15 +56,9 @@ informHttpError err =
         Http.NetworkError ->
             "Network error. Please check your wifi."
         
-        Http.BadBody bb ->
-            let
-                _ = Debug.log "" bb
-            in
+        Http.BadBody _ ->
             "Oooh something went wrong. Try again!"   
         
-        Http.BadUrl bd ->
-            let
-                _ = Debug.log "" bd
-            in
+        Http.BadUrl _ ->
             "Invalid url."
                             

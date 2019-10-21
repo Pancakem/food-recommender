@@ -22,7 +22,14 @@ init session =
         model = {
             session = session
             , navbarState = navstate
-            , recommendation = { food = ""}
+            , recommendation = 
+                { food = ""
+                , protein = 0.0
+                , energy = 0.0
+                , calories = 0.0
+                , carb = 0.0
+                , vitamin = 0.0
+                }
             , dropdownState = dropdownstate
             , problem = []
             }
@@ -115,7 +122,16 @@ viewRecommendation model =
     div [ style "text-align" "center" ]
         [
         div [style "color" "green"] 
-            [ text model.recommendation.food ]
+            [ p [] [text model.recommendation.food]
+            , ul []
+                [
+                    li [] [text <| "Carbohydrate: " ++ (String.fromFloat model.recommendation.carb)]
+                    , li [] [text <| "Protein: " ++ (String.fromFloat model.recommendation.protein)]
+                    , li [] [text <| "Vitamin: " ++ (String.fromFloat model.recommendation.vitamin)]
+                    , li [] [text <| "Calories: " ++ (String.fromFloat model.recommendation.calories)]
+                    , li [] [text <| "Energy: " ++ (String.fromFloat model.recommendation.energy)]
+                ] 
+            ]
         , br [] []
         , div []
             [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ]]
@@ -149,13 +165,23 @@ getRecommendation session =
 
 type alias Recommendation =
     { food : String
+    , protein : Float
+    , carb : Float
+    , vitamin : Float
+    , energy: Float
+    , calories: Float
     }
 
 
 decodeRecommendation : Decode.Decoder Recommendation
 decodeRecommendation = 
-    Decode.map Recommendation
+    Decode.map6 Recommendation
         (Decode.field "food" Decode.string)
+        (Decode.field "protein" Decode.float)
+        (Decode.field "carb" Decode.float)
+        (Decode.field "vitamin" Decode.float)
+        (Decode.field "energy" Decode.float)
+        (Decode.field "calories" Decode.float)
 
 
 tips : List String
