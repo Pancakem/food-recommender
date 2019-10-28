@@ -4,7 +4,7 @@ from flask import request, make_response, jsonify
 from flask.views import MethodView
 
 from main import bcrypt, db
-from main.model.model import User, BadToken
+from main.model.model import User, BadToken, Settings
 
 from main.alg.geneticAlgo.genetic_algorithm import *
 
@@ -200,6 +200,8 @@ class RecommendAPI(MethodView):
         if auth_token:
             resp = User.decode_auth_token(auth_token)
             if isinstance(resp, str):
+
+                settns = Settings.query.filter_by(id=resp).first()
                 ## do recommendation here
                 cuisineScore = {"indian":0.08,"italian":0.15,"afghani":0.08,"chinese":0.14, "Kenyan":0, "nigerian":0.20, "ugandan":0.10, "Tanzanian":0.13, "Lunch": 0.10, "Breakfast":0.02}
 

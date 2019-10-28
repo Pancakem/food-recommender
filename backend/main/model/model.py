@@ -91,6 +91,16 @@ class Settings(db.Model):
      
     __tablename__ = "settings"
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    
+    id = db.Column(db.String(255), primary_key=True)
+    preference = db.Column(db.String(255))
+    protein_intake = db.Column(db.Float)
+    carb_intake = db.Column(db.Float)
+    fat_intake = db.Column(db.Float)
+
+    def __init__(self, id, preference, protein_intake, carb_intake, fat_intake):
+        self.id = id
+        self.preference = preference
+        self.protein_intake = protein_intake
+        self.carb_intake = carb_intake
+        self.fat_intake = fat_intake
 
