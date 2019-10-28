@@ -4,15 +4,17 @@ import Browser.Navigation as Nav
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, oneOf, s, string)
 
-type Route = 
-    Landing
+
+type Route
+    = Landing
     | Home
     | Register
     | Login
     | Settings
 
+
 parser : Parser (Route -> a) a
-parser = 
+parser =
     oneOf
         [ Parser.map Landing Parser.top
         , Parser.map Register (s "register")
@@ -21,33 +23,35 @@ parser =
         , Parser.map Settings (s "settings")
         ]
 
-fromUrl : Url -> Maybe Route 
-fromUrl url = 
+
+fromUrl : Url -> Maybe Route
+fromUrl url =
     Parser.parse parser url
 
 
 pushUrl : Nav.Key -> Route -> Cmd msg
-pushUrl key route = 
+pushUrl key route =
     Nav.pushUrl key (toPath route)
 
+
 toPath : Route -> String
-toPath route = 
+toPath route =
     let
-        path = 
-            case route of 
+        path =
+            case route of
                 Landing ->
-                    [""]
+                    [ "" ]
 
                 Home ->
-                    ["home"]
-                
-                Login -> 
-                    ["login"]
-                
-                Register -> 
-                    ["register"]
-                
+                    [ "home" ]
+
+                Login ->
+                    [ "login" ]
+
+                Register ->
+                    [ "register" ]
+
                 Settings ->
-                    ["settings"]
+                    [ "settings" ]
     in
     String.join "/" path

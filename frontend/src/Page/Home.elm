@@ -1,28 +1,31 @@
-module Page.Home exposing (Model, Msg, update, view, subscriptions, init, toSession)
+module Page.Home exposing (Model, Msg, init, subscriptions, toSession, update, view)
 
-import Html exposing (..)
-import Session exposing (Session, cred)
-import Route
-import Bootstrap.Navbar as Navbar
-import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Button as Button
-import Html.Events exposing (..)
+import Bootstrap.Dropdown as Dropdown
+import Bootstrap.Navbar as Navbar
+import Helper exposing (endPoint, informHttpError, prepareAuthHeader)
+import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Http
-import Helper exposing (prepareAuthHeader, endPoint, informHttpError)
 import Json.Decode as Decode
+import Route
+import Session exposing (Session, cred)
 
-init : Session -> (Model, Cmd Msg)
+
+init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        (navstate, navCmd) = Navbar.initialState NavbarMsg
+        ( navstate, navCmd ) =
+            Navbar.initialState NavbarMsg
 
-        dropdownstate = Dropdown.initialState
+        dropdownstate =
+            Dropdown.initialState
 
-        model = {
-            session = session
+        model =
+            { session = session
             , navbarState = navstate
-            , recommendation = { food = ""}
+            , recommendation = { food = "" }
             , dropdownState = dropdownstate
             , problem = []
             }
@@ -34,11 +37,11 @@ init session =
 
                 Nothing ->
                     Route.pushUrl (Session.navKey session) Route.Login
-                    
     in
-    ( model , cmd )
-        
-type alias Model = 
+    ( model, cmd )
+
+
+type alias Model =
     { session : Session
     , recommendation : Recommendation
     , navbarState : Navbar.State
@@ -46,61 +49,66 @@ type alias Model =
     , problem : List Problem
     }
 
-type Problem = ServerError String
+
+type Problem
+    = ServerError String
+
 
 type Msg
     = NavbarMsg Navbar.State
     | GetRecommendation
-    | GotRecommendation  (Result Http.Error Recommendation)
+    | GotRecommendation (Result Http.Error Recommendation)
     | LoggedOut
 
-update : Msg -> Model -> (Model, Cmd Msg)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NavbarMsg state ->
-            ({model | navbarState = state}, Cmd.none)
+            ( { model | navbarState = state }, Cmd.none )
 
         GetRecommendation ->
-            (model, getRecommendation model.session)
-        
+            ( model, getRecommendation model.session )
+
         GotRecommendation resp ->
             let
-                newModel = 
+                newModel =
                     case resp of
                         Ok data ->
-                            {model | recommendation = data }
-                        
+                            { model | recommendation = data }
+
                         Err er ->
-                            {model | problem = [ServerError <| informHttpError er]}
+                            { model | problem = [ ServerError <| informHttpError er ] }
             in
-            
-            (newModel, Cmd.none)
+            ( newModel, Cmd.none )
 
         LoggedOut ->
-            (model, Cmd.batch [Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ])
+            ( model, Cmd.batch [ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ] )
 
 
-view : Model -> {title : String, content : Html Msg}
+view : Model -> { title : String, content : Html Msg }
 view model =
-    {title = "Home"
-    , content = 
+    { title = "Home"
+    , content =
         div []
             [ viewNavbar model
-            , p [class "validation-problem"]
+            , p [ class "validation-problem" ]
                 (List.map (\str -> viewServerError str) model.problem)
-            , h3 [style "text-align" "center"] [text "Did You Know!"]
+            , h3 [ style "text-align" "center" ] [ text "Did You Know!" ]
             , viewDidyouknow
             , br [] []
             , viewRecommendation model
             ]
     }
 
+
 viewServerError : Problem -> Html Msg
 viewServerError (ServerError str) =
     text str
 
+
 viewNavbar : Model -> Html Msg
-viewNavbar model = 
+viewNavbar model =
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
         |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
@@ -110,20 +118,21 @@ viewNavbar model =
             ]
         |> Navbar.view model.navbarState
 
+
 viewRecommendation : Model -> Html Msg
 viewRecommendation model =
     div [ style "text-align" "center" ]
-        [
-        div [style "color" "green"] 
+        [ div [ style "color" "green" ]
             [ text model.recommendation.food ]
         , br [] []
         , div []
-            [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ]]
+            [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ] ]
         ]
 
-viewDidyouknow = 
-    div [style "display" "block"]
-        [ p [] [text (List.head tips |> Maybe.withDefault "")]
+
+viewDidyouknow =
+    div [ style "display" "block" ]
+        [ p [] [ text (List.head tips |> Maybe.withDefault "") ]
         ]
 
 
@@ -131,21 +140,24 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
+
 toSession : Model -> Session
-toSession {session} = 
+toSession { session } =
     session
 
+
 getRecommendation : Session -> Cmd Msg
-getRecommendation session = 
-    Http.request 
+getRecommendation session =
+    Http.request
         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
         , method = "GET"
         , timeout = Nothing
         , tracker = Nothing
         , expect = Http.expectJson GotRecommendation decodeRecommendation
-        , url = endPoint ["recommend"]
+        , url = endPoint [ "recommend" ]
         , body = Http.emptyBody
         }
+
 
 type alias Recommendation =
     { food : String
@@ -153,14 +165,14 @@ type alias Recommendation =
 
 
 decodeRecommendation : Decode.Decoder Recommendation
-decodeRecommendation = 
+decodeRecommendation =
     Decode.map Recommendation
         (Decode.field "food" Decode.string)
 
 
 tips : List String
-tips = 
-    ["""Don’t drink sugar calories. Sugary drinks are among the most fattening items you can put into your body. 
+tips =
+    [ """Don’t drink sugar calories. Sugary drinks are among the most fattening items you can put into your body. 
     This is because your brain doesn’t measure calories from liquid sugar the same way it does for solid food.
     Therefore, when you drink soda, you end up eating more total calories."""
     , """Eat nuts. Despite being high in fat, nuts are incredibly nutritious and healthy. 

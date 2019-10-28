@@ -1,10 +1,11 @@
-port module Session exposing(Session, decode, navKey, login, changes, cred, viewer, logout)
+port module Session exposing (Session, changes, cred, decode, login, logout, navKey, viewer)
 
 import Browser.Navigation as Nav
+import Cred exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 import User exposing (..)
-import Cred exposing (..)
+
 
 type Session
     = LoggedIn Nav.Key User
@@ -81,7 +82,7 @@ login { token, profile } =
                 [ ( "token", Cred.encodeToken token )
                 , ( "profile"
                   , Encode.object
-                        [ ( "id", Encode.string profile.id)
+                        [ ( "id", Encode.string profile.id )
                         , ( "username", Encode.string profile.username )
                         , ( "email", Encode.string profile.email )
                         ]

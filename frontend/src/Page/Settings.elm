@@ -1,36 +1,37 @@
-module Page.Settings exposing (Model, Msg(..), FoodPreference, init, toSession, view, update, subscriptions)
+module Page.Settings exposing (FoodPreference, Model, Msg(..), init, subscriptions, toSession, update, view)
 
 import Array as Array
+import Bootstrap.Button as Button
+import Bootstrap.Carousel as Carousel
+import Bootstrap.Navbar as Navbar
+import Helper exposing (decodeProfile, endPoint, informHttpError, prepareAuthHeader)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Html.Events.Extra exposing (targetValueIntParse)
+import Http
 import Json.Decode as Decode
 import Route
 import Session exposing (Session, logout)
-import Http
-import Bootstrap.Navbar as Navbar
-import Bootstrap.Carousel as Carousel
-import Bootstrap.Button as Button
-import Helper exposing (prepareAuthHeader, endPoint, informHttpError, decodeProfile)
-import Json.Decode as Decode
 
 
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        (navstate, navCmd) = Navbar.initialState NavbarMsg
+        ( navstate, navCmd ) =
+            Navbar.initialState NavbarMsg
 
-        carouselstate = Carousel.initialStateWithOptions Carousel.defaultStateOptions 
+        carouselstate =
+            Carousel.initialStateWithOptions Carousel.defaultStateOptions
 
-        model = {
-            session = session
+        model =
+            { session = session
             , navbarState = navstate
             , form =
-            { email = ""
-            , profileName = ""
-            , password = ""            
-            }
+                { email = ""
+                , profileName = ""
+                , password = ""
+                }
             , problem = []
             , likes = []
             }
@@ -38,13 +39,14 @@ init session =
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Cmd.batch 
-                        [ navCmd, (getAccountInfo session) ]--, --(getFoodPreferences session)]
+                    Cmd.batch
+                        [ navCmd, getAccountInfo session ]
 
+                --, --(getFoodPreferences session)]
                 Nothing ->
                     Route.pushUrl (Session.navKey session) Route.Login
     in
-    ( model , cmd )
+    ( model, cmd )
 
 
 type alias Model =
@@ -52,7 +54,7 @@ type alias Model =
     , problem : List Problem
     , form : Form
     , navbarState : Navbar.State
-    , likes : Likes 
+    , likes : Likes
     }
 
 
@@ -66,12 +68,17 @@ type alias Form =
     , password : String
     }
 
-type alias Likes = List String
+
+type alias Likes =
+    List String
+
+
 
 -- UPDATE
 
+
 type Msg
-    = GotAccountInfo (Result Http.Error Account) 
+    = GotAccountInfo (Result Http.Error Account)
     | GotSettingsInfo (Result Http.Error FoodPreference)
     | SubmitAccount
     | SetField Field String
@@ -84,28 +91,26 @@ update msg model =
     case msg of
         GotAccountInfo resp ->
             let
-                newModel = 
+                newModel =
                     case resp of
                         Ok a ->
                             updateForm (\f -> { f | profileName = a.username, email = a.email }) model
-                            
+
                         Err e ->
-                            { model | problem = [ ServerError <| informHttpError e]}
+                            { model | problem = [ ServerError <| informHttpError e ] }
             in
-                   
             ( newModel, Cmd.none )
 
-        GotSettingsInfo resp ->                     
+        GotSettingsInfo resp ->
             let
-                newModel = 
+                newModel =
                     case resp of
                         Ok a ->
                             { model | likes = a.likes }
-                            
+
                         Err e ->
-                            { model | problem = [ ServerError <| informHttpError e]}
+                            { model | problem = [ ServerError <| informHttpError e ] }
             in
-                   
             ( newModel, Cmd.none )
 
         SubmitAccount ->
@@ -115,15 +120,17 @@ update msg model =
             ( model |> setField field val
             , Cmd.none
             )
-        
+
         NavbarMsg state ->
-            ({model | navbarState = state}, Cmd.none)
-        
+            ( { model | navbarState = state }, Cmd.none )
+
         ClickedLogout ->
-            (model, Cmd.batch[ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login])
+            ( model, Cmd.batch [ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ] )
+
 
 
 -- record update helpers
+
 
 updateForm : (Form -> Form) -> Model -> Model
 updateForm transform model =
@@ -138,8 +145,11 @@ setField field val model =
 
         ProfileName ->
             updateForm (\form -> { form | profileName = val }) model
-        
+
+
+
 -- VIEW
+
 
 view : Model -> { title : String, content : Html Msg }
 view model =
@@ -151,37 +161,42 @@ view model =
 viewSettings : Model -> Html Msg
 viewSettings model =
     div []
-    [ viewNavbar model
-    , br [][], br [][]
-    , div [ class "settings-container" ]
+        [ viewNavbar model
+        , br [] []
+        , br [] []
+        , div [ class "settings-container" ]
             [ ul [] (List.map (\str -> viewError str) model.problem)
             , viewAccountInfo model
+
             --, viewPersonalSettings model
             ]
-    ]
-    
+        ]
+
 
 viewError : Problem -> Html msg
-viewError (ServerError str) = 
-    div[ style "color" "red" ]
+viewError (ServerError str) =
+    div [ style "color" "red" ]
         [ text str ]
-    
+
+
 viewAccountInfo : Model -> Html Msg
-viewAccountInfo model = 
+viewAccountInfo model =
     div [ class "task-form settings-form" ]
         [ text " Account Info"
         , inputField ProfileName model model.form.profileName "Full Name" "text"
         , inputField Email model model.form.email "Email" "text"
         ]
 
+
 viewPersonalSettings : Model -> Html Msg
-viewPersonalSettings model = 
+viewPersonalSettings model =
     div [ class "task-form settings-form" ]
         [ text "Food Preferences"
         ]
 
+
 viewNavbar : Model -> Html Msg
-viewNavbar model = 
+viewNavbar model =
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
         |> Navbar.brand [ class "nav-menu-logo", href "/home" ] [ text "EatRight" ]
@@ -191,24 +206,25 @@ viewNavbar model =
             ]
         |> Navbar.view model.navbarState
 
+
 type Field
     = Email
     | ProfileName
 
+
 inputField : Field -> Model -> String -> String -> String -> Html Msg
-inputField field {form} plceholder lbel taype =
+inputField field { form } plceholder lbel taype =
     let
-        val = 
+        val =
             case field of
-                Email -> 
+                Email ->
                     form.email
-                
+
                 ProfileName ->
                     form.profileName
-                
     in
     div [ class "" ]
-        [ span [] [label [class "task-form-input-title"] [ text lbel ]]
+        [ span [] [ label [ class "task-form-input-title" ] [ text lbel ] ]
         , input
             [ class "task-form-input"
             , type_ taype
@@ -224,6 +240,7 @@ toSession : Model -> Session
 toSession model =
     model.session
 
+
 getInt : String -> Int
 getInt str =
     String.toInt str |> Maybe.withDefault 0
@@ -235,22 +252,30 @@ type alias Account =
     , username : String
     }
 
+
 type alias FoodPreference =
     { likes : List String
     }
 
 
--- Subscriptions 
-subscriptions : Model -> Sub Msg 
+
+-- Subscriptions
+
+
+subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
 
+
+
 -- http
+
+
 getAccountInfo : Session -> Cmd Msg
-getAccountInfo session = 
+getAccountInfo session =
     Http.request
         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
-        , url = endPoint ["status"]
+        , url = endPoint [ "status" ]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
@@ -259,8 +284,9 @@ getAccountInfo session =
         }
 
 
+
 -- getFoodPreferences : Session -> Cmd Msg
--- getFoodPreferences session = 
+-- getFoodPreferences session =
 --     Http.request
 --         { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
 --         , url = endPoint ["status"]
@@ -270,8 +296,7 @@ getAccountInfo session =
 --         , tracker = Nothing
 --         , expect = Http.expectJson GotSettingsInfo decodeFoodPreference
 --         }
-
 -- decodeFoodPreference : Decode.Decoder FoodPreference
--- decodeFoodPreference = 
+-- decodeFoodPreference =
 --     Decode.map FoodPreference
 --         (Decode.field "likes" (Decode.list Decode.string))

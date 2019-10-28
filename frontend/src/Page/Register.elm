@@ -1,17 +1,17 @@
 module Page.Register exposing (Model, Msg, init, toSession, update, view)
 
-import Browser.Navigation as Nav
+import Browser.Navigation as Navigation exposing (load)
+import Helper exposing (Response, decodeResponse, endPoint, informHttpError)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import User exposing (Profile)
+import Http
+import Json.Encode as Encode
 import Regex exposing (..)
 import Route exposing (Route)
 import Session exposing (..)
-import Http
-import Helper exposing (endPoint, Response, decodeResponse, informHttpError)
-import Json.Encode as Encode
-import Browser.Navigation as Navigation exposing (load)
+import User exposing (Profile)
+
 
 init : Session -> ( Model, Cmd msg )
 init session =
@@ -30,23 +30,25 @@ init session =
             { email = ""
             , username = ""
             , age = 0
+            , gender = 0
             , password = ""
             , passwordAgain = ""
             }
-      , focus = Nothing
       , showPassword = False
       , showErrors = False
       }
     , cmd
     )
 
+
+
 -- MODEL
+
 
 type alias Model =
     { session : Session
     , problems : List Problem
     , form : Form
-    , focus : Maybe ValidatedField
     , showPassword : Bool
     , showErrors : Bool
     }
@@ -56,6 +58,7 @@ type alias Form =
     { email : String
     , username : String
     , age : Int
+    , gender : Int
     , password : String
     , passwordAgain : String
     }
@@ -64,7 +67,6 @@ type alias Form =
 type Problem
     = InvalidEntry ValidatedField String
     | ServerError String
-
 
 
 view : Model -> { title : String, content : Html Msg }
@@ -92,34 +94,70 @@ viewServerError problem =
             text ""
 
 
+toGender : String -> Int
+toGender str =
+    case str of
+        "Male" ->
+            1
+
+        "Female" ->
+            2
+
+        "Prefer not to say" ->
+            3
+
+        _ ->
+            0
+
+
 viewForm : Model -> Html Msg
 viewForm model =
-    div [ class "vert-form" ]
-        [ p [ class "product-slogan"] [ text "Eat Healthy."]
-        , p [ class "product-cta"] [ text  "No fees"]
-        , p [ class "field-set-label"] [ text "Set Up Account"]
+    div [ class "form-control" ]
+        [ p [ class "product-slogan" ] [ text "Eat Healthy." ]
+        , p [ class "product-cta" ] [ text "No fees" ]
+        , p [ class "field-set-label" ] [ text "Set Up Account" ]
         , viewInput model Email "Email Address" "text" "johndoe@example.com"
         , viewInput model Username "Full Name" "text" "John Doe"
         , viewInput model Age "Age" "text" "18"
+        , div []
+            [ div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , value "Male"
+                    , name "gender-choice"
+                    , class "form-check-input"
+                    ]
+                    [ text "Male" ]
+                ]
+            , div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , value "Female"
+                    , name "gender-choice"
+                    , class "form-check-input"
+                    ]
+                    [ text "Female" ]
+                ]
+            , div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , name "gender-choice"
+                    , value "Prefer Not To Say"
+                    , class "form-check-input"
+                    ]
+                    [ text "Prefer Not To Say" ]
+                ]
+            ]
         , viewInput model Password "Password" "password" "********"
         , viewInput model PasswordAgain "Confirm Password" "password" "********"
-        -- , viewTermsAndConditions
         , div [ class "login-button-row" ]
-            [ button [ class "blue-button button", onClick SubmittedForm ] [ text "Join" ] ]
+            [ button [ class "btn btn-primary", onClick SubmittedForm ] [ text "Join" ] ]
         ]
 
 
 viewInput : Model -> ValidatedField -> String -> String -> String -> Html Msg
 viewInput model formField labelName inputType inputName =
     let
-        hasFocus =
-            case model.focus of
-                Just focusedField ->
-                    focusedField == formField
-
-                Nothing ->
-                    False
-
         what =
             case formField of
                 Username ->
@@ -133,32 +171,34 @@ viewInput model formField labelName inputType inputName =
 
                 PasswordAgain ->
                     model.form.passwordAgain
-                
+
                 Age ->
                     String.fromInt model.form.age
+
+                Gender ->
+                    ""
 
         lis =
             List.map (\err -> viewProblem model formField err) model.problems
     in
-    label
-        [ class "form-label" ]
-        [ text labelName
-        , input
-            [ if formField == Password && model.showPassword then
-                type_ "text"
+    div []
+        [ label
+            [ class "" ]
+            [ text labelName
+            , input
+                [ if formField == Password && model.showPassword then
+                    type_ "text"
 
-              else
-                type_ inputType
-            , classList
-                [ ( "focus", hasFocus ) ]
-            , placeholder inputName
-            , onInput <| SetField formField
-            , onFocus <| OnFocus formField
-            , onBlur <| OnBlur formField
-            , value what
+                  else
+                    type_ inputType
+                , placeholder inputName
+                , onInput <| SetField formField
+                , value what
+                , class "form-control"
+                ]
+                []
+            , ul [] lis
             ]
-            []
-        , ul [] lis
         ]
 
 
@@ -191,8 +231,6 @@ viewProblem model formfield problem =
 type Msg
     = SubmittedForm
     | SetField ValidatedField String
-    | OnFocus ValidatedField
-    | OnBlur ValidatedField
     | ToggleShowPassword
     | GotResponse (Result Http.Error Response)
 
@@ -226,26 +264,22 @@ update msg model =
             , Cmd.none
             )
 
-        OnFocus formField ->
-            ( { model | focus = Just formField }, Cmd.none )
-
-        OnBlur formField ->
-            ( { model | focus = Nothing }, Cmd.none )
-
         ToggleShowPassword ->
             ( { model | showPassword = not model.showPassword }, Cmd.none )
 
         GotResponse signUpResp ->
             case signUpResp of
                 Ok successData ->
-                    (model
-                    , Cmd.batch [Session.login successData, Route.pushUrl (Session.navKey model.session) Route.Home ]
+                    ( model
+                    , Cmd.batch [ Session.login successData, Route.pushUrl (Session.navKey model.session) Route.Home ]
                     )
+
                 Err err ->
                     let
-                        errorMsg = informHttpError err
+                        errorMsg =
+                            informHttpError err
                     in
-                    ({model | problems = [ServerError errorMsg]}
+                    ( { model | problems = [ ServerError errorMsg ] }
                     , Cmd.none
                     )
 
@@ -268,16 +302,10 @@ type ValidatedField
     = Username
     | Email
     | Age
+    | Gender
     | Password
     | PasswordAgain
 
-
--- viewTermsAndConditions : Html msg
--- viewTermsAndConditions =
---     div []
---         [ text "By signing up, you agree to the "
---         , a [ href "/termsandconditions"] [ text "Terms and Conditions" ]
---         ]
 
 fieldsToValidate : List ValidatedField
 fieldsToValidate =
@@ -315,14 +343,18 @@ setField field value model =
 
         PasswordAgain ->
             updateForm (\form -> { form | passwordAgain = value }) model
-        
+
         Age ->
             updateForm (\form -> { form | age = String.toInt value |> Maybe.withDefault 0 }) model
-        
+
+        Gender ->
+            updateForm (\form -> { form | gender = toGender value }) model
+
+
 validatedField : TrimmedForm -> ValidatedField -> List Problem
 validatedField (Trimmed form) field =
     List.map (InvalidEntry field) <|
-        case field of     
+        case field of
             Username ->
                 if String.isEmpty form.username then
                     [ "name can't be blank." ]
@@ -362,9 +394,10 @@ validatedField (Trimmed form) field =
 
                 else
                     []
-            
+
             _ ->
                 []
+
 
 trimFields : Form -> TrimmedForm
 trimFields form =
@@ -372,6 +405,7 @@ trimFields form =
         { username = String.trim form.username
         , email = String.trim form.email
         , age = form.age
+        , gender = form.gender
         , password = String.trim form.password
         , passwordAgain = String.trim form.passwordAgain
         }
@@ -400,26 +434,29 @@ checkSymbol password =
             True
 
 
+
 -- http
 
+
 doRegister : Model -> Cmd Msg
-doRegister model = 
-    Http.request 
-        { url = endPoint ["auth", "register"]
+doRegister model =
+    Http.request
+        { url = endPoint [ "auth", "register" ]
         , body = Http.jsonBody (encodeRegister model)
-        , expect = Http.expectJson GotResponse decodeResponse 
-        , headers = [Http.header "Origin" "http://localhost:5000"]
+        , expect = Http.expectJson GotResponse decodeResponse
+        , headers = [ Http.header "Origin" "http://localhost:5000" ]
         , method = "POST"
         , tracker = Nothing
         , timeout = Nothing
         }
 
 
-encodeRegister : Model -> Encode.Value 
-encodeRegister {form} = 
+encodeRegister : Model -> Encode.Value
+encodeRegister { form } =
     Encode.object
-        [ ("email", Encode.string form.email)
-        , ("fullname", Encode.string form.username)
-        , ("age", Encode.int form.age)
-        , ("password", Encode.string form.password)
+        [ ( "email", Encode.string form.email )
+        , ( "fullname", Encode.string form.username )
+        , ( "age", Encode.int form.age )
+        , ( "gender", Encode.int form.gender )
+        , ( "password", Encode.string form.password )
         ]
