@@ -217,7 +217,12 @@ class RecommendAPI(MethodView):
                 food = menuData[rec]['dishName']
                     
                 responseObject = {
-                        'food': food
+                        'food': food,
+                        'protein': 0.0,
+                        'carb': 0.0,
+                        'vitamin': 0.0,
+                        'energy': 0.0,
+                        'caories': 0.0
                 }
                 return make_response(jsonify(responseObject)), 200
             responseObject = {
