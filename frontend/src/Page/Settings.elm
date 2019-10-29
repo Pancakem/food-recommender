@@ -79,7 +79,7 @@ type Msg
 
 type Ty = 
     Carbohydrate
-    | Vitamin
+    | Fat
     | Protein
 
 updateIntake : Ty -> FoodPreference -> FoodPreference
@@ -88,7 +88,7 @@ updateIntake ty fp =
         Carbohydrate ->
             {fp | carbIn = fp.carbIn + 1}
     
-        Vitamin ->
+        Fat ->
             {fp | vitaIn = fp.vitaIn + 1}
         
         Protein ->
@@ -105,7 +105,7 @@ update msg model =
                         Carbohydrate ->
                             {model | preferences = updateIntake ty model.preferences}
                         
-                        Vitamin ->
+                        Fat ->
                             {model | preferences = updateIntake ty model.preferences}
 
                         Protein ->
@@ -121,7 +121,7 @@ update msg model =
                         Carbohydrate ->
                             {model | preferences = updateIntake ty model.preferences}
                         
-                        Vitamin ->
+                        Fat ->
                             {model | preferences = updateIntake ty model.preferences}
 
                         Protein ->
@@ -252,9 +252,9 @@ viewPersonalSettings model =
         , button [onClick <| Increase Carbohydrate] [text "Increase carb uptake"]
         , button  [onClick <| Decrease Carbohydrate] [text "Decrease carb uptake"]
         , hr [] []
-        , p [] [text "Vitamins"]
-        , button [onClick <| Increase Vitamin] [text "Increase vitamin uptake"]
-        , button [onClick <| Decrease Vitamin] [text "Decrease vitamin uptake"]  
+        , p [] [text "Fat"]
+        , button [onClick <| Increase Fat] [text "Increase fat uptake"]
+        , button [onClick <| Decrease Fat] [text "Decrease fat uptake"]  
         , hr [] []
         , button [] [text "Submit"]
         ]

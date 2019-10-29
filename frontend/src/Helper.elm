@@ -12,7 +12,7 @@ import User exposing (Profile)
 endPoint : List String -> String
 endPoint lis = 
      Builder.crossOrigin
-            "http://127.0.0.1:5000" lis []
+            "https://25ecf6bd.ngrok.io" lis []
 
 type alias Response =
     { token : String

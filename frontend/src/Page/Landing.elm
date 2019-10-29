@@ -84,8 +84,7 @@ viewColumn model =
         div [ class "overlay"] 
         [
             h1 [] [ text "EAT RIGHT" ]
-            ,p [] [ text """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla aliquet finibus sagittis. Quisque id
-                    eros erat. Sed ac maximus est."""]
+            ,p [] [ text """An Intelligent Food Recommendation Platform"""]
         ]
         ,div [ class "row images" ]
             [ 
