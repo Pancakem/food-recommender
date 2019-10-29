@@ -7,14 +7,10 @@ import math
 import os
 # import matplotlib.pyplot as plt
 
-menuData = None
-
 def setMenuData(file_name):
     with open(file_name) as menu_Data:
         menuData = json.load(menu_Data)
-
-with open('genInfo.json') as gen_Info:
-    genInfo = json.load(gen_Info)
+    return menuData
 
 ## This part creates the chromosome
 
@@ -62,7 +58,7 @@ def randSeq2(n, sum):
     return sequence
 
 
-def createChromosome( totQty ):
+def createChromosome( totQty, menuData ):
     """
     Creates the chromosome with Qty assigned to Each Dish such that
     sum of all Qty equals to the number of dishes to be ordered
@@ -218,7 +214,7 @@ class Fitness:
         for i in cuisineScore:
             self.totCuisineScore += cuisineScore[i]
 
-    def calcFitness(self):
+    def calcFitness(self, menuData):
         """
         Calculate Fitness for a Chromosome
         cuisineQty = object holding individual qty per cuisine

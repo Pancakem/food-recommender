@@ -31,6 +31,7 @@ init session =
             , username = ""
             , age = 0
             , gender = 0
+            , preference = ""
             , password = ""
             , passwordAgain = ""
             }
@@ -59,6 +60,7 @@ type alias Form =
     , username : String
     , age : Int
     , gender : Int
+    , preference : String
     , password : String
     , passwordAgain : String
     }
@@ -72,13 +74,14 @@ type Problem
 view : Model -> { title : String, content : Html Msg }
 view model =
     { title = "Register"
-    , content = registerView model
+    , content = div [class "register-page"] 
+                    [registerView model]
     }
 
 
 registerView : Model -> Html Msg
 registerView model =
-    div [ class "login-page" ]
+    div [ class "register-form" ]
         [ p [ class "validation-problem" ] (List.map (\str -> viewServerError str) model.problems)
         , viewForm model
         ]
@@ -113,39 +116,75 @@ toGender str =
 viewForm : Model -> Html Msg
 viewForm model =
     div [ class "form-control" ]
-        [ p [ class "product-slogan" ] [ text "Eat Healthy." ]
-        , p [ class "product-cta" ] [ text "No fees" ]
-        , p [ class "field-set-label" ] [ text "Set Up Account" ]
+        [ p [ class "" ] [ text "Eat Healthy." ]
+        , p [ class "field-set-label" ] [ text "Register Account" ]
         , viewInput model Email "Email Address" "text" "johndoe@example.com"
         , viewInput model Username "Full Name" "text" "John Doe"
         , viewInput model Age "Age" "text" "18"
         , div []
-            [ div [ class "form-check-inline" ]
+            [ label [] [text "Pick Gender"] 
+            ,div [ class "form-check-inline" ]
                 [ input
                     [ type_ "radio"
-                    , value "Male"
                     , name "gender-choice"
                     , class "form-check-input"
+                    , onCheck <| SetChecked "Male" Gender
                     ]
-                    [ text "Male" ]
-                ]
-            , div [ class "form-check-inline" ]
-                [ input
-                    [ type_ "radio"
-                    , value "Female"
-                    , name "gender-choice"
-                    , class "form-check-input"
-                    ]
-                    [ text "Female" ]
+                    [] 
+                ,  text "Male"
                 ]
             , div [ class "form-check-inline" ]
                 [ input
                     [ type_ "radio"
                     , name "gender-choice"
-                    , value "Prefer Not To Say"
+                    , class "form-check-input"
+                    , onCheck <| SetChecked "Female" Gender
+                    ]
+                    []
+                , text "Female"
+                ]
+            , div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , name "gender-choice"
+                    , onCheck <| SetChecked "Prefer Not To Say" Gender
                     , class "form-check-input"
                     ]
-                    [ text "Prefer Not To Say" ]
+                    [ ]
+                , text "Prefer Not To Say"
+                ]
+            ]
+        , div []
+            [ label [] [text "Pick Dietary Preference"] 
+            ,div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , name "deitary-choice"
+                    , class "form-check-input"
+                    , onCheck <| SetChecked "vegan" Preference
+                    ]
+                    []
+                , text "Vegan"
+                ]
+            , div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , name "deitary-choice"
+                    , class "form-check-input"
+                    , onCheck <| SetChecked "vegetarian" Preference
+                    ]
+                    []
+                , text "Vegetarian"
+                ]
+            , div [ class "form-check-inline" ]
+                [ input
+                    [ type_ "radio"
+                    , name "deitary-choice"
+                    , onCheck <| SetChecked "mixed_food" Preference
+                    , class "form-check-input"
+                    ]
+                    []
+                , text "Mixed Food"
                 ]
             ]
         , viewInput model Password "Password" "password" "********"
@@ -174,9 +213,6 @@ viewInput model formField labelName inputType inputName =
 
                 Age ->
                     String.fromInt model.form.age
-
-                Gender ->
-                    ""
 
         lis =
             List.map (\err -> viewProblem model formField err) model.problems
@@ -233,7 +269,11 @@ type Msg
     | SetField ValidatedField String
     | ToggleShowPassword
     | GotResponse (Result Http.Error Response)
+    | SetChecked String CheckedField Bool
 
+type CheckedField =
+    Preference
+    | Gender
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -245,6 +285,21 @@ update msg model =
             doRegister model
     in
     case msg of
+        SetChecked str f bool->
+            let
+                val = if bool then str else "" 
+
+                newModel =
+                    case f of
+                        Gender ->
+                            updateForm (\form -> {form | gender = toGender val}) model
+                    
+                        Preference ->
+                            updateForm (\form -> {form | preference = val}) model
+                            
+            in
+            (newModel, Cmd.none)
+
         SubmittedForm ->
             case validate model of
                 [] ->
@@ -302,7 +357,6 @@ type ValidatedField
     = Username
     | Email
     | Age
-    | Gender
     | Password
     | PasswordAgain
 
@@ -346,9 +400,6 @@ setField field value model =
 
         Age ->
             updateForm (\form -> { form | age = String.toInt value |> Maybe.withDefault 0 }) model
-
-        Gender ->
-            updateForm (\form -> { form | gender = toGender value }) model
 
 
 validatedField : TrimmedForm -> ValidatedField -> List Problem
@@ -406,6 +457,7 @@ trimFields form =
         , email = String.trim form.email
         , age = form.age
         , gender = form.gender
+        , preference = form.preference
         , password = String.trim form.password
         , passwordAgain = String.trim form.passwordAgain
         }
@@ -444,7 +496,7 @@ doRegister model =
         { url = endPoint [ "auth", "register" ]
         , body = Http.jsonBody (encodeRegister model)
         , expect = Http.expectJson GotResponse decodeResponse
-        , headers = [ Http.header "Origin" "http://localhost:5000" ]
+        , headers = []
         , method = "POST"
         , tracker = Nothing
         , timeout = Nothing
@@ -458,5 +510,6 @@ encodeRegister { form } =
         , ( "fullname", Encode.string form.username )
         , ( "age", Encode.int form.age )
         , ( "gender", Encode.int form.gender )
+        , ( "preference", Encode.string form.preference)
         , ( "password", Encode.string form.password )
         ]

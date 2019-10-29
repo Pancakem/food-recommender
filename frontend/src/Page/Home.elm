@@ -168,7 +168,7 @@ toSession { session } =
 getRecommendation : Session -> Cmd Msg
 getRecommendation session =
     Http.request
-        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+        { headers = [ prepareAuthHeader session ]
         , method = "GET"
         , timeout = Nothing
         , tracker = Nothing

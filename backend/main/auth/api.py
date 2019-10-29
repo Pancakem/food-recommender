@@ -72,6 +72,11 @@ class RegisterAPI(MethodView):
                 db.session.commit()
                 # generate the auth token
                 auth_token = user.encode_auth_token(user.id)
+                settings = Settings(user.id, post_data['preference'], 19.0, 5.0, 2.0)
+                # store user default settings
+                db.session.add(settings)
+                db.session.commit()
+
                 responseObject = {
                     'token': auth_token.decode(),
                     'profile': {
@@ -83,11 +88,12 @@ class RegisterAPI(MethodView):
                 return make_response(jsonify(responseObject)), 201
                 
             except Exception as e:
+                print(e)
                 responseObject = {
                     'status': 'fail',
                     'message': f'Some error occurred. Please try again. {e}'
                 }
-                return make_response(jsonify(responseObject)), 401
+                return make_response(jsonify(responseObject)), 500
         else:
             responseObject = {
                 'status': 'fail',
@@ -204,13 +210,13 @@ class RecommendAPI(MethodView):
                 settns = Settings.query.filter_by(id=resp).first()
                 ## do recommendation here
                 if settns.preference == 'vegan':
-                    setMenuData('vegan.json')
+                    menuData = setMenuData('vegan.json')
                 elif settns.preference == 'mixed_food':
-                    setMenuData('mixed_food.json')
+                    menuData = setMenuData('mixed_food.json')
                 elif settns.preference == 'vegetarian':
-                    setMenuData('vegetarian.json')
+                    menuData = setMenuData('vegetarian.json')
                 else:
-                    setMenuData('mixed_food.json')
+                    menuData = setMenuData('mixed_food.json')
                     
                 cuisineScore = {settns.preference: 0.90}
 
