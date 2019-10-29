@@ -7,8 +7,11 @@ import math
 import os
 # import matplotlib.pyplot as plt
 
-with open('dishMap.json') as menu_Data:
-    menuData = json.load(menu_Data)
+menuData = None
+
+def setMenuData(file_name):
+    with open(file_name) as menu_Data:
+        menuData = json.load(menu_Data)
 
 with open('genInfo.json') as gen_Info:
     genInfo = json.load(gen_Info)
@@ -69,7 +72,7 @@ def createChromosome( totQty ):
     returns chromosome of dish id and corresponding quantity
     """
     chromosome = []
-    qtySeq = randSeq2(genInfo["totalDishes"],totQty)
+    qtySeq = randSeq2(len(menuData),totQty)
     i=0
     for key in menuData:
         chromosome.append(Dish(key,qtySeq[i]))

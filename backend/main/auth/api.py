@@ -203,7 +203,16 @@ class RecommendAPI(MethodView):
 
                 settns = Settings.query.filter_by(id=resp).first()
                 ## do recommendation here
-                cuisineScore = {"indian":0.08,"italian":0.15,"afghani":0.08,"chinese":0.14, "Kenyan":0, "nigerian":0.20, "ugandan":0.10, "Tanzanian":0.13, "Lunch": 0.10, "Breakfast":0.02}
+                if settns.preference == 'vegan':
+                    setMenuData('vegan.json')
+                elif settns.preference == 'mixed_food':
+                    setMenuData('mixed_food.json')
+                elif settns.preference == 'vegetarian':
+                    setMenuData('vegetarian.json')
+                else:
+                    setMenuData('mixed_food.json')
+                    
+                cuisineScore = {settns.preference: 0.90}
 
                 temp = createInitialPopu(4, 10)
                 temp1 = rankDishes(temp, cuisineScore, 2)
@@ -237,6 +246,53 @@ class RecommendAPI(MethodView):
             }
             return make_response(jsonify(responseObject)), 401
 
+
+class SettingsAPI(MethodView):
+    """
+    Settings API
+    """
+    def get(self):
+        # get auth token
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            try:
+                auth_token = auth_header.split(" ")[0]
+            except IndexError:
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Bearer token malformed.'
+                }
+                return make_response(jsonify(responseObject)), 401
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = User.decode_auth_token(auth_token)
+            if isinstance(resp, str):
+
+                settns = Settings.query.filter_by(id=resp).first()
+
+                responseObject = {
+                        'preference': settns.preference,
+                        'protein': settns.protein_intake,
+                        'carb': settns.carb_intake,
+                        'fat': settns.fat_intake
+                }
+                return make_response(jsonify(responseObject)), 200
+            
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+
+            return make_response(jsonify(responseObject)), 401
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+            return make_response(jsonify(responseObject)), 401
+
+
 auth_blueprint = Blueprint('auth', __name__)
 
 # define the API resources
@@ -245,6 +301,7 @@ user_view = UserAPI.as_view('user_api')
 login_view = LoginAPI.as_view('login_api')
 logout_view = LogoutAPI.as_view('logout_api')
 recommend_view = RecommendAPI.as_view('recommend_api')
+settings_view = SettingsAPI.as_view("settings_api")
 
 # add Rules for API Endpoints
 auth_blueprint.add_url_rule(
@@ -275,4 +332,10 @@ auth_blueprint.add_url_rule(
     '/recommend',
     view_func=recommend_view,
     methods=['GET']
+)
+
+auth_blueprint.add_url_rule(
+    '/settings',
+    view_func=settings_view,
+    methods=["GET"]
 )

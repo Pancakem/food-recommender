@@ -1,0 +1,1121 @@
+[{
+    "Food Name": "Uji wa mahindi (Maize Porridge)",
+    "Energy (kJ)": 221,
+    "Energy (kCal)": 52,
+    "Water (g)": 87.5,
+    "Protein (g)": 1.5,
+    "Fat (g)": 1.1,
+    "Carbohydrate (g)": 8.5,
+    "Fibre (g)": 1.1,
+    "Ash (g)": 0.3
+}, {
+    "Food Name": "Sorghum, Finger Millet and Maize Porridge",
+    "Energy (kJ)": 174,
+    "Energy (kCal)": 41,
+    "Water (g)": 89.8,
+    "Protein (g)": 1.3,
+    "Fat (g)": 0.9,
+    "Carbohydrate (g)": 6.3,
+    "Fibre (g)": 1.3,
+    "Ash (g)": 0.4
+}, {
+    "Food Name": "Kaimati (Fried Dumplings)",
+    "Energy (kJ)": 1800,
+    "Energy (kCal)": 429,
+    "Water (g)": 18.8,
+    "Protein (g)": 4.6,
+    "Fat (g)": 21.8,
+    "Carbohydrate (g)": 52.8,
+    "Fibre (g)": 1.6,
+    "Ash (g)": 0.4
+}, {
+    "Food Name": "Mahamri (Swahili Doughnuts)",
+    "Energy (kJ)": 1730,
+    "Energy (kCal)": 413,
+    "Water (g)": 22.8,
+    "Protein (g)": 6.0,
+    "Fat (g)": 22.1,
+    "Carbohydrate (g)": 46.6,
+    "Fibre (g)": 2.1,
+    "Ash (g)": 0.4
+}, {
+    "Food Name": "Whole Maize Flour Ugali",
+    "Energy (kJ)": 596,
+    "Energy (kCal)": 141,
+    "Water (g)": 64.5,
+    "Protein (g)": 3.3,
+    "Fat (g)": 1.8,
+    "Carbohydrate (g)": 26.0,
+    "Fibre (g)": 3.8,
+    "Ash (g)": 0.5
+}, {
+    "Food Name": "Maize and Finger Millet Flour Ugali",
+    "Energy (kJ)": 562,
+    "Energy (kCal)": 133,
+    "Water (g)": 64.0,
+    "Protein (g)": 3.1,
+    "Fat (g)": 1.3,
+    "Carbohydrate (g)": 24.0,
+    "Fibre (g)": 6.6,
+    "Ash (g)": 1.0
+}, {
+    "Food Name": "Maize, Red Sorghum and Finger Millet Ugali",
+    "Energy (kJ)": 543,
+    "Energy (kCal)": 129,
+    "Water (g)": 66.2,
+    "Protein (g)": 3.1,
+    "Fat (g)": 1.4,
+    "Carbohydrate (g)": 23.3,
+    "Fibre (g)": 5.3,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Cassava and Red Sorghum Ugali",
+    "Energy (kJ)": 489,
+    "Energy (kCal)": 116,
+    "Water (g)": 69.6,
+    "Protein (g)": 2.1,
+    "Fat (g)": 0.8,
+    "Carbohydrate (g)": 23.4,
+    "Fibre (g)": 3.4,
+    "Ash (g)": 0.7
+}, {
+    "Food Name": "Refined Maize Flour Ugali",
+    "Energy (kJ)": 626,
+    "Energy (kCal)": 148,
+    "Water (g)": 62.8,
+    "Protein (g)": 3.4,
+    "Fat (g)": 1.9,
+    "Carbohydrate (g)": 27.3,
+    "Fibre (g)": 4.0,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Sorghum, Maize flour & Finger Millet Ugali",
+    "Energy (kJ)": 634,
+    "Energy (kCal)": 150,
+    "Water (g)": 61.0,
+    "Protein (g)": 1.9,
+    "Fat (g)": 0.7,
+    "Carbohydrate (g)": 32.1,
+    "Fibre (g)": 3.6,
+    "Ash (g)": 0.7
+}, {
+    "Food Name": "Cassava Flour Ugali",
+    "Energy (kJ)": 788,
+    "Energy (kCal)": 186,
+    "Water (g)": 51.6,
+    "Protein (g)": 1.1,
+    "Fat (g)": 0.3,
+    "Carbohydrate (g)": 43.7,
+    "Fibre (g)": 2.2,
+    "Ash (g)": 1.3
+}, {
+    "Food Name": "Cassava, Millet & Sorghum Porridge",
+    "Energy (kJ)": 194,
+    "Energy (kCal)": 46,
+    "Water (g)": 87.9,
+    "Protein (g)": 0.5,
+    "Fat (g)": 0.1,
+    "Carbohydrate (g)": 10.2,
+    "Fibre (g)": 1.0,
+    "Ash (g)": 0.3
+}, {
+    "Food Name": "Cassava Porridge (Uji wa Muhogo)",
+    "Energy (kJ)": 121,
+    "Energy (kCal)": 28,
+    "Water (g)": 92.6,
+    "Protein (g)": 0.1,
+    "Fat (g)": 0.0,
+    "Carbohydrate (g)": 6.8,
+    "Fibre (g)": 0.3,
+    "Ash (g)": 0.2
+}, {
+    "Food Name": "Finger Millet Porridge (Uji wa Wimbi)",
+    "Energy (kJ)": 168,
+    "Energy (kCal)": 40,
+    "Water (g)": 88.8,
+    "Protein (g)": 0.7,
+    "Fat (g)": 0.2,
+    "Carbohydrate (g)": 7.8,
+    "Fibre (g)": 2.1,
+    "Ash (g)": 0.4
+}, {
+    "Food Name": "Bulrush Millet Porridge (Uji wa Mawele)",
+    "Energy (kJ)": 350,
+    "Energy (kCal)": 83,
+    "Water (g)": 79.2,
+    "Protein (g)": 2.0,
+    "Fat (g)": 1.0,
+    "Carbohydrate (g)": 15.7,
+    "Fibre (g)": 1.6,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Rice Flour Porridge (Uji wa Mchele)",
+    "Energy (kJ)": 235,
+    "Energy (kCal)": 56,
+    "Water (g)": 87.5,
+    "Protein (g)": 0.6,
+    "Fat (g)": 1.3,
+    "Carbohydrate (g)": 10.2,
+    "Fibre (g)": 0.2,
+    "Ash (g)": 0.1
+}, {
+    "Food Name": "\u201cBusara\u201d (Whole Maize and Finger Millet Porridge)",
+    "Energy (kJ)": 170,
+    "Energy (kCal)": 40,
+    "Water (g)": 88.6,
+    "Protein (g)": 1.0,
+    "Fat (g)": 0.3,
+    "Carbohydrate (g)": 7.3,
+    "Fibre (g)": 2.5,
+    "Ash (g)": 0.4
+}, {
+    "Food Name": "White Chapati",
+    "Energy (kJ)": 1770,
+    "Energy (kCal)": 424,
+    "Water (g)": 18.4,
+    "Protein (g)": 7.8,
+    "Fat (g)": 21.1,
+    "Carbohydrate (g)": 49.6,
+    "Fibre (g)": 2.5,
+    "Ash (g)": 0.7
+}, {
+    "Food Name": "Brown Chapati",
+    "Energy (kJ)": 1720,
+    "Energy (kCal)": 413,
+    "Water (g)": 20.5,
+    "Protein (g)": 7.3,
+    "Fat (g)": 22.9,
+    "Carbohydrate (g)": 40.9,
+    "Fibre (g)": 7.2,
+    "Ash (g)": 1.2
+}, {
+    "Food Name": "Drop Scones",
+    "Energy (kJ)": 1870,
+    "Energy (kCal)": 449,
+    "Water (g)": 23.5,
+    "Protein (g)": 7.1,
+    "Fat (g)": 29.8,
+    "Carbohydrate (g)": 37.4,
+    "Fibre (g)": 1.4,
+    "Ash (g)": 0.9
+}, {
+    "Food Name": "\u201cTerere\u201d (Stir fried amaranth leaves)",
+    "Energy (kJ)": 342,
+    "Energy (kCal)": 83,
+    "Water (g)": 80.6,
+    "Protein (g)": 3.0,
+    "Fat (g)": 5.3,
+    "Carbohydrate (g)": 2.9,
+    "Fibre (g)": 5.5,
+    "Ash (g)": 2.7
+}, {
+    "Food Name": "Sukumawiki (Stir fried kales)",
+    "Energy (kJ)": 225,
+    "Energy (kCal)": 54,
+    "Water (g)": 87.0,
+    "Protein (g)": 2.5,
+    "Fat (g)": 3.2,
+    "Carbohydrate (g)": 2.1,
+    "Fibre (g)": 3.8,
+    "Ash (g)": 1.5
+}, {
+    "Food Name": "Stir-fried Cabbage",
+    "Energy (kJ)": 411,
+    "Energy (kCal)": 100,
+    "Water (g)": 82.7,
+    "Protein (g)": 1.2,
+    "Fat (g)": 8.6,
+    "Carbohydrate (g)": 3.1,
+    "Fibre (g)": 2.4,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Mrenda and Seveve (Jute Mallow and Pumpkin leaves)",
+    "Energy (kJ)": 249,
+    "Energy (kCal)": 59,
+    "Water (g)": 85.3,
+    "Protein (g)": 3.4,
+    "Fat (g)": 2.3,
+    "Carbohydrate (g)": 5.4,
+    "Fibre (g)": 2.0,
+    "Ash (g)": 1.6
+}, {
+    "Food Name": "Pumpkin Leaves",
+    "Energy (kJ)": 410,
+    "Energy (kCal)": 99,
+    "Water (g)": 80.8,
+    "Protein (g)": 3.2,
+    "Fat (g)": 6.7,
+    "Carbohydrate (g)": 5.5,
+    "Fibre (g)": 1.5,
+    "Ash (g)": 2.3
+}, {
+    "Food Name": "Saget, Terere & Managu ",
+    "Energy (kJ)": 251,
+    "Energy (kCal)": 60,
+    "Water (g)": 83.0,
+    "Protein (g)": 4.3,
+    "Fat (g)": 1.9,
+    "Carbohydrate (g)": 4.5,
+    "Fibre (g)": 3.8,
+    "Ash (g)": 2.5
+}, {
+    "Food Name": "Pilau (Spiced Rice)",
+    "Energy (kJ)": 895,
+    "Energy (kCal)": 213,
+    "Water (g)": 56.3,
+    "Protein (g)": 6.9,
+    "Fat (g)": 9.4,
+    "Carbohydrate (g)": 24.8,
+    "Fibre (g)": 1.1,
+    "Ash (g)": 1.5
+}, {
+    "Food Name": "Mseto wa Ndengu (Rice with green grams)",
+    "Energy (kJ)": 433,
+    "Energy (kCal)": 103,
+    "Water (g)": 74.5,
+    "Protein (g)": 3.7,
+    "Fat (g)": 1.3,
+    "Carbohydrate (g)": 18.4,
+    "Fibre (g)": 1.5,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Mseto wa Maharagwe (Add Rice with Beans)",
+    "Energy (kJ)": 807,
+    "Energy (kCal)": 193,
+    "Water (g)": 58.2,
+    "Protein (g)": 5.0,
+    "Fat (g)": 7.9,
+    "Carbohydrate (g)": 23.5,
+    "Fibre (g)": 3.8,
+    "Ash (g)": 1.7
+}, {
+    "Food Name": "Nderema (Vine Spinach)",
+    "Energy (kJ)": 299,
+    "Energy (kCal)": 72,
+    "Water (g)": 84.7,
+    "Protein (g)": 3.2,
+    "Fat (g)": 5.2,
+    "Carbohydrate (g)": 1.4,
+    "Fibre (g)": 3.5,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Fiqe (Red Sorghum, Beans and Teff Flour)",
+    "Energy (kJ)": 807,
+    "Energy (kCal)": 192,
+    "Water (g)": 52.5,
+    "Protein (g)": 7.2,
+    "Fat (g)": 5.8,
+    "Carbohydrate (g)": 24.2,
+    "Fibre (g)": 7.4,
+    "Ash (g)": 2.9
+}, {
+    "Food Name": "Qita (Maize and Wheat flour pancake)",
+    "Energy (kJ)": 1020,
+    "Energy (kCal)": 241,
+    "Water (g)": 44.3,
+    "Protein (g)": 5.1,
+    "Fat (g)": 5.6,
+    "Carbohydrate (g)": 41.2,
+    "Fibre (g)": 2.8,
+    "Ash (g)": 0.9
+}, {
+    "Food Name": "Gurdo, Marqa (Ugali in Sour Milk)",
+    "Energy (kJ)": 1020,
+    "Energy (kCal)": 242,
+    "Water (g)": 46.9,
+    "Protein (g)": 6.6,
+    "Fat (g)": 9.6,
+    "Carbohydrate (g)": 29.7,
+    "Fibre (g)": 5.1,
+    "Ash (g)": 2.0
+}, {
+    "Food Name": "Mchuzi wa ndengu (Green Gram Stew)",
+    "Energy (kJ)": 454,
+    "Energy (kCal)": 109,
+    "Water (g)": 74.4,
+    "Protein (g)": 6.3,
+    "Fat (g)": 4.2,
+    "Carbohydrate (g)": 9.3,
+    "Fibre (g)": 4.0,
+    "Ash (g)": 1.7
+}, {
+    "Food Name": "Mchuzi wa Maharagwe (Bean Stew)",
+    "Energy (kJ)": 263,
+    "Energy (kCal)": 63,
+    "Water (g)": 83.1,
+    "Protein (g)": 3.5,
+    "Fat (g)": 1.4,
+    "Carbohydrate (g)": 7.2,
+    "Fibre (g)": 3.7,
+    "Ash (g)": 1.1
+}, {
+    "Food Name": "Mchuzi wa Ndengu Kamande (Lentil Stew)",
+    "Energy (kJ)": 455,
+    "Energy (kCal)": 108,
+    "Water (g)": 72.8,
+    "Protein (g)": 7.1,
+    "Fat (g)": 3.0,
+    "Carbohydrate (g)": 11.1,
+    "Fibre (g)": 4.5,
+    "Ash (g)": 1.6
+}, {
+    "Food Name": "Ugali (Cassava, Fingermillet and Sorghum Flour Ugali)",
+    "Energy (kJ)": 613,
+    "Energy (kCal)": 145,
+    "Water (g)": 61.3,
+    "Protein (g)": 2.0,
+    "Fat (g)": 0.6,
+    "Carbohydrate (g)": 30.7,
+    "Fibre (g)": 4.3,
+    "Ash (g)": 1.1
+}, {
+    "Food Name": "Yam Stew",
+    "Energy (kJ)": 394,
+    "Energy (kCal)": 94,
+    "Water (g)": 76.7,
+    "Protein (g)": 1.5,
+    "Fat (g)": 2.4,
+    "Carbohydrate (g)": 15.3,
+    "Fibre (g)": 2.5,
+    "Ash (g)": 1.6
+}, {
+    "Food Name": "Githeri (stewed Maize & Beans)",
+    "Energy (kJ)": 661,
+    "Energy (kCal)": 157,
+    "Water (g)": 60.4,
+    "Protein (g)": 6.7,
+    "Fat (g)": 4.2,
+    "Carbohydrate (g)": 19.7,
+    "Fibre (g)": 7.2,
+    "Ash (g)": 1.8
+}, {
+    "Food Name": "Mukimo (Maize, Beans, Potatoes & Pumpkin Leaves)",
+    "Energy (kJ)": 498,
+    "Energy (kCal)": 118,
+    "Water (g)": 67.1,
+    "Protein (g)": 5.0,
+    "Fat (g)": 0.7,
+    "Carbohydrate (g)": 20.5,
+    "Fibre (g)": 4.8,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Githeri (Sauteed Fresh Maize and beans)",
+    "Energy (kJ)": 773,
+    "Energy (kCal)": 185,
+    "Water (g)": 55.3,
+    "Protein (g)": 6.9,
+    "Fat (g)": 7.2,
+    "Carbohydrate (g)": 17.8,
+    "Fibre (g)": 10.5,
+    "Ash (g)": 2.2
+}, {
+    "Food Name": "Mukimo (Fresh Maize, Potatoes & Pumpkin Leaves)",
+    "Energy (kJ)": 457,
+    "Energy (kCal)": 109,
+    "Water (g)": 68.8,
+    "Protein (g)": 3.0,
+    "Fat (g)": 1.0,
+    "Carbohydrate (g)": 18.5,
+    "Fibre (g)": 6.8,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Stewed Potatoes & Arrowroots",
+    "Energy (kJ)": 380,
+    "Energy (kCal)": 90,
+    "Water (g)": 78.0,
+    "Protein (g)": 1.9,
+    "Fat (g)": 2.1,
+    "Carbohydrate (g)": 15.0,
+    "Fibre (g)": 1.8,
+    "Ash (g)": 1.2
+}, {
+    "Food Name": "Mukimo wa Njahi (Black Beans, Green Bananas & Potatoes)",
+    "Energy (kJ)": 693,
+    "Energy (kCal)": 164,
+    "Water (g)": 53.7,
+    "Protein (g)": 9.5,
+    "Fat (g)": 0.6,
+    "Carbohydrate (g)": 26.5,
+    "Fibre (g)": 7.2,
+    "Ash (g)": 2.4
+}, {
+    "Food Name": "Githeri (Fresh beans and Maize)",
+    "Energy (kJ)": 751,
+    "Energy (kCal)": 180,
+    "Water (g)": 57.0,
+    "Protein (g)": 7.8,
+    "Fat (g)": 7.6,
+    "Carbohydrate (g)": 15.1,
+    "Fibre (g)": 10.4,
+    "Ash (g)": 2.2
+}, {
+    "Food Name": "Mashed Potato and Bananas",
+    "Energy (kJ)": 750,
+    "Energy (kCal)": 179,
+    "Water (g)": 62.1,
+    "Protein (g)": 2.3,
+    "Fat (g)": 8.5,
+    "Carbohydrate (g)": 22.1,
+    "Fibre (g)": 2.6,
+    "Ash (g)": 2.4
+}, {
+    "Food Name": "Mukimo wa Njahi (Raw & Ripe Bananas)",
+    "Energy (kJ)": 636,
+    "Energy (kCal)": 151,
+    "Water (g)": 57.7,
+    "Protein (g)": 6.4,
+    "Fat (g)": 0.6,
+    "Carbohydrate (g)": 26.6,
+    "Fibre (g)": 6.5,
+    "Ash (g)": 2.2
+}, {
+    "Food Name": "Groundnut Sauce",
+    "Energy (kJ)": 1240,
+    "Energy (kCal)": 298,
+    "Water (g)": 50.2,
+    "Protein (g)": 10.6,
+    "Fat (g)": 23.4,
+    "Carbohydrate (g)": 9.6,
+    "Fibre (g)": 3.5,
+    "Ash (g)": 2.7
+}, {
+    "Food Name": "Vimumunya vya Chumvi (Pumpkin & Coconut Milk)",
+    "Energy (kJ)": 297,
+    "Energy (kCal)": 72,
+    "Water (g)": 85.8,
+    "Protein (g)": 1.3,
+    "Fat (g)": 4.9,
+    "Carbohydrate (g)": 4.6,
+    "Fibre (g)": 1.9,
+    "Ash (g)": 1.5
+}, {
+    "Food Name": "Vinolo (Banana and Maize Flour Ugali)",
+    "Energy (kJ)": 524,
+    "Energy (kCal)": 124,
+    "Water (g)": 68.4,
+    "Protein (g)": 2.2,
+    "Fat (g)": 0.9,
+    "Carbohydrate (g)": 25.5,
+    "Fibre (g)": 2.5,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Biryani rice",
+    "Energy (kJ)": 641,
+    "Energy (kCal)": 152,
+    "Water (g)": 65.3,
+    "Protein (g)": 2.7,
+    "Fat (g)": 3.2,
+    "Carbohydrate (g)": 27.9,
+    "Fibre (g)": 0.3,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Vimumunya vya Sukari (Sweetened Pumpkin & Coconut Milk)",
+    "Energy (kJ)": 390,
+    "Energy (kCal)": 93,
+    "Water (g)": 79.0,
+    "Protein (g)": 1.1,
+    "Fat (g)": 3.0,
+    "Carbohydrate (g)": 14.5,
+    "Fibre (g)": 1.8,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Wukunu (Sweet potatoes & Dehulled Black Beans)",
+    "Energy (kJ)": 396,
+    "Energy (kCal)": 94,
+    "Water (g)": 73.0,
+    "Protein (g)": 4.1,
+    "Fat (g)": 0.6,
+    "Carbohydrate (g)": 15.8,
+    "Fibre (g)": 4.6,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Mushenye (Green Maize and Sweet Potatoes)",
+    "Energy (kJ)": 641,
+    "Energy (kCal)": 153,
+    "Water (g)": 60.4,
+    "Protein (g)": 7.1,
+    "Fat (g)": 4.1,
+    "Carbohydrate (g)": 17.6,
+    "Fibre (g)": 8.6,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Wali wa Kuchemshwa (Boiled Rice)",
+    "Energy (kJ)": 584,
+    "Energy (kCal)": 138,
+    "Water (g)": 67.1,
+    "Protein (g)": 2.7,
+    "Fat (g)": 2.0,
+    "Carbohydrate (g)": 27.2,
+    "Fibre (g)": 0.2,
+    "Ash (g)": 0.7
+}, {
+    "Food Name": "Wali wa Yasmin (Onion Fried Rice)",
+    "Energy (kJ)": 779,
+    "Energy (kCal)": 185,
+    "Water (g)": 58.9,
+    "Protein (g)": 3.2,
+    "Fat (g)": 5.1,
+    "Carbohydrate (g)": 31.2,
+    "Fibre (g)": 0.6,
+    "Ash (g)": 1.0
+}, {
+    "Food Name": "Stir-fried Spinach",
+    "Energy (kJ)": 307,
+    "Energy (kCal)": 74,
+    "Water (g)": 84.4,
+    "Protein (g)": 2.8,
+    "Fat (g)": 5.4,
+    "Carbohydrate (g)": 2.0,
+    "Fibre (g)": 3.3,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Thabai \/ Thaa (Stinging Nettle Leaves)",
+    "Energy (kJ)": 143,
+    "Energy (kCal)": 34,
+    "Water (g)": 92.3,
+    "Protein (g)": 1.2,
+    "Fat (g)": 2.4,
+    "Carbohydrate (g)": 1.9,
+    "Fibre (g)": 0.6,
+    "Ash (g)": 1.8
+}, {
+    "Food Name": "Rhikhuvi (Stewed Cowpea Leaves)",
+    "Energy (kJ)": 630,
+    "Energy (kCal)": 152,
+    "Water (g)": 74.1,
+    "Protein (g)": 3.2,
+    "Fat (g)": 13.3,
+    "Carbohydrate (g)": 3.5,
+    "Fibre (g)": 3.2,
+    "Ash (g)": 2.8
+}, {
+    "Food Name": "Kunde and Mrenda (Stewed Cowpeas and Jute Mallow leaves)",
+    "Energy (kJ)": 238,
+    "Energy (kCal)": 57,
+    "Water (g)": 83.5,
+    "Protein (g)": 3.7,
+    "Fat (g)": 2.0,
+    "Carbohydrate (g)": 4.4,
+    "Fibre (g)": 3.3,
+    "Ash (g)": 3.1
+}, {
+    "Food Name": "Kimanga cha Ndizi (Smoked Green Bananas and Kidney Beans)",
+    "Energy (kJ)": 614,
+    "Energy (kCal)": 146,
+    "Water (g)": 57.7,
+    "Protein (g)": 6.5,
+    "Fat (g)": 0.9,
+    "Carbohydrate (g)": 24.1,
+    "Fibre (g)": 7.7,
+    "Ash (g)": 3.1
+}, {
+    "Food Name": "Kimanga Cha Mihogo (Mashed Cassava and Pigeon Peas)",
+    "Energy (kJ)": 823,
+    "Energy (kCal)": 194,
+    "Water (g)": 46.8,
+    "Protein (g)": 4.8,
+    "Fat (g)": 0.6,
+    "Carbohydrate (g)": 39.6,
+    "Fibre (g)": 5.8,
+    "Ash (g)": 2.4
+}, {
+    "Food Name": "Ndoto (Sauteed Red Kidney Beans & Red Sorghum)",
+    "Energy (kJ)": 806,
+    "Energy (kCal)": 193,
+    "Water (g)": 56.4,
+    "Protein (g)": 5.7,
+    "Fat (g)": 7.9,
+    "Carbohydrate (g)": 21.3,
+    "Fibre (g)": 7.0,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Muthokoi (Dehulled Maize and Beans)",
+    "Energy (kJ)": 677,
+    "Energy (kCal)": 161,
+    "Water (g)": 62.7,
+    "Protein (g)": 5.0,
+    "Fat (g)": 5.9,
+    "Carbohydrate (g)": 19.8,
+    "Fibre (g)": 4.6,
+    "Ash (g)": 2.0
+}, {
+    "Food Name": "Kimanga cha Viazi Vitamu (Mashed Sweet Potato & Black Beans)",
+    "Energy (kJ)": 472,
+    "Energy (kCal)": 112,
+    "Water (g)": 68.0,
+    "Protein (g)": 5.4,
+    "Fat (g)": 0.5,
+    "Carbohydrate (g)": 18.9,
+    "Fibre (g)": 5.2,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Kitojo (Sweet Potato Leaves)",
+    "Energy (kJ)": 596,
+    "Energy (kCal)": 144,
+    "Water (g)": 74.6,
+    "Protein (g)": 3.9,
+    "Fat (g)": 12.7,
+    "Carbohydrate (g)": 1.4,
+    "Fibre (g)": 4.6,
+    "Ash (g)": 2.9
+}, {
+    "Food Name": "Mchuzi wa Mbaazi (Pigeon Peas Stew)",
+    "Energy (kJ)": 494,
+    "Energy (kCal)": 118,
+    "Water (g)": 70.9,
+    "Protein (g)": 5.7,
+    "Fat (g)": 4.4,
+    "Carbohydrate (g)": 11.0,
+    "Fibre (g)": 6.1,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Nchenga\/ Nzenga (Crushed Maize)",
+    "Energy (kJ)": 542,
+    "Energy (kCal)": 129,
+    "Water (g)": 69.5,
+    "Protein (g)": 2.2,
+    "Fat (g)": 3.9,
+    "Carbohydrate (g)": 20.3,
+    "Fibre (g)": 1.8,
+    "Ash (g)": 2.2
+}, {
+    "Food Name": "Mseto wa Viazi (Potatoes in Rice)",
+    "Energy (kJ)": 469,
+    "Energy (kCal)": 111,
+    "Water (g)": 73.7,
+    "Protein (g)": 2.2,
+    "Fat (g)": 1.9,
+    "Carbohydrate (g)": 21.1,
+    "Fibre (g)": 0.5,
+    "Ash (g)": 0.6
+}, {
+    "Food Name": "Stewed Green Bananas",
+    "Energy (kJ)": 350,
+    "Energy (kCal)": 84,
+    "Water (g)": 81.8,
+    "Protein (g)": 1.0,
+    "Fat (g)": 3.8,
+    "Carbohydrate (g)": 10.4,
+    "Fibre (g)": 2.2,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Finger Millet Ugali",
+    "Energy (kJ)": 505,
+    "Energy (kCal)": 120,
+    "Water (g)": 65.1,
+    "Protein (g)": 2.9,
+    "Fat (g)": 0.7,
+    "Carbohydrate (g)": 21.0,
+    "Fibre (g)": 8.9,
+    "Ash (g)": 1.4
+}, {
+    "Food Name": "Mashed Potatoes",
+    "Energy (kJ)": 449,
+    "Energy (kCal)": 106,
+    "Water (g)": 71.0,
+    "Protein (g)": 2.5,
+    "Fat (g)": 0.2,
+    "Carbohydrate (g)": 22.8,
+    "Fibre (g)": 1.7,
+    "Ash (g)": 1.8
+}, {
+    "Food Name": "Mashed Bananas",
+    "Energy (kJ)": 344,
+    "Energy (kCal)": 81,
+    "Water (g)": 76.9,
+    "Protein (g)": 1.2,
+    "Fat (g)": 0.3,
+    "Carbohydrate (g)": 16.9,
+    "Fibre (g)": 3.0,
+    "Ash (g)": 1.7
+}, {
+    "Food Name": "Enriched Mashed Potatoes",
+    "Energy (kJ)": 591,
+    "Energy (kCal)": 141,
+    "Water (g)": 70.4,
+    "Protein (g)": 2.0,
+    "Fat (g)": 6.2,
+    "Carbohydrate (g)": 18.6,
+    "Fibre (g)": 1.4,
+    "Ash (g)": 1.4
+}, {
+    "Food Name": "Enriched Mashed Bananas",
+    "Energy (kJ)": 568,
+    "Energy (kCal)": 136,
+    "Water (g)": 72.9,
+    "Protein (g)": 1.0,
+    "Fat (g)": 7.8,
+    "Carbohydrate (g)": 14.3,
+    "Fibre (g)": 2.6,
+    "Ash (g)": 1.5
+}, {
+    "Food Name": "Pan Fried Sweet Potatoes",
+    "Energy (kJ)": 1040,
+    "Energy (kCal)": 248,
+    "Water (g)": 51.7,
+    "Protein (g)": 3.1,
+    "Fat (g)": 13.9,
+    "Carbohydrate (g)": 25.3,
+    "Fibre (g)": 4.9,
+    "Ash (g)": 1.2
+}, {
+    "Food Name": "Potato Chips",
+    "Energy (kJ)": 1370,
+    "Energy (kCal)": 326,
+    "Water (g)": 32.1,
+    "Protein (g)": 4.8,
+    "Fat (g)": 13.6,
+    "Carbohydrate (g)": 44.4,
+    "Fibre (g)": 3.3,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Kimito (Mashed Beans & Potatoes)",
+    "Energy (kJ)": 537,
+    "Energy (kCal)": 127,
+    "Water (g)": 64.1,
+    "Protein (g)": 5.7,
+    "Fat (g)": 0.8,
+    "Carbohydrate (g)": 21.6,
+    "Fibre (g)": 5.4,
+    "Ash (g)": 2.3
+}, {
+    "Food Name": "Arrowroot Stew",
+    "Energy (kJ)": 383,
+    "Energy (kCal)": 91,
+    "Water (g)": 77.8,
+    "Protein (g)": 1.9,
+    "Fat (g)": 2.3,
+    "Carbohydrate (g)": 14.9,
+    "Fibre (g)": 1.8,
+    "Ash (g)": 1.4
+}, {
+    "Food Name": "Sweet Potatoes with Peanut Butter",
+    "Energy (kJ)": 373,
+    "Energy (kCal)": 89,
+    "Water (g)": 81.1,
+    "Protein (g)": 2.2,
+    "Fat (g)": 4.4,
+    "Carbohydrate (g)": 9.3,
+    "Fibre (g)": 2.2,
+    "Ash (g)": 0.9
+}, {
+    "Food Name": "Black Bean Stew (Dolichos\/ Njahi Stew)",
+    "Energy (kJ)": 261,
+    "Energy (kCal)": 62,
+    "Water (g)": 83.6,
+    "Protein (g)": 3.6,
+    "Fat (g)": 1.3,
+    "Carbohydrate (g)": 7.7,
+    "Fibre (g)": 2.8,
+    "Ash (g)": 1.1
+}, {
+    "Food Name": "Pan Fried Arrowroots",
+    "Energy (kJ)": 761,
+    "Energy (kCal)": 181,
+    "Water (g)": 56.9,
+    "Protein (g)": 4.1,
+    "Fat (g)": 5.2,
+    "Carbohydrate (g)": 28.3,
+    "Fibre (g)": 2.5,
+    "Ash (g)": 3.1
+}, {
+    "Food Name": "Nyenyi (Mashed Pigeon Peas & Green Maize)",
+    "Energy (kJ)": 524,
+    "Energy (kCal)": 125,
+    "Water (g)": 66.4,
+    "Protein (g)": 4.9,
+    "Fat (g)": 2.3,
+    "Carbohydrate (g)": 17.8,
+    "Fibre (g)": 6.5,
+    "Ash (g)": 2.0
+}, {
+    "Food Name": "Finger Millet and Sorghum Porridge",
+    "Energy (kJ)": 311,
+    "Energy (kCal)": 74,
+    "Water (g)": 82.3,
+    "Protein (g)": 2.7,
+    "Fat (g)": 2.2,
+    "Carbohydrate (g)": 9.7,
+    "Fibre (g)": 2.3,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Mashed Pumpkin and Black Nightshade Leaves",
+    "Energy (kJ)": 277,
+    "Energy (kCal)": 67,
+    "Water (g)": 80.8,
+    "Protein (g)": 3.8,
+    "Fat (g)": 2.4,
+    "Carbohydrate (g)": 4.9,
+    "Fibre (g)": 5.1,
+    "Ash (g)": 3.0
+}, {
+    "Food Name": "Enriched Matoke",
+    "Energy (kJ)": 465,
+    "Energy (kCal)": 111,
+    "Water (g)": 73.7,
+    "Protein (g)": 2.4,
+    "Fat (g)": 3.5,
+    "Carbohydrate (g)": 15.8,
+    "Fibre (g)": 3.2,
+    "Ash (g)": 1.4
+}, {
+    "Food Name": "Oatmeal",
+    "Energy (kJ)": 351,
+    "Energy (kCal)": 83,
+    "Water (g)": 78.3,
+    "Protein (g)": 2.4,
+    "Fat (g)": 1.7,
+    "Carbohydrate (g)": 12.9,
+    "Fibre (g)": 3.5,
+    "Ash (g)": 1.2
+}, {
+    "Food Name": "Oat Porridge (Uji wa Shayiri)",
+    "Energy (kJ)": 363,
+    "Energy (kCal)": 86,
+    "Water (g)": 79.3,
+    "Protein (g)": 1.9,
+    "Fat (g)": 1.6,
+    "Carbohydrate (g)": 15.3,
+    "Fibre (g)": 1.4,
+    "Ash (g)": 0.5
+}, {
+    "Food Name": "Enriched Mandazi (East African Doughnuts; Enriched)",
+    "Energy (kJ)": 1590,
+    "Energy (kCal)": 379,
+    "Water (g)": 23.5,
+    "Protein (g)": 7.6,
+    "Fat (g)": 16.1,
+    "Carbohydrate (g)": 49.9,
+    "Fibre (g)": 2.2,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Basic Mandazi (East African Doughnuts; Basic)",
+    "Energy (kJ)": 1430,
+    "Energy (kCal)": 340,
+    "Water (g)": 28.2,
+    "Protein (g)": 6.4,
+    "Fat (g)": 12.9,
+    "Carbohydrate (g)": 48.7,
+    "Fibre (g)": 2.1,
+    "Ash (g)": 1.7
+}, {
+    "Food Name": "Stewed Split Dal",
+    "Energy (kJ)": 291,
+    "Energy (kCal)": 69,
+    "Water (g)": 81.8,
+    "Protein (g)": 3.7,
+    "Fat (g)": 1.9,
+    "Carbohydrate (g)": 8.1,
+    "Fibre (g)": 2.7,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Potato Curry",
+    "Energy (kJ)": 608,
+    "Energy (kCal)": 145,
+    "Water (g)": 69.0,
+    "Protein (g)": 2.2,
+    "Fat (g)": 7.0,
+    "Carbohydrate (g)": 17.3,
+    "Fibre (g)": 2.2,
+    "Ash (g)": 2.3
+}, {
+    "Food Name": "Peas and Brinjal Curry",
+    "Energy (kJ)": 544,
+    "Energy (kCal)": 131,
+    "Water (g)": 72.5,
+    "Protein (g)": 4.2,
+    "Fat (g)": 8.5,
+    "Carbohydrate (g)": 6.6,
+    "Fibre (g)": 5.8,
+    "Ash (g)": 2.4
+}, {
+    "Food Name": "Steamed Rice (Wali wa Mvuke)",
+    "Energy (kJ)": 513,
+    "Energy (kCal)": 121,
+    "Water (g)": 68.6,
+    "Protein (g)": 2.6,
+    "Fat (g)": 0.3,
+    "Carbohydrate (g)": 26.7,
+    "Fibre (g)": 0.2,
+    "Ash (g)": 1.5
+}, {
+    "Food Name": "Rotli (Indian Chapati)",
+    "Energy (kJ)": 1560,
+    "Energy (kCal)": 374,
+    "Water (g)": 21.6,
+    "Protein (g)": 8.0,
+    "Fat (g)": 16.7,
+    "Carbohydrate (g)": 43.8,
+    "Fibre (g)": 7.9,
+    "Ash (g)": 2.0
+}, {
+    "Food Name": "Potato Bhajia",
+    "Energy (kJ)": 1960,
+    "Energy (kCal)": 471,
+    "Water (g)": 15.1,
+    "Protein (g)": 8.6,
+    "Fat (g)": 31.0,
+    "Carbohydrate (g)": 37.1,
+    "Fibre (g)": 4.8,
+    "Ash (g)": 3.5
+}, {
+    "Food Name": "Siro (Semolina & Nuts)",
+    "Energy (kJ)": 1720,
+    "Energy (kCal)": 412,
+    "Water (g)": 28.4,
+    "Protein (g)": 4.3,
+    "Fat (g)": 26.1,
+    "Carbohydrate (g)": 39.4,
+    "Fibre (g)": 1.1,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Chick Peas Curry",
+    "Energy (kJ)": 524,
+    "Energy (kCal)": 126,
+    "Water (g)": 69.2,
+    "Protein (g)": 6.0,
+    "Fat (g)": 5.1,
+    "Carbohydrate (g)": 10.3,
+    "Fibre (g)": 7.3,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Bhature (Fried Indian Bread)",
+    "Energy (kJ)": 1410,
+    "Energy (kCal)": 337,
+    "Water (g)": 36.1,
+    "Protein (g)": 5.9,
+    "Fat (g)": 18.5,
+    "Carbohydrate (g)": 35.9,
+    "Fibre (g)": 1.7,
+    "Ash (g)": 1.9
+}, {
+    "Food Name": "Pumpkins with Peanut Butter",
+    "Energy (kJ)": 359,
+    "Energy (kCal)": 86,
+    "Water (g)": 82.7,
+    "Protein (g)": 2.6,
+    "Fat (g)": 5.5,
+    "Carbohydrate (g)": 5.4,
+    "Fibre (g)": 2.6,
+    "Ash (g)": 1.3
+}, {
+    "Food Name": "Firinda (Skinned bean Stew)",
+    "Energy (kJ)": 390,
+    "Energy (kCal)": 93,
+    "Water (g)": 74.9,
+    "Protein (g)": 5.2,
+    "Fat (g)": 2.3,
+    "Carbohydrate (g)": 10.2,
+    "Fibre (g)": 5.3,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Fried Egg (Mayai ya Kukaangwa)",
+    "Energy (kJ)": 926,
+    "Energy (kCal)": 223,
+    "Water (g)": 64.2,
+    "Protein (g)": 13.1,
+    "Fat (g)": 17.9,
+    "Carbohydrate (g)": 2.5,
+    "Fibre (g)": 0.0,
+    "Ash (g)": 2.4
+}, {
+    "Food Name": "Omelette",
+    "Energy (kJ)": 502,
+    "Energy (kCal)": 121,
+    "Water (g)": 77.6,
+    "Protein (g)": 6.6,
+    "Fat (g)": 7.8,
+    "Carbohydrate (g)": 5.3,
+    "Fibre (g)": 1.5,
+    "Ash (g)": 1.2
+}, {
+    "Food Name": "Spanish Omelette",
+    "Energy (kJ)": 667,
+    "Energy (kCal)": 161,
+    "Water (g)": 74.0,
+    "Protein (g)": 7.5,
+    "Fat (g)": 12.9,
+    "Carbohydrate (g)": 3.2,
+    "Fibre (g)": 0.8,
+    "Ash (g)": 1.6
+}, {
+    "Food Name": "Vegetable Samosa (Sambusa ya Mboga)",
+    "Energy (kJ)": 1360,
+    "Energy (kCal)": 325,
+    "Water (g)": 30.2,
+    "Protein (g)": 8.5,
+    "Fat (g)": 13.1,
+    "Carbohydrate (g)": 40.2,
+    "Fibre (g)": 6.2,
+    "Ash (g)": 1.7
+}, {
+    "Food Name": "Pancakes (Chapati za Maji)",
+    "Energy (kJ)": 1140,
+    "Energy (kCal)": 270,
+    "Water (g)": 41.5,
+    "Protein (g)": 8.3,
+    "Fat (g)": 8.5,
+    "Carbohydrate (g)": 39.2,
+    "Fibre (g)": 1.7,
+    "Ash (g)": 0.8
+}, {
+    "Food Name": "Tosti Mayai (Egg Toast)",
+    "Energy (kJ)": 1180,
+    "Energy (kCal)": 280,
+    "Water (g)": 40.3,
+    "Protein (g)": 12.5,
+    "Fat (g)": 10.7,
+    "Carbohydrate (g)": 32.4,
+    "Fibre (g)": 1.9,
+    "Ash (g)": 2.1
+}, {
+    "Food Name": "Chai ya Maziwa (Mixed Tea)",
+    "Energy (kJ)": 153,
+    "Energy (kCal)": 36,
+    "Water (g)": 92.1,
+    "Protein (g)": 1.1,
+    "Fat (g)": 1.2,
+    "Carbohydrate (g)": 5.4,
+    "Fibre (g)": 0.0,
+    "Ash (g)": 0.3
+}, {
+    "Food Name": "Bean Stew with Milk and Cream",
+    "Energy (kJ)": 584,
+    "Energy (kCal)": 139,
+    "Water (g)": 65.2,
+    "Protein (g)": 7.2,
+    "Fat (g)": 4.5,
+    "Carbohydrate (g)": 14.3,
+    "Fibre (g)": 6.7,
+    "Ash (g)": 2.2
+}, {
+    "Food Name": "Mcheleng (Rice with Milk)",
+    "Energy (kJ)": 741,
+    "Energy (kCal)": 176,
+    "Water (g)": 61.5,
+    "Protein (g)": 3.9,
+    "Fat (g)": 5.7,
+    "Carbohydrate (g)": 27.2,
+    "Fibre (g)": 0.2,
+    "Ash (g)": 1.4
+}, {
+    "Food Name": "Chaas (Diluted Yoghurt)",
+    "Energy (kJ)": 252,
+    "Energy (kCal)": 60,
+    "Water (g)": 86.6,
+    "Protein (g)": 2.0,
+    "Fat (g)": 2.2,
+    "Carbohydrate (g)": 8.0,
+    "Fibre (g)": 0.0,
+    "Ash (g)": 1.1
+}, {
+    "Food Name": "Ashir",
+    "Energy (kJ)": 529,
+    "Energy (kCal)": 125,
+    "Water (g)": 68.2,
+    "Protein (g)": 2.7,
+    "Fat (g)": 0.9,
+    "Carbohydrate (g)": 25.8,
+    "Fibre (g)": 1.2,
+    "Ash (g)": 1.2
+}]
