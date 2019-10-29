@@ -64,7 +64,8 @@ class RegisterAPI(MethodView):
                     fullname=post_data['fullname'],
                     email=post_data['email'],
                     age=post_data['age'],
-                    password=post_data['password']
+                    password=post_data['password'],
+                    gender=post_data['gender']
                 )
 
                 # insert the user
@@ -218,27 +219,32 @@ class RecommendAPI(MethodView):
                 else:
                     menuData = setMenuData('mixed_food.json')
                     
-                cuisineScore = {settns.preference: 0.90}
+                # cuisineScore = {settns.preference: 0.90}
 
-                temp = createInitialPopu(4, 10)
-                temp1 = rankDishes(temp, cuisineScore, 2)
-                matePool = selection(temp1,2)
-                newGen = crossover(matePool,temp,5)
-                newGenAfterMutation = mutatePopulation(newGen, 10, 0.67)
-                import random
-                rec = newGenAfterMutation[random.randrange(0, len(newGenAfterMutation))]
+                # temp = createInitialPopu(1, 10, menuData)
+                # temp1 = rankDishes(temp, cuisineScore, 2, menuData)
+                # matePool = selection(temp1,2)
+                # newGen = crossover(matePool,temp,5)
+                # newGenAfterMutation = mutatePopulation(newGen, 10, 0.67)
+                # import random
+                # rec = newGenAfterMutation[random.randrange(0, len(newGenAfterMutation))]
 
-                rec = rec[random.randrange(0, len(rec))].id
-                food = menuData[rec]['dishName']
+                start_point = int(settns.protein_intake + settns.fat_intake + settns.carb_intake)
+
+                rec = random.randrange(start_point, len(menuData))
+                food = menuData[rec]
                     
                 responseObject = {
-                        'food': food,
-                        'protein': 0.0,
-                        'carb': 0.0,
-                        'vitamin': 0.0,
-                        'energy': 0.0,
-                        'caories': 0.0
+                        'food': food["Food Name"],
+                        'protein':food["Protein (g)"],
+                        'carb':food["Carbohydrate (g)"],
+                        'fat':food["Fat (g)"],
+                        'energy':food["Energy (kJ)"],
+                        'calories':food["Energy (kCal)"],
+                        "water": food["Water (g)"],
+                        "fibre": food["Fibre (g)"]
                 }
+                
                 return make_response(jsonify(responseObject)), 200
             responseObject = {
                 'status': 'fail',
