@@ -61,50 +61,58 @@ view model =
 
 viewNavbar : Model -> Html Msg
 viewNavbar model =
-    nav [ class "navbar navbar-default navbar-fixed-top" ]
-        [ div [ class "container-fluid" ]
-            [ div [ class "navbar-header" ]
-                [ a [ class "navbar-brand", href "/" ]
-                    [ text "EatRight" ]
-                ]
-            , ul [ class "nav navbar-nav navbar-right" ]
-                [ li [] [ a [ href "/login" ] [ text "Sign In" ] ]
-                , li [] [ a [ href "/register" ] [ text "Sign Up" ] ]
-                ]
+    nav [class "navbar navbar-fixed"]
+        [div [class "nav-header"]
+            [ 
+                img [src "src/images/icon.png"] []
+                ,a [class "header", href "/"] [text "EatRight"]
+            ]
+        , div [class "nav", id "nav"]
+            [ ul [id "nav-collapse"] [
+                li [] [a [href "/login"] [text "Login"]]
+                , li [] [a [href "/register"] [text "Register"]]
+            ]
             ]
         ]
 
 
 viewColumn : Model -> Html Msg
 viewColumn model =
-    div [ class "row" ]
-        [ div [ class "column" ]
-            [ img [ src "src/images/olive-oil-968657__340.jpg" ] [] ]
-        , div [ class "column" ]
-            [ img [ src "src/images/vegetables-752153_960_720.jpg" ] [] ]
-        , div []
-            [ img [ src "src/images/grapes-690230_960_720.jpg" ] [] ]
-        , div []
-            [ img [ src "src/images/grapes-690230_960_720.jpg" ] [] ]
+    div [class "landing"]
+    [
+        div [ class "overlay"] 
+        [
+            h1 [] [ text "EAT RIGHT" ]
+            ,p [] [ text """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla aliquet finibus sagittis. Quisque id
+                    eros erat. Sed ac maximus est."""]
         ]
+        ,div [ class "row images" ]
+            [ 
+                div [ class "col-lg-6 col-md-6 col-xs-12" ]
+                    [ img [ src "src/images/vegetables-752153_960_720.jpg" ] [] ]
+                , div [ class "col-lg-6 col-md-6 col-xs-12 togo" ]
+                    [ img [ src "src/images/olive-oil-968657__340.jpg" ] [] ]
+            ]
+    ]
+
 
 
 viewPitch : Html msg
 viewPitch =
-    div [ class "container" ]
+    p [ class "" ]
         [ text pitch ]
 
 
 viewMyDiet : Html msg
 viewMyDiet =
-    div [ class "container" ]
+    p [ class "" ]
         [ text mydiet ]
 
 
 viewFooter : Html msg
 viewFooter =
     footer [ class "cp-text" ]
-        [ h6 [] [ text "EATRIGHT" ]
+        [ h3 [] [ text "EATRIGHT" ]
         , text "What is EatRight"
         , br [] []
         , text "Fruits"
