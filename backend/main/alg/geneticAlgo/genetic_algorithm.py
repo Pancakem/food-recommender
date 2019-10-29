@@ -12,6 +12,9 @@ def setMenuData(file_name):
         menuData = json.load(menu_Data)
     return menuData
 
+with open('genInfo.json') as gen_Data:
+        genInfo = json.load(gen_Data)
+
 ## This part creates the chromosome
 
 # NOT USING THIS FUNCTION CURRENTLY
@@ -375,7 +378,7 @@ def crossover( matingPool, origChromosomes, noOfElite):
 
 
 ## create initial population
-def createInitialPopu(maxDishes, initialPopuSize):
+def createInitialPopu(maxDishes, initialPopuSize, menuData):
     """
     Creates initial set of population
 
@@ -385,12 +388,12 @@ def createInitialPopu(maxDishes, initialPopuSize):
     """
     population = []
     for i in range(1, initialPopuSize+1):
-        population.append(createChromosome(maxDishes))
+        population.append(createChromosome(maxDishes, menuData))
     return population
 
 
 ## rank the population
-def rankDishes(population, cuisineScore, MaxQtyToBeOrdered):
+def rankDishes(population, cuisineScore, MaxQtyToBeOrdered, menuData):
     """
     Ranks the population using the Fitness class
     and the method to calculate fitness
@@ -404,7 +407,7 @@ def rankDishes(population, cuisineScore, MaxQtyToBeOrdered):
     """
     fitnessResults = {}
     for i in range(0,len(population)):
-        fitnessResults[i] = Fitness(population[i], cuisineScore, MaxQtyToBeOrdered).calcFitness()
+        fitnessResults[i] = Fitness(population[i], cuisineScore, MaxQtyToBeOrdered).calcFitness(menuData)
     return sorted(fitnessResults.items(), key=lambda x: x[1], reverse=True)
 
 
