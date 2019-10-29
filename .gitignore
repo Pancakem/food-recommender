@@ -17,3 +17,5 @@ share/
 local/
 migrations/
 *.pyc
+Scripts/
+tcl/

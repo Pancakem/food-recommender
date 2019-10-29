@@ -1,8 +1,5 @@
 module Page.Home exposing (Model, Msg, init, subscriptions, toSession, update, view)
 
-import Bootstrap.Button as Button
-import Bootstrap.Dropdown as Dropdown
-import Bootstrap.Navbar as Navbar
 import Helper exposing (endPoint, informHttpError, prepareAuthHeader)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -16,15 +13,8 @@ import Session exposing (Session, cred)
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        ( navstate, navCmd ) =
-            Navbar.initialState NavbarMsg
-
-        dropdownstate =
-            Dropdown.initialState
-
         model =
             { session = session
-            , navbarState = navstate
             , recommendation = 
                 { food = ""
                 , protein = 0.0
@@ -33,14 +23,13 @@ init session =
                 , carb = 0.0
                 , vitamin = 0.0
                 }
-            , dropdownState = dropdownstate
             , problem = []
             }
 
         cmd =
             case Session.cred session of
                 Just cred ->
-                    navCmd
+                    Cmd.none
 
                 Nothing ->
                     Route.pushUrl (Session.navKey session) Route.Login
@@ -51,8 +40,6 @@ init session =
 type alias Model =
     { session : Session
     , recommendation : Recommendation
-    , navbarState : Navbar.State
-    , dropdownState : Dropdown.State
     , problem : List Problem
     }
 
@@ -62,8 +49,7 @@ type Problem
 
 
 type Msg
-    = NavbarMsg Navbar.State
-    | GetRecommendation
+    = GetRecommendation
     | GotRecommendation (Result Http.Error Recommendation)
     | LoggedOut
 
@@ -71,9 +57,6 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NavbarMsg state ->
-            ( { model | navbarState = state }, Cmd.none )
-
         GetRecommendation ->
             ( model, getRecommendation model.session )
 
@@ -97,14 +80,22 @@ view : Model -> { title : String, content : Html Msg }
 view model =
     { title = "Home"
     , content =
-        div []
-            [ viewNavbar model
-            , p [ class "validation-problem" ]
-                (List.map (\str -> viewServerError str) model.problem)
-            , h3 [ style "text-align" "center" ] [ text "Did You Know!" ]
-            , viewDidyouknow
-            , br [] []
-            , viewRecommendation model
+        div [ class "home" ]
+            [ 
+                viewNavbar model
+                ,p [ class "validation-problem" ]
+                    (List.map (\str -> viewServerError str) model.problem)
+                ,div [class "row"] 
+                [
+                    div [class "col-lg-6 col-md-12 col-xs-12"]
+                    [
+                        viewDidyouknow
+                    ]
+                    ,div [class "col-lg-6 col-md-12 col-xs-12"]
+                    [
+                        viewRecommendation model
+                    ]
+                ]
             ]
     }
 
@@ -116,40 +107,51 @@ viewServerError (ServerError str) =
 
 viewNavbar : Model -> Html Msg
 viewNavbar model =
-    Navbar.config NavbarMsg
-        |> Navbar.withAnimation
-        |> Navbar.brand [ class "nav-menu-logo", href "/" ] [ text "EatRight" ]
-        |> Navbar.items
-            [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/settings" ] [ text "Settings" ]
-            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", onClick LoggedOut ] [ text "Logout" ]
+    nav [class "navbar navbar-fixed"]
+        [div [class "nav-header"]
+            [ a [ class "navbar-toggle"] 
+                [span [class "fa fa-bars"] []
+                ]
+            , a [class "header", href "/"] [text "EatRight"]
             ]
-        |> Navbar.view model.navbarState
+        , div [class "nav", id "nav"]
+            [ ul [id "nav-collapse"] [
+                li [] [a [href "/settings"] [text "Settings"]]
+                , li [] [a [href "/", onClick LoggedOut] [text "Logout"]]
+            ]
+            ]
+        ]
 
 
 viewRecommendation : Model -> Html Msg
 viewRecommendation model =
-    div [ style "text-align" "center" ]
-        [
-        div [style "color" "green"] 
-            [ p [] [text model.recommendation.food]
-            , ul []
+        div [ class "dyk", style "color" "green"] 
+            [ 
+                h3 [ style "text-align" "center"] [ text "Recommendations"]  
+                ,div [ class "content"] 
                 [
-                    li [] [text <| "Carbohydrate: " ++ (String.fromFloat model.recommendation.carb)]
-                    , li [] [text <| "Protein: " ++ (String.fromFloat model.recommendation.protein)]
-                    , li [] [text <| "Vitamin: " ++ (String.fromFloat model.recommendation.vitamin)]
-                    , li [] [text <| "Calories: " ++ (String.fromFloat model.recommendation.calories)]
-                    , li [] [text <| "Energy: " ++ (String.fromFloat model.recommendation.energy)]
-                ] 
+                    p [] [text model.recommendation.food]
+                    , ul []
+                        [
+                            li [] [text <| "Carbohydrate: " ++ (String.fromFloat model.recommendation.carb)]
+                            , li [] [text <| "Protein: " ++ (String.fromFloat model.recommendation.protein)]
+                            , li [] [text <| "Vitamin: " ++ (String.fromFloat model.recommendation.vitamin)]
+                            , li [] [text <| "Calories: " ++ (String.fromFloat model.recommendation.calories)]
+                            , li [] [text <| "Energy: " ++ (String.fromFloat model.recommendation.energy)]
+                        ] 
+                    ,button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ] 
+                ]
             ]
-        , br [] []
-        , div []
-            [ button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ] ]
-        ]
 
 
 viewDidyouknow =
-    div [ style "display" "block" ]
-        [ p [] [ text (List.head tips |> Maybe.withDefault "") ]
+    div [ class "dyk" , style "display" "block" ]
+        [ 
+            h3 [ style "text-align" "center" ] [ text "Did You Know!" ]
+            ,div [ class "content" ] 
+            [
+                p [] [ text (List.head tips |> Maybe.withDefault "") ]
+            ]
         ]
 
 

@@ -84,6 +84,8 @@ viewColumn model =
             [ img [ src "src/images/vegetables-752153_960_720.jpg" ] [] ]
         , div []
             [ img [ src "src/images/grapes-690230_960_720.jpg" ] [] ]
+        , div []
+            [ img [ src "src/images/grapes-690230_960_720.jpg" ] [] ]
         ]
 
 

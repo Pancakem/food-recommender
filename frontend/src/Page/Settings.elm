@@ -1,9 +1,6 @@
 module Page.Settings exposing (FoodPreference, Model, Msg(..), init, subscriptions, toSession, update, view)
 
-import Array as Array
-import Bootstrap.Button as Button
-import Bootstrap.Carousel as Carousel
-import Bootstrap.Navbar as Navbar
+import Array
 import Helper exposing (decodeProfile, endPoint, informHttpError, prepareAuthHeader)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -14,8 +11,6 @@ import Json.Decode as Decode
 import Route
 import Session exposing (Session, logout)
 import Http
-import Bootstrap.Navbar as Navbar
-import Bootstrap.Carousel as Carousel
 import Helper exposing (prepareAuthHeader, endPoint, informHttpError, decodeProfile)
 import Json.Decode as Decode
 
@@ -23,11 +18,10 @@ import Json.Decode as Decode
 init : Session -> ( Model, Cmd Msg )
 init session =
     let
-        (navstate, navCmd) = Navbar.initialState NavbarMsg   
+        
 
         model =
             { session = session
-            , navbarState = navstate
             , user =
             { email = ""
             , profileName = ""            
@@ -45,9 +39,8 @@ init session =
             case Session.cred session of
                 Just cred ->
                     Cmd.batch
-                        [ navCmd, getAccountInfo session ]
+                        [getAccountInfo session, getFoodPreferences session ]
 
-                --, --(getFoodPreferences session)]
                 Nothing ->
                     Route.pushUrl (Session.navKey session) Route.Login
     in
@@ -58,7 +51,6 @@ type alias Model =
     { session : Session
     , problem : List Problem
     , user : User
-    , navbarState : Navbar.State
     , preferences : FoodPreference 
     } 
 
@@ -80,7 +72,6 @@ type Msg
     | GotSettingsInfo (Result Http.Error FoodPreference)
     | SubmitAccount
     | SetField Field String
-    | NavbarMsg Navbar.State
     | ClickedLogout
     | Increase Ty
     | Decrease Ty
@@ -171,9 +162,6 @@ update msg model =
             , Cmd.none
             )
 
-        NavbarMsg state ->
-            ( { model | navbarState = state }, Cmd.none )
-
         ClickedLogout ->
             ( model, Cmd.batch [ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ] )
 
@@ -221,7 +209,7 @@ viewSettings model =
 
 viewError : Problem -> Html msg
 viewError (ServerError str) =
-    div [ style "color" "red" ]
+    div [ class "alert"]
         [ text str ]
 
 
@@ -272,14 +260,20 @@ viewPersonalSettings model =
 
 viewNavbar : Model -> Html Msg
 viewNavbar model =
-    Navbar.config NavbarMsg
-        |> Navbar.withAnimation
-        |> Navbar.brand [ class "nav-menu-logo", href "/home" ] [ text "EatRight" ]
-        |> Navbar.items
-            [ Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", href "/home" ] [ text "Home" ]
-            , Navbar.itemLink [ class "navbar-dropdown nav-links nav-menu", onClick ClickedLogout ] [ text "Logout" ]
+    nav [class "navbar navbar-fixed"]
+        [div [class "nav-header"]
+            [ a [ class "navbar-toggle"] 
+                [span [class "fa fa-bars"] []
+                ]
+            , a [class "header", href "/"] [text "EatRight"]
             ]
-        |> Navbar.view model.navbarState
+        , div [class "nav", id "nav"]
+            [ ul [id "nav-collapse"] [
+                li [] [a [href "/settings"] [text "Settings"]]
+                , li [] [a [href "/", onClick ClickedLogout] [text "Logout"]]
+            ]
+            ]
+        ]
 
 
 type Field
@@ -299,7 +293,7 @@ inputField field {user} plceholder lbel taype =
                     user.profileName
                 
     in
-    div [ class "" ]
+    div [ class ""]
         [ span [] [ label [ class "task-form-input-title" ] [ text lbel ] ]
         , input
             [ class "task-form-input"
