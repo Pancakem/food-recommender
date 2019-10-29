@@ -42,7 +42,7 @@ init session =
                         [getAccountInfo session, getFoodPreferences session ]
 
                 Nothing ->
-                    Route.pushUrl (Session.navKey session) Route.Login
+                    Route.replaceUrl (Session.navKey session) Route.Login
     in
     ( model, cmd )
 
@@ -163,7 +163,7 @@ update msg model =
             )
 
         ClickedLogout ->
-            ( model, Cmd.batch [ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ] )
+            ( model, Cmd.batch [ Session.logout, Route.loadPage Route.Login ] )
 
 
 
@@ -228,7 +228,7 @@ viewPersonalSettings model =
         txt = 
             if model.preferences.likes == "vegan" then
                 veganMojo
-            else if model.preferences.likes == "vegeterian" then
+            else if model.preferences.likes == "vegetarian" then
                 vegetarianMojo
             else
                 theRestMojo
@@ -254,7 +254,9 @@ viewPersonalSettings model =
         , hr [] []
         , p [] [text "Vitamins"]
         , button [onClick <| Increase Vitamin] [text "Increase vitamin uptake"]
-        , button [onClick <| Decrease Vitamin] [text "Decrease vitamin uptake"]      
+        , button [onClick <| Decrease Vitamin] [text "Decrease vitamin uptake"]  
+        , hr [] []
+        , button [] [text "Submit"]
         ]
 
 
@@ -269,8 +271,8 @@ viewNavbar model =
             ]
         , div [class "nav", id "nav"]
             [ ul [id "nav-collapse"] [
-                li [] [a [href "/settings"] [text "Settings"]]
-                , li [] [a [href "/", onClick ClickedLogout] [text "Logout"]]
+                li [] [a [href "/"] [text "Home"]]
+                , li [] [a [onClick ClickedLogout] [text "Logout"]]
             ]
             ]
         ]
@@ -325,9 +327,9 @@ type alias Account =
 
 type alias FoodPreference =
     { likes : String
-    , prIn: Int
-    , carbIn : Int
-    , vitaIn : Int
+    , prIn: Float
+    , carbIn : Float
+    , vitaIn : Float
     }
 
 
@@ -347,7 +349,7 @@ subscriptions _ =
 getAccountInfo : Session -> Cmd Msg
 getAccountInfo session =
     Http.request
-        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
+        { headers = [ prepareAuthHeader session ]
         , url = endPoint [ "status" ]
         , body = Http.emptyBody
         , method = "GET"
@@ -360,8 +362,8 @@ getAccountInfo session =
 getFoodPreferences : Session -> Cmd Msg
 getFoodPreferences session = 
     Http.request
-        { headers = [ prepareAuthHeader session, Http.header "Origin" "http://localhost:5000" ]
-        , url = endPoint ["status"]
+        { headers = [ prepareAuthHeader session]
+        , url = endPoint ["settings"]
         , body = Http.emptyBody
         , method = "GET"
         , timeout = Nothing
@@ -372,10 +374,10 @@ getFoodPreferences session =
 decodeFoodPreference : Decode.Decoder FoodPreference
 decodeFoodPreference = 
     Decode.map4 FoodPreference
-        (Decode.field "likes" Decode.string)
-        (Decode.field "prIn" Decode.int)
-        (Decode.field "carbIn" Decode.int)
-        (Decode.field "vitaIn" Decode.int)
+        (Decode.field "preference" Decode.string)
+        (Decode.field "protein" Decode.float)
+        (Decode.field "carb" Decode.float)
+        (Decode.field "fat" Decode.float)
 
 
 veganMojo = 

@@ -19,7 +19,7 @@ init session =
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Home
+                    Route.replaceUrl (Session.navKey session) Route.Home
 
                 Nothing ->
                     Cmd.none
@@ -208,7 +208,7 @@ update msg model =
             case resp of
                 Ok successData ->
                     ( model
-                    , Cmd.batch [ Session.login successData, Route.pushUrl (Session.navKey model.session) Route.Home ]
+                    , Cmd.batch [ Session.login successData, Route.loadPage Route.Home ]
                     )
 
                 Err err ->
