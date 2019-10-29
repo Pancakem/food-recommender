@@ -13,7 +13,8 @@ init session =
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Route.pushUrl (Session.navKey session) Route.Home
+                    Cmd.batch 
+                        [ Route.loadPage Route.Home]
 
                 Nothing ->
                     Cmd.none

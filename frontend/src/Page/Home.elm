@@ -8,6 +8,7 @@ import Http
 import Json.Decode as Decode
 import Route
 import Session exposing (Session, cred)
+import Random
 
 
 init : Session -> ( Model, Cmd Msg )
@@ -21,26 +22,37 @@ init session =
                 , energy = 0.0
                 , calories = 0.0
                 , carb = 0.0
-                , vitamin = 0.0
+                , fat = 0.0
+                , water = 0.0
+                , fibre = 0.0
                 }
             , problem = []
+            , randNo = 0
             }
 
         cmd =
             case Session.cred session of
                 Just cred ->
-                    Cmd.none
+                    newNumber
 
                 Nothing ->
-                    Route.pushUrl (Session.navKey session) Route.Login
+                    Route.replaceUrl (Session.navKey session) Route.Login
     in
     ( model, cmd )
 
+getRandomInt : Random.Generator Int
+getRandomInt = 
+    Random.int 1 3
+
+newNumber : Cmd Msg
+newNumber =
+  Random.generate NewNumber getRandomInt
 
 type alias Model =
     { session : Session
     , recommendation : Recommendation
     , problem : List Problem
+    , randNo : Int
     }
 
 
@@ -52,11 +64,16 @@ type Msg
     = GetRecommendation
     | GotRecommendation (Result Http.Error Recommendation)
     | LoggedOut
+    | NewNumber Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NewNumber x ->
+            ({model | randNo = x}, Cmd.none)
+
+
         GetRecommendation ->
             ( model, getRecommendation model.session )
 
@@ -73,7 +90,7 @@ update msg model =
             ( newModel, Cmd.none )
 
         LoggedOut ->
-            ( model, Cmd.batch [ Session.logout, Route.pushUrl (Session.navKey model.session) Route.Login ] )
+            ( model, Cmd.batch [ Session.logout, Route.loadPage Route.Login ] )
 
 
 view : Model -> { title : String, content : Html Msg }
@@ -89,7 +106,7 @@ view model =
                 [
                     div [class "col-lg-6 col-md-12 col-xs-12"]
                     [
-                        viewDidyouknow
+                        viewDidyouknow model
                     ]
                     ,div [class "col-lg-6 col-md-12 col-xs-12"]
                     [
@@ -117,7 +134,7 @@ viewNavbar model =
         , div [class "nav", id "nav"]
             [ ul [id "nav-collapse"] [
                 li [] [a [href "/settings"] [text "Settings"]]
-                , li [] [a [href "/", onClick LoggedOut] [text "Logout"]]
+                , li [] [a [onClick LoggedOut] [text "Logout"]]
             ]
             ]
         ]
@@ -133,24 +150,26 @@ viewRecommendation model =
                     p [] [text model.recommendation.food]
                     , ul []
                         [
-                            li [] [text <| "Carbohydrate: " ++ (String.fromFloat model.recommendation.carb)]
-                            , li [] [text <| "Protein: " ++ (String.fromFloat model.recommendation.protein)]
-                            , li [] [text <| "Vitamin: " ++ (String.fromFloat model.recommendation.vitamin)]
-                            , li [] [text <| "Calories: " ++ (String.fromFloat model.recommendation.calories)]
-                            , li [] [text <| "Energy: " ++ (String.fromFloat model.recommendation.energy)]
+                            li [] [text <| "Carbohydrate: " ++ (String.fromFloat model.recommendation.carb ++ " (g)")]
+                            , li [] [text <| "Protein: " ++ (String.fromFloat model.recommendation.protein ++ " (g)")]
+                            , li [] [text <| "Fat: " ++ (String.fromFloat model.recommendation.fat ++ " (g)")]
+                            , li [] [text <| "Calories: " ++ (String.fromFloat model.recommendation.calories ++ " (kCal)")]
+                            , li [] [text <| "Energy: " ++ (String.fromFloat model.recommendation.energy ++ " (kJ)")]
+                            , li [] [text <| "Water: " ++ (String.fromFloat model.recommendation.water ++ " (g)")]
+                            , li [] [text <| "Fibre: " ++ (String.fromFloat model.recommendation.fibre ++ " (g)")]
                         ] 
                     ,button [ class "recommend-button", onClick GetRecommendation ] [ text "Get Recommendation" ] 
                 ]
             ]
 
-
-viewDidyouknow =
+viewDidyouknow : Model -> Html Msg
+viewDidyouknow model =
     div [ class "dyk" , style "display" "block" ]
         [ 
             h3 [ style "text-align" "center" ] [ text "Did You Know!" ]
             ,div [ class "content" ] 
             [
-                p [] [ text (List.head tips |> Maybe.withDefault "") ]
+                p [] [ text (List.take model.randNo tips |> List.head |> Maybe.withDefault "") ]
             ]
         ]
 
@@ -182,21 +201,26 @@ type alias Recommendation =
     { food : String
     , protein : Float
     , carb : Float
-    , vitamin : Float
+    , fat : Float
     , energy: Float
     , calories: Float
+    , water : Float
+    , fibre : Float
     }
 
 
 decodeRecommendation : Decode.Decoder Recommendation
 decodeRecommendation = 
-    Decode.map6 Recommendation
+    Decode.map8 Recommendation
         (Decode.field "food" Decode.string)
         (Decode.field "protein" Decode.float)
         (Decode.field "carb" Decode.float)
-        (Decode.field "vitamin" Decode.float)
+        (Decode.field "fat" Decode.float)
         (Decode.field "energy" Decode.float)
         (Decode.field "calories" Decode.float)
+        (Decode.field "water" Decode.float)
+        (Decode.field "fibre" Decode.float)
+        
 
 
 tips : List String

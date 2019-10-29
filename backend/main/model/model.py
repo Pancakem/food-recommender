@@ -37,8 +37,9 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
+    gender = db.Column(db.Integer)
 
-    def __init__(self, fullname, email, age, password, admin=False):
+    def __init__(self, fullname, email, age, password, gender, admin=False):
         self.id = str(uuid.uuid4())
         self.fullname = fullname
         self.email = email
@@ -46,6 +47,7 @@ class User(db.Model):
         self.password = bcrypt.generate_password_hash(
             password, app.config.get('BCRYPT_LOG_ROUNDS')
         ).decode()
+        self.gender = gender
         self.registered_on = datetime.datetime.now()
         self.admin = admin
     
